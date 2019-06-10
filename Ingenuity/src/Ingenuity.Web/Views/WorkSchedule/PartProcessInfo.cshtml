@@ -1,0 +1,34 @@
+﻿@model Ingenuity.Web.Models.PartProcess
+
+@{
+    ViewData["Title"] = "PartProcessInfo";
+}
+
+<h2>物料清单材料加工信息</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PartProcessInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaterialInfoId" />
+            <div class="form-group">
+                <label asp-for="WorkerName" class="control-label">操作员</label>
+                <input asp-for="WorkerName" class="form-control" />
+                <span asp-validation-for="WorkerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalCount" class="control-label">完成数量</label>
+                <input asp-for="TotalCount" class="form-control" />
+                <span asp-validation-for="TotalCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  for="badCount" class="control-label">报废数量</label>
+                <input type="number" id="badCount" name="badCount" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

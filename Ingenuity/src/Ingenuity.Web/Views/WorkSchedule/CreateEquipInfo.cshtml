@@ -1,0 +1,44 @@
+﻿@model Ingenuity.Web.Models.EquipInfo
+
+@{
+    ViewData["Title"] = "CreateEquipInfo";
+}
+
+<h2>新增设备</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateEquipInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">设备名称</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Site" class="control-label">车间机位</label>
+                <input asp-for="Site" class="form-control" />
+                <span asp-validation-for="Site" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkSituation" class="control-label">工作情况</label>
+                <input asp-for="WorkSituation" class="form-control" />
+                <span asp-validation-for="WorkSituation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperateSituation" class="control-label">运行状态</label>
+                <input asp-for="OperateSituation" class="form-control" />
+                <span asp-validation-for="OperateSituation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="EquipList">返回列表</a>
+</div>
+

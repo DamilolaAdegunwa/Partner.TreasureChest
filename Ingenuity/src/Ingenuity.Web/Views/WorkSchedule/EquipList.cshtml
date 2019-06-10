@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.EquipInfo>
+
+@{
+    ViewData["Title"] = "EquipList";
+}
+
+<h2>设备信息列表</h2>
+
+<p>
+    <a asp-action="CreateEquipInfo">创建设备</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>设备编号</th>
+            <th>设备名称</th>
+            <th>车间机位</th>
+            <th>工作情况</th>
+            <th>运行状态</th>
+            <th>创建日期</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EquipNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Site)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkSituation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OperateSituation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    <a href="@Url.Action("UpdateEquipInfo",new { equipInfoId=item.Id})">编辑</a>
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="7"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "完成进度";
+}
+
+<h3>各模块任务情况:</h3>
+<table class="table table-bordered text-center">
+    <tr>
+        <td>
+            <a href="@Url.Action("OrderList","Order")" class="btn btn-success" style="width:100%;padding-top:40px;height:100px;" role="button">订单完成数量:@ViewBag.OrderCompleteCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("OrderList","Order")" class="btn btn-danger" style="width:100%;padding-top:40px;height:100px;" role="button">订单待完成数量:@ViewBag.OrderUnCompleteCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("OrderList","Order")" class="btn btn-info" style="width:100%;padding-top:40px;height:100px;" role="button">订单已出货数量:@ViewBag.OrderShipCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("OrderList","Order")" class="btn btn-warning" style="width:100%;padding-top:40px;height:100px;" role="button">订单待配置物料清单数量:@ViewBag.OrderNoMaterialCount</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="@Url.Action("MaterialBill","Order")" class="btn btn-info" style="width:100%;padding-top:40px;height:100px;" role="button">物料清单总数量:@ViewBag.MaterialCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("MaterialBill","Order")" class="btn btn-success" style="width:100%;padding-top:40px;height:100px;" role="button">物料清单已完成数量:@ViewBag.MaterialCompletedCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("PartProcessList","WorkSchedule")" class="btn btn-primary" style="width:100%;padding-top:40px;height:100px;" role="button">物料清单正加工数量:@ViewBag.MaterialCompletingCount</a>
+        </td>
+        <td>
+            <a href="@Url.Action("ProcessInfoList","WorkSchedule")" class="btn btn-danger" style="width:100%;padding-top:40px;height:100px;" role="button">物料清单待加工数量:@ViewBag.MaterialWaitCompleteCount</a>
+        </td>
+    </tr>
+</table>
+<h3>物料清单完成进度:</h3>
+<canvas id="canvas" width="400" height="100"></canvas>
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript">
+        var barChartData = {
+            labels: @Html.Raw(ViewBag.MaterialName),
+            datasets: [{
+                label: '在制品目标数量',
+                backgroundColor: 'rgb(255, 255, 132)',
+                borderColor: 'rgb(128, 24, 167)',
+                borderWidth: 1,
+                data:  @Html.Raw(ViewBag.AimCount),
+            }, {
+                label: '在制品完成数量',
+                backgroundColor: 'rgb(34, 98, 233)',
+                borderColor: 'rgb(65, 99, 32)',
+                borderWidth: 1,
+                data: @Html.Raw(ViewBag.FinishCount),
+            }]
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+        };
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "物料清单报表";
+}
+<h2 class="text-center">物料清单报表</h2>
+<div id="hot"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        var dataObject =@Html.Raw(ViewBag.DataObject);
+        var hotElement = document.querySelector('#hot');
+        var hotElementContainer = hotElement.parentNode;
+        var hotSettings = {
+            data: dataObject,
+            columns: [
+                {
+                    data: 'Id',
+                    type: 'numeric',
+                    width: 40,
+                },
+                {
+                    data: 'OrderId',
+                    type: 'text',
+                },
+                {
+                    data: 'MaterialName',
+                    type: 'text',
+                },
+                {
+                    data: 'UseCount',
+                    type: 'text',
+                },
+                {
+                    data: 'T_CreateDate',
+                    type: 'text',
+                },
+                {
+                    data: 'CompleteStatus',
+                    type: 'text',
+                },
+            ],
+            stretchH: 'all',
+            autoWrapRow: true,
+            maxRows: 22,
+            manualRowResize: true,
+            manualColumnResize: true,
+            rowHeaders: true,
+            colHeaders: [
+                'ID',
+                '订单Id',
+                '原材料名称',
+                '使用数量',
+                '创建日期',
+                '完成状态',
+            ],
+            manualRowMove: true,
+            manualColumnMove: true,
+            contextMenu: true,
+            filters: true,
+            dropdownMenu: true,
+            readOnly:true,
+        };
+        var hot = new Handsontable(hotElement, hotSettings);
+    </script>
+}

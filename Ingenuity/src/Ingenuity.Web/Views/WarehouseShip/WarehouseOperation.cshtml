@@ -1,0 +1,51 @@
+﻿@model Ingenuity.Web.Models.Warehouse
+@{
+    ViewData["Title"] = "WarehouseOperation";
+}
+
+<h2>入库操作</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="WarehouseOperation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaterialName" class="control-label">材料名称</label>
+                <input asp-for="MaterialName" class="form-control" />
+                <span asp-validation-for="MaterialName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TakeWay" class="control-label">交接方式</label>
+                <input asp-for="TakeWay" class="form-control" />
+                <span asp-validation-for="TakeWay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepotSite" class="control-label">仓库区位</label>
+                <input asp-for="DepotSite" class="form-control" />
+                <span asp-validation-for="DepotSite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label">入库数量</label>
+                <input asp-for="Count" class="form-control" />
+                <span asp-validation-for="Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label">重量</label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier" class="control-label">供应商</label>
+                <input asp-for="Supplier" class="form-control" />
+                <span asp-validation-for="Supplier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact" class="control-label">联系方式</label>
+                <input asp-for="Contact" class="form-control" />
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

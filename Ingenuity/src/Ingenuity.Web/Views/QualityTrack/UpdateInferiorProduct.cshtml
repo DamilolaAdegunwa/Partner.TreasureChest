@@ -1,0 +1,30 @@
+﻿@model Ingenuity.Web.Models.BadPart
+
+@{
+    ViewData["Title"] = "更新物料清单材料不良品信息";
+}
+
+<h2>更新物料清单材料不良品信息</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateInferiorProduct">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <label asp-for="BadCount" class="control-label">工序名称:@Model.ProcessName</label>
+            <div class="form-group">
+                <label asp-for="BadCount" class="control-label">报废数量</label>
+                <input asp-for="BadCount" class="form-control" />
+                <span asp-validation-for="BadCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="保存" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="InferiorProduct">返回列表</a>
+</div>
+

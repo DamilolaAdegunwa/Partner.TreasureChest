@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.BadPart>
+
+@{
+    ViewData["Title"] = "物料清单材料不良品管理";
+}
+
+<h2>物料清单材料不良品管理</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>零件名称</th>
+            <th>材料名称</th>
+            <th>工序名称</th>
+            <th>报废数量</th>
+            <th>创建日期</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProcessName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BadCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    <a href="@Url.Action("UpdateInferiorProduct",new { badPartId=item.Id})">编辑</a>
+                    <a href="@Url.Action("DeleteInferiorProduct",new { badPartId=item.Id})">删除</a>
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="6"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

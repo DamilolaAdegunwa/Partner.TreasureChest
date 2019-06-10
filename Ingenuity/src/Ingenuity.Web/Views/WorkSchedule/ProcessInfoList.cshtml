@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.ProcessInfo>
+
+@{
+    ViewData["Title"] = "工序列表";
+}
+
+<h2>工序列表</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>零件名称</th>
+            <th>材料名称</th>
+            <th>工作环节</th>
+            <th>设备编号</th>
+            <th>创建时间</th>
+            <th>工艺情况</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.T_EquipNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @if (item.CompleteStatus == (int)CompleteStatusEnum.加工完成)
+                    {
+                        <label style="color:red;font-weight:bold;">工序完成</label>
+                    }
+                    else if (item.CompleteStatus == (int)CompleteStatusEnum.待加工)
+                    {
+                        <a href="@Url.Action("UpdateProcessInfo",new { processInfoId=item.Id})">编辑</a>
+                        <a href="@Url.Action("DeleteProcessInfo",new { processInfoId=item.Id})">删除</a>
+                        <a href="javascript:void(0);" onclick="startProcessInfo(@item.Id)">加工</a>
+                    }
+                    else
+                    {
+                        <label style="color:yellowgreen;font-weight:bold;">工序进行中</label>
+                    }
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="7"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script type="text/javascript">
+        function startProcessInfo(processInfoId){
+            $.ajax({
+                url:'@Url.Action("StartProcessInfo")',
+                type: "Post",
+                data: {"processInfoId":processInfoId},
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        layer.alert(data.message, { icon: 6 }, function () {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        layer.alert(data.message, { icon: 5 });
+                    }
+                }
+            });
+        }
+    </script>
+}

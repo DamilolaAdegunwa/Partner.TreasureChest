@@ -1,0 +1,47 @@
+﻿@model Ingenuity.Web.Models.InventoryInfo
+
+@{
+    ViewData["Title"] = "CreateInventoryInfo";
+}
+
+<h2>新增库存信息</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateInventoryInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaterialName" class="control-label">材料名称</label>
+                <input asp-for="MaterialName" class="form-control" />
+                <span asp-validation-for="MaterialName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepotSite" class="control-label">车间机位</label>
+                <input asp-for="DepotSite" class="form-control" />
+                <span asp-validation-for="DepotSite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalCount" class="control-label">总量</label>
+                <input asp-for="TotalCount" class="form-control" />
+                <span asp-validation-for="TotalCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RemainCount" class="control-label">余量</label>
+                <input asp-for="RemainCount" class="form-control" />
+                <span asp-validation-for="RemainCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label">备注</label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="InventoryList">返回列表t</a>
+</div>
+

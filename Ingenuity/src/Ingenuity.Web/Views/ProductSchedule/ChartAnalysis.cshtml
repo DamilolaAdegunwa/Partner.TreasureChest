@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "图表分析";
+}
+<h3>订单完成进度:</h3>
+<canvas id="orderCanvas" width="400" height="100"></canvas>
+
+<h3>物料清单完成进度:</h3>
+<canvas id="materialCanvas" width="400" height="100"></canvas>
+
+<h3>材料不良品分布图</h3>
+<canvas id="badPartCanvas" width="400" height="100"></canvas>
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    <script type="text/javascript">
+        var materialChartData = {
+            labels: @Html.Raw(ViewBag.MaterialName),
+            datasets: [{
+                label: '在制品目标数量',
+                backgroundColor: 'rgb(178, 24, 132)',
+                borderColor: 'rgb(23, 24, 167)',
+                borderWidth: 1,
+                data:  @Html.Raw(ViewBag.AimCount),
+            }, {
+                label: '在制品完成数量',
+                backgroundColor: 'rgb(34, 98, 233)',
+                borderColor: 'rgb(65, 99, 32)',
+                borderWidth: 1,
+                data: @Html.Raw(ViewBag.FinishCount),
+            }]
+        };
+
+        var orderChartData = {
+            labels: @Html.Raw(ViewBag.OrderName),
+            datasets: [{
+                label: '订单零件数量',
+                backgroundColor: 'rgb(255, 148, 132)',
+                borderColor: 'rgb(128, 24, 167)',
+                borderWidth: 1,
+                data:  @Html.Raw(ViewBag.OrderCount),
+            }, {
+                label: '订单出货数量',
+                backgroundColor: 'rgb(34, 98, 233)',
+                borderColor: 'rgb(65, 99, 32)',
+                borderWidth: 1,
+                data: @Html.Raw(ViewBag.OrderShipCount),
+            }]
+        };
+        var badPartChartData = {
+            labels: @Html.Raw(ViewBag.ProcessName),
+            datasets: [{
+                label: '不良品数量',
+                backgroundColor: 'rgb(223, 36, 132)',
+                borderColor: 'rgb(150, 24, 167)',
+                borderWidth: 1,
+                data:  @Html.Raw(ViewBag.BadCount),
+            }]
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('materialCanvas').getContext('2d');
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: materialChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+            var orderctx = document.getElementById('orderCanvas').getContext('2d');
+            window.myOrderBar = new Chart(orderctx, {
+                type: 'bar',
+                data: orderChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+            var badPartctx = document.getElementById('badPartCanvas').getContext('2d');
+            window.myOrderBar = new Chart(badPartctx, {
+                type: 'bar',
+                data: badPartChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Bar Chart'
+                    }
+                }
+            });
+        };
+    </script>
+}
+

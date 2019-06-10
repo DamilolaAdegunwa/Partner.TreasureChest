@@ -1,0 +1,33 @@
+﻿@model Ingenuity.Web.Models.MaterialInfo
+
+@{
+    ViewData["Title"] = "CreateMaterialBill";
+}
+
+<h2>新增物料清单</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateMaterialBill">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="MaterialName" class="control-label">材料名称</label>
+                <input asp-for="MaterialName" class="form-control" />
+                <span asp-validation-for="MaterialName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UseCount" class="control-label">使用数量/1个零件</label>
+                <input asp-for="UseCount" class="form-control" />
+                <span asp-validation-for="UseCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="OrderList" asp-controller="Order">返回订单列表</a>
+</div>
+

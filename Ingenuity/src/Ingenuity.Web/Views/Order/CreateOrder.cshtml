@@ -1,0 +1,52 @@
+﻿@model Ingenuity.Web.Models.Order
+
+@{
+    ViewData["Title"] = "CreateOrder";
+}
+
+<h2>新增订单</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label">公司名称</label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkerName" class="control-label">操作员</label>
+                <input asp-for="WorkerName" class="form-control" />
+                <span asp-validation-for="WorkerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModleNum" class="control-label">型号</label>
+                <input asp-for="ModleNum" class="form-control" />
+                <span asp-validation-for="ModleNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label">零件名称</label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label">规格</label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label">数量</label>
+                <input asp-for="Count" class="form-control" />
+                <span asp-validation-for="Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="创建" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="OrderList">返回列表</a>
+</div>
+

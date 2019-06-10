@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.Order>
+
+@{
+    ViewData["Title"] = "OrderList";
+}
+
+<h2>订单列表</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>订单编号</th>
+            <th>公司名称</th>
+            <th>创建日期 </th>
+            <th>操作员</th>
+            <th>型号</th>
+            <th>零件名称</th>
+            <th>规格</th>
+            <th>数量</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModleNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    <a href="@Url.Action("OrderDetail",new { orderId=item.Id})">详情</a> |
+                    <a href="@Url.Action("UpdateOrder",new { orderId=item.Id})">编辑</a> |
+                    <a href="@Url.Action("DeleteOrder",new { orderId=item.Id})">删除</a><br />
+
+                    @if (item.IsComplete)
+                    {
+                        if (item.IsShip)
+                        {
+                            <label style="color:red;font-weight:bold;">完成出货</label>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("CreateMaterialBill",new { orderId=item.Id})">新增物料清单</a>
+                            <label style="color:red;font-weight:bold;">现有物料清单已完成</label>
+                        }
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("CreateMaterialBill",new { orderId=item.Id})">新增物料清单</a>
+
+                    }
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="9"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

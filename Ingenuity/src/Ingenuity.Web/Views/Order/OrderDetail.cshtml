@@ -1,0 +1,71 @@
+﻿@model Ingenuity.Web.Models.Order
+
+@{
+    ViewData["Title"] = "订单详情";
+}
+
+<h2>订单详情</h2>
+<a href="@Url.Action("UpdateOrder",new { orderId=Model.Id})">编辑</a>
+<table class="table table-striped">
+    <tr>
+        <th>订单号</th>
+        <td>@Html.DisplayFor(model => model.OrderNumber)</td>
+        <th>公司名称</th>
+        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+    </tr>
+    <tr>
+        <th>创建日期</th>
+        <td>@Html.DisplayFor(model => model.CreateDate)</td>
+        <th>操作员</th>
+        <td>@Html.DisplayFor(model => model.WorkerName)</td>
+    </tr>
+    <tr>
+        <th>型号</th>
+        <td>@Html.DisplayFor(model => model.ModleNum)</td>
+        <th>零件名称</th>
+        <td>@Html.DisplayFor(model => model.ProductName)</td>
+    </tr>
+    <tr>
+        <th>规格</th>
+        <td>@Html.DisplayFor(model => model.Size)</td>
+        <th>数量</th>
+        <td>@Html.DisplayFor(model => model.Count)</td>
+    </tr>
+</table>
+<hr />
+<h2>物料清单</h2>
+<table class="table table-striped">
+    @if (ViewBag.MaterialInfoList != null)
+    {
+        <tr>
+            <th>材料名称</th>
+            <th>使用数量</th>
+            <th>创建日期</th>
+            <td></td>
+        </tr>
+        @foreach (var materialInfo in (List<MaterialInfo>)ViewBag.MaterialInfoList)
+        {
+            <tr>
+                <td>@materialInfo.MaterialName</td>
+                <td>@materialInfo.UseCount</td>
+                <td>@materialInfo.CreateDate</td>
+
+                <td>
+                    @if (materialInfo.CompleteStatus == (int)CompleteStatusEnum.加工完成)
+                    {
+                          <label style="color:red;font-weight:bold;">加工完成</label>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("CreateProcessInfo","WorkSchedule",new { materialInfoId=materialInfo.Id})">配置工序</a>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+<div>
+    <a asp-action="OrderList">返回订单列表</a>
+</div>
+

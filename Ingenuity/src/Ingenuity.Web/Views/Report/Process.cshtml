@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "工序安排报表";
+}
+<h2 class="text-center">工序安排报表</h2>
+<div id="hot"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        var dataObject =@Html.Raw(ViewBag.DataObject);
+        var hotElement = document.querySelector('#hot');
+        var hotElementContainer = hotElement.parentNode;
+        var hotSettings = {
+            data: dataObject,
+            columns: [
+                {
+                    data: 'Id',
+                    type: 'numeric',
+                    width: 40,
+                },
+                {
+                    data: 'OrderName',
+                    type: 'text',
+                },
+                {
+                    data: 'MaterialName',
+                    type: 'text',
+                },
+                {
+                    data: 'WorkName',
+                    type: 'text',
+                },
+                {
+                    data: 'T_EquipNumber',
+                    type: 'text',
+                },
+                {
+                    data: 'T_CompleteStatus',
+                    type: 'text',
+                },
+                {
+                    data: 'T_CreateDate',
+                    type: 'text',
+                },
+            ],
+            stretchH: 'all',
+            autoWrapRow: true,
+            maxRows: 22,
+            manualRowResize: true,
+            manualColumnResize: true,
+            rowHeaders: true,
+            colHeaders: [
+                'ID',
+                '零件名称',
+                '材料名称',
+                '工序名',
+                '设备号',
+                '完成状态',
+                '创建时间',
+            ],
+            manualRowMove: true,
+            manualColumnMove: true,
+            contextMenu: true,
+            filters: true,
+            dropdownMenu: true,
+            readOnly:true,
+        };
+        var hot = new Handsontable(hotElement, hotSettings);
+    </script>
+}

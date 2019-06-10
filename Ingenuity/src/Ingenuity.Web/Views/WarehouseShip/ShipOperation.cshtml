@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.Order>
+
+@{
+    ViewData["Title"] = "出货业务";
+}
+
+<h2>出货业务</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>订单编号</th>
+            <th>公司名称</th>
+            <th>创建日期 </th>
+            <th>操作员</th>
+            <th>型号</th>
+            <th>零件名称</th>
+            <th>规格</th>
+            <th>数量</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModleNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    <a href="@Url.Action("ProductShip",new { orderId=item.Id})">出货</a>
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="9"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

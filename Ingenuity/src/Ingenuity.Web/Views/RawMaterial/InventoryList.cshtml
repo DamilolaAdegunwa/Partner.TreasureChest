@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Ingenuity.Web.Models.InventoryInfo>
+
+@{
+    ViewData["Title"] = "InventoryList";
+}
+
+<h2>库存信息</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>材料名称</th>
+            <th>车间机位</th>
+            <th>总量</th>
+            <th>余量</th>
+            <th>更新日期</th>
+            <th>备注</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepotSite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RemainCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+                <td>
+                    <a href="@Url.Action("UpdateInventoryInfo",new { inventoryInfoId=item.Id})">编辑</a>
+                </td>
+            </tr>
+        }
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td class="text-center" colspan="7"><label style="color:red;font-weight:bold;">暂无数据！</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

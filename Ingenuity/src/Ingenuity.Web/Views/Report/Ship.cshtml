@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "出货报表";
+}
+<h2 class="text-center">出货报表</h2>
+<div id="hot"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        var dataObject =@Html.Raw(ViewBag.DataObject);
+        var hotElement = document.querySelector('#hot');
+        var hotElementContainer = hotElement.parentNode;
+        var hotSettings = {
+            data: dataObject,
+            columns: [
+                {
+                    data: 'Id',
+                    type: 'numeric',
+                    width: 40,
+                },
+                {
+                    data: 'OrderId',
+                    type: 'text',
+                },
+                {
+                    data: 'OutWay',
+                    type: 'text',
+                },
+                {
+                    data: 'WorkName',
+                    type: 'text',
+                },
+                {
+                    data: 'Count',
+                    type: 'text',
+                },
+                {
+                    data: 'T_CreateDate',
+                    type: 'text',
+                },
+            ],
+            stretchH: 'all',
+            autoWrapRow: true,
+            maxRows: 22,
+            manualRowResize: true,
+            manualColumnResize: true,
+            rowHeaders: true,
+            colHeaders: [
+                'ID',
+                '订单号',
+                '出货方式',
+                '出货人',
+                '出货数量',
+                '创建时间',
+            ],
+            manualRowMove: true,
+            manualColumnMove: true,
+            contextMenu: true,
+            filters: true,
+            dropdownMenu: true,
+            readOnly:true,
+        };
+        var hot = new Handsontable(hotElement, hotSettings);
+    </script>
+}
