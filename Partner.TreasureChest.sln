@@ -11,27 +11,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pagination", "Pagination", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{156338C6-5370-4427-9E34-2973DB8A1FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pagination.Web", "Pagination\src\Pagination.Web\Pagination.Web.csproj", "{E95D3D09-278E-46A4-BF72-5A42EDD6CCE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pagination.Web", "Pagination\src\Pagination.Web\Pagination.Web.csproj", "{E95D3D09-278E-46A4-BF72-5A42EDD6CCE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TailorImage.Web", "TailorImage\src\TailorImage.Web\TailorImage.Web.csproj", "{BE020BF1-4E1D-4E0D-8F1A-E28313A58867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TailorImage.Web", "TailorImage\src\TailorImage.Web\TailorImage.Web.csproj", "{BE020BF1-4E1D-4E0D-8F1A-E28313A58867}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LogPanel", "LogPanel", "{E74ABD11-877E-4E60-9898-10A6A35E25F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1CAA238D-569B-4785-8BF8-FA4E0D11CDF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogPanel.Web", "LogPanel\src\LogPanel.Web\LogPanel.Web.csproj", "{5B276DD8-6B46-4588-AF0A-883DB6EDAB31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogPanel.Web", "LogPanel\src\LogPanel.Web\LogPanel.Web.csproj", "{5B276DD8-6B46-4588-AF0A-883DB6EDAB31}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KnockoutJS", "KnockoutJS", "{0AB899F1-39B0-47AA-B38A-2CF69DCEA4B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36F007B5-9BB1-4754-BAFF-0DF3D96F5B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnockoutJS.Web", "KnockoutJS\src\KnockoutJS.Web\KnockoutJS.Web.csproj", "{5F5C61A1-FE25-47AD-8C1E-5B4903C2715B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnockoutJS.Web", "KnockoutJS\src\KnockoutJS.Web\KnockoutJS.Web.csproj", "{5F5C61A1-FE25-47AD-8C1E-5B4903C2715B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ingenuity", "Ingenuity", "{D6F2169F-7DF4-481D-A6DA-F914ED308DEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CE68EB18-FDF2-4153-B77B-3BB50AAF2514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ingenuity.Web", "Ingenuity\src\Ingenuity.Web\Ingenuity.Web.csproj", "{9462BD1D-CD53-4D6C-9CB9-E38C62385832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ingenuity.Web", "Ingenuity\src\Ingenuity.Web\Ingenuity.Web.csproj", "{9462BD1D-CD53-4D6C-9CB9-E38C62385832}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DingTalk", "DingTalk", "{512099C6-B2EC-4EC7-8479-CEF88AEEEA19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC3C0A93-6E5B-446B-A0EF-E4D7119C4651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DingTalk.Web", "DingTalk\src\DingTalk.Web\DingTalk.Web.csproj", "{6FA08A7E-8E40-488A-84DC-D24E133AB027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +65,10 @@ Global
 		{9462BD1D-CD53-4D6C-9CB9-E38C62385832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9462BD1D-CD53-4D6C-9CB9-E38C62385832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9462BD1D-CD53-4D6C-9CB9-E38C62385832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA08A7E-8E40-488A-84DC-D24E133AB027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA08A7E-8E40-488A-84DC-D24E133AB027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA08A7E-8E40-488A-84DC-D24E133AB027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA08A7E-8E40-488A-84DC-D24E133AB027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +84,8 @@ Global
 		{5F5C61A1-FE25-47AD-8C1E-5B4903C2715B} = {36F007B5-9BB1-4754-BAFF-0DF3D96F5B01}
 		{CE68EB18-FDF2-4153-B77B-3BB50AAF2514} = {D6F2169F-7DF4-481D-A6DA-F914ED308DEC}
 		{9462BD1D-CD53-4D6C-9CB9-E38C62385832} = {CE68EB18-FDF2-4153-B77B-3BB50AAF2514}
+		{BC3C0A93-6E5B-446B-A0EF-E4D7119C4651} = {512099C6-B2EC-4EC7-8479-CEF88AEEEA19}
+		{6FA08A7E-8E40-488A-84DC-D24E133AB027} = {BC3C0A93-6E5B-446B-A0EF-E4D7119C4651}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {965E9C99-96A6-489B-A17A-1285073763B0}
