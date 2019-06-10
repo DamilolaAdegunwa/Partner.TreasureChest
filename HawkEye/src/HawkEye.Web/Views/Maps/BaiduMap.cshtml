@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    #container {
+        width: 500px;
+        height: 300px;
+        margin-top: 20px;
+    }
+</style>
+<div id="container" class="center-block"></div>
+
+@section Scripts{
+    @* 百度地图Api *@
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=VNAqreEg3qN2kGUkdqnDoAoZxhUP5KhH"></script>
+    <script type="text/javascript">
+        $(function () {
+            var map = new BMap.Map("container");
+            var point = new BMap.Point(116.404, 39.915);
+            map.centerAndZoom(point, 15);
+        });
+    </script>
+}
+

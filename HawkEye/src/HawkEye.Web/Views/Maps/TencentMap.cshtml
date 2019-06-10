@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    #container {
+        width: 500px;
+        height: 300px;
+        margin-top: 20px;
+    }
+</style>
+<div id="container" class="center-block"></div>
+
+@section Scripts{
+    @* 腾讯地图Api *@
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=Y33IBZ-OVI32-C5HU5-CLYAK-JCRVQ-HPF3Y"></script>
+    <script type="text/javascript">
+        $(function () {
+            var map = new qq.maps.Map(document.getElementById("container"));
+        });
+    </script>
+    @*<script type="text/javascript">
+            function init() {
+                var myLatlng = new qq.maps.LatLng(-34.397, 150.644);
+                var myOptions = {
+                    zoom: 8,
+                    center: myLatlng,
+                    mapTypeId: qq.maps.MapTypeId.ROADMAP
+                }
+                var map = new qq.maps.Map(document.getElementById("container"), myOptions);
+            }
+
+            function loadScript() {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://map.qq.com/api/js?v=2.exp&callback=init";
+                document.body.appendChild(script);
+            }
+
+            window.onload = loadScript;
+        </script>*@
+}
