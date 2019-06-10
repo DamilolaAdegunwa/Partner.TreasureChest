@@ -1,0 +1,32 @@
+{
+  "cache": {
+    "systemRamTarget": 0.9,
+    "compactLargeObjectHeap": false
+  },
+  "diagnostics": {
+    "internalLogPath": "C:\\ProgramData\\Seq\\Logs\\",
+    "internalLoggingLevel": "Information",
+    "internalLogServerUrl": null,
+    "telemetryServerUrl": null
+  },
+  "api": {
+    "listenUris": [
+      "http://localhost:5341/"
+    ],
+    "ingestionPort": null,
+    "corsAllowedOrigins": [],
+    "frameAllowFrom": [],
+    "integratedAuthenticationScheme": null,
+    "redirectHttpToHttps": false,
+    "hstsMaxAge": 31536000,
+    "hstsIncludeSubDomains": false,
+    "avoidLdap": false
+  },
+  "storage": {
+    "masterKey": "pmk.AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjlq7Zgp1nkuTHD+h8je0eAQAAAACAAAAAAAQZgAAAAEAACAAAACqTZ4iDAqayTYwgHZkEUAA3autaxot9nRJvKLmVF8mAgAAAAAOgAAAAAIAACAAAADR2NvjvRXMn70ea1DYHQM/WuybZeqqqnGy1iOrz7KAlDAAAACu6fFYSSzGUiMIyioodGNL4HyZJy7uLpHjOowJBPbo0A7+OrK6ZOtfcjaXUq1g8jdAAAAAWtJQT7aus8NsWlfxiraciOBCaPVEZrdhCZc+iTZWdoP+zkk5auo8iLQOgwK2478ew9X+PcWau/VqnIgFpsO2zQ==$khYCfE4W/d/VyvTZaNxsvQ==",
+    "preferredEngine": null,
+    "lmdb": {
+      "extentMapSize": 200000000000
+    }
+  }
+}
