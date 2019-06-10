@@ -1,0 +1,133 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "多条件查询分页示例";
+}
+
+@section Styles{
+    <link href="~/lib/bootstrap pagination/bootstrapv3.css" rel="stylesheet" />
+}
+
+<div class="text-center">
+    <h1 class="display-4">多条件查询分页</h1>
+    <div id="queryItem" class="form-horizontal">
+        <div class="form-group">
+            <label for="bookName" class="col-sm-2 control-label">书名</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="bookName" data-bind="value:queryItemEntity.BookName">
+            </div>
+            <label for="author" class="col-sm-2 control-label">作者</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="author" data-bind="value:queryItemEntity.Author">
+            </div>
+            <label for="press" class="col-sm-2 control-label">出版社</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="press" data-bind="value:queryItemEntity.Press">
+            </div>
+        </div>
+        <button class="btn btn-primary" data-bind="click:queryBookList">查询</button>
+    </div>
+    <div id="books" style="height:220px;">
+        <table class="table table-hover" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>出版社</th>
+                    <th>版本</th>
+                    <th>价格</th>
+                    <th>书籍编号</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach:bookList">
+                <tr>
+                    <td data-bind="text:id"></td>
+                    <td data-bind="text:bookName"></td>
+                    <td data-bind="text:author"></td>
+                    <td data-bind="text:press"></td>
+                    <td data-bind="text:version"></td>
+                    <td data-bind="text:price"></td>
+                    <td data-bind="text:bookNumber"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="pagination"></div>
+</div>
+
+@section Scripts{
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="~/lib/bootstrap pagination/bootstrap-paginator.js"></script>
+    <script type='text/javascript'>
+        // bootstrap paginator插件地址：http://plugins.jquery.com/bootstrap-paginator/
+        var options = {
+            currentPage: 1,
+            totalPages: 10,
+            numberOfPages:5,
+            size: "normal",
+            alignment: "left",
+            onPageClicked: function (event, originalEvent, type, page) {
+                options.currentPage = page;
+                viewModel.pageEntity.PageIndex = options.currentPage;
+                ko.mapping.toJS(viewModel.queryItemEntityBackup, viewModel.queryItemEntity);
+                viewModel.getBookData();
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "首页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "末页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        var viewModel = {
+            bookList: ko.mapping.fromJS(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))),//展示数据
+            pageEntity: ko.mapping.fromJS(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new PageRequestViewModel()))),//分页信息
+            queryItemEntity: ko.mapping.fromJS(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new QueryItemViewModel()))),//查询条件信息
+            queryItemEntityBackup: ko.mapping.fromJS(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new QueryItemViewModel()))),//查询条件信息备份
+
+            getBookData: function () {
+                var pageEntity = ko.mapping.toJS(viewModel.pageEntity);
+                var queryItemEntity = ko.mapping.toJS(viewModel.queryItemEntity);
+
+                $.ajax({
+                    url: '@Url.Action("MultipleQueryGetData")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { "pageEntity": pageEntity, "queryItemEntity": queryItemEntity},
+                    success: function (result) {
+                        ko.mapping.fromJS(result.data, viewModel.bookList);
+                        options.totalPages = result.totalCount > 0 ? result.totalCount % options.numberOfPages == 0 ?
+                            result.totalCount / options.numberOfPages : (result.totalCount / options.numberOfPages) + 1 : 1;
+                        $('#pagination').bootstrapPaginator(options);
+                    }
+                });
+            },
+
+            //查询
+            queryBookList: function () {
+                options.currentPage = 1;
+                viewModel.pageEntity.PageIndex = options.currentPage;
+                viewModel.getBookData();
+                ko.mapping.fromJS(viewModel.queryItemEntity, viewModel.queryItemEntityBackup);//记录查询条件,分页点击时需要用到
+            }
+        };
+
+        $(function () {
+            $('#pagination').bootstrapPaginator(options);
+
+            ko.applyBindings(viewModel);
+            viewModel.pageEntity.PageIndex = options.currentPage;
+            viewModel.pageEntity.PageSize = options.numberOfPages;
+            viewModel.getBookData();
+        });
+    </script>
+}
