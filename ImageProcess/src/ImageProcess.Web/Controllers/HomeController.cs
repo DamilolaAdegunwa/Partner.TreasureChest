@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TailorImage.Web.Models;
+using ImageProcess.Web.Models;
 
-namespace TailorImage.Web.Controllers
+namespace ImageProcess.Web.Controllers
 {
     public class HomeController : Controller
     {

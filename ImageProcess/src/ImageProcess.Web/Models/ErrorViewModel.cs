@@ -1,6 +1,6 @@
 using System;
 
-namespace TailorImage.Web.Models
+namespace ImageProcess.Web.Models
 {
     public class ErrorViewModel
     {
