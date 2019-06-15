@@ -1,0 +1,159 @@
+﻿@using KnockoutJS.Web.ViewModels
+@model List<UnitViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "实现前后端交互(手动绑定)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered" style="margin-top:5px;">
+    <thead>
+        <tr>
+            <th>公司名称</th>
+            <th>公司地址</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:unitList">
+        <tr>
+            <td><input type="text" data-bind="value:unitName" /></td>
+            <td><input type="text" data-bind="value:address" /></td>
+            <td><button class="btn btn-danger" data-bind="click:$root.removeUnitModel">删除</button></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" style="text-align:center;">
+                <button type="button" class="btn btn-primary" data-bind="click:addUnitModel">增加</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<button type="button" class="btn btn-primary" data-bind="click:getUnitModelList">加载新数据</button>
+<button type="button" class="btn btn-primary" data-bind="click:submitUnitModelList">提交全部数据</button>
+<button type="button" class="btn btn-primary" data-bind="click:submitSingleUnitModel">提交单个数据</button>
+
+@section Scripts{
+    <script type="text/javascript">
+        var unitViewModel = function (name, addressInfo) {
+            var self = this;
+            self.unitName = ko.observable(name);
+            self.address = ko.observable(addressInfo);
+        }
+
+        var viewModel = {
+            unitList: ko.observableArray(),
+
+            addUnitModel: function () {
+                viewModel.unitList.push(new unitViewModel('',''));
+            },
+            removeUnitModel: function (unit) {
+                viewModel.unitList.remove(unit);
+            },
+
+            //使用ajax请求后台获取Json数据并绑定到viewModel对象中
+            getUnitModelList: function () {
+                var result = $.getJSON('@Url.Action("GetUnitViewModelList")', '', function (data) {
+                    viewModel.unitList.removeAll();
+                    if (data.executeResult) {
+                        //普通for循环
+                        //for (var i = 0; i < data.unitViewModels.length; i++) {
+                        //    viewModel.unitList.push(new unitViewModel(data.unitViewModels[i]["unitName"], data.unitViewModels[i]["address"]));
+                        //}
+
+                        //JS的foreach方式
+                        //data.forEach(function (val, index, data.unitViewModels) {
+                        //    viewModel.unitList.push(new unitViewModel(val["unitName"], val["address"]));
+                        //});
+
+                        //Jquery的foreach方式
+                        $.each(data.unitViewModels, function (i, val) {
+                            viewModel.unitList.push(new unitViewModel(val["unitName"], val["address"]));
+                        });
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                });
+            },
+
+            //使用ajax提交viewModel对象到后台
+            submitUnitModelList: function () {
+                //如果直接提交observableArray数组，则会报错，序列化不到位,对于单个Observable对象可以使用
+                //var postData = JSON.stringify(viewModel.unitList());
+                //console.log(postData);//数据会有问题，因为只会序列化observableArray，内部对象不会被序列化
+
+                //使用ko提供的序列化方法，将observableArray数组内的对象一并序列化,方式有两种,以下两种效果一样
+                //方式一：
+                //转换成JS对象两种方式：
+                //1、使用map方法转换为js对象
+                //var mapJSObject =  $.map(viewModel.unitList(), function (unit) {
+                //    return unit.unitName() ? {unitName: unit.unitName(),address: unit.address()} : undefined
+                //});
+                //console.log(mapJSObject);
+
+                //2、使用ko提供的方法ko.toJS(),将viewModel复制一份并转换为新的JS对象
+                //var toJSObject = ko.toJS(viewModel.unitList());
+                //console.log(toJSObject);
+
+                //最终，使用JSON.stringify()将js对象序列化为json数据
+                //console.log(JSON.stringify(toJSObject));
+
+                //方式二：使用ko提供的方法ko.toJSON()，将viewModel直接序列化为json数据(该方法内实际进行ko.toJS和JSON.stringify()两个过程)
+                var postData = ko.toJSON(viewModel.unitList());
+                console.log(postData);
+
+                //后台方法中加了FromBody特性则使用post提交无效，因为contentType的原因，FromBody指定为从application/json中
+                @*$.post('@Url.Action("SaveJsonData")', postData, function (data) {
+                    alert(data.message);
+                });*@
+                 $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ManualMappingUnitViewModelList")',
+                    contentType: "application/json; charset=utf-8",
+                    data: postData,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data.message);
+                    }
+                });
+            },
+            
+            //使用ajax提交viewModel对象到后台
+            submitSingleUnitModel: function () {
+                //提交单个实体
+                var postSingleData = ko.toJSON(viewModel.unitList()[0]);
+                //后台方法中加了FromBody特性则使用post提交无效，因为contentType的原因，FromBody指定为从application/json中
+                @*$.post('@Url.Action("SaveSingleUnitViewModel")', postSingleData, function (data) {
+                    alert(data.message);
+                });*@
+                 $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ManualMappingSingleUnitViewModel")',
+                    contentType: "application/json;charset=utf-8",
+                    data: postSingleData,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data.message);
+                    }
+                });
+            }
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);//完成绑定
+
+            //数据初始化
+            @foreach (var unitViewModel in Model)
+            {
+                <text>viewModel.unitList.push(new unitViewModel('@Html.Raw(unitViewModel.UnitName)','@Html.Raw(unitViewModel.Address)'));</text>
+            }
+        });
+    </script>
+}
+
+
+
+

@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using KnockoutJS.Application;
+using KnockoutJS.EFCore;
+using KnockoutJS.Web.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,8 +27,7 @@ namespace KnockoutJS.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -31,11 +36,33 @@ namespace KnockoutJS.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //services.AddAutoMapper();
+            services.AddSession();
+            services.AddHttpClient();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //替换默认控制器生成器
+            //services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<TimingActionFilter>();
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(option => option.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());
+
+            //Autofac容器
+            var builder = new ContainerBuilder();
+
+            //模块注入
+            builder.RegisterModule<KnockoutJSWebModule>();
+            builder.RegisterModule<KnockoutJSApplicationModule>();
+            builder.RegisterModule(new KnockoutJSEFCoreModule(Configuration));
+
+            builder.Populate(services);
+            var container = builder.Build();
+            return new AutofacServiceProvider(container);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -52,6 +79,8 @@ namespace KnockoutJS.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            //Mappings.RegisterMappings();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

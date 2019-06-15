@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "初步使用";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <!--observable write-->
+    <label>公司名称</label>
+    <input type="text" data-bind="value:unitName" /><br />
+    <label>公司地址</label>
+    <input type="text" data-bind="value:address" /><br />
+    <!--observable read-->
+    <p data-bind="text:'您的公司名称为:'+unitName()+'，公司地址是:'+address()+' .'"></p>
+    <hr />
+    <!--observableArray write-->
+    <label>公司类型</label>
+    <input type="text" data-bind="value:addUnitTypeText" />
+    <label>值</label>
+    <input type="text" data-bind="value:addUnitTypeValue" />
+    <button class="btn btn-primary" data-bind="click:addUnitTypeOption">增加下拉值</button><br />
+
+    <!--observableArray read-->
+    <select data-bind="options:unitTypeOptions, optionsText: 'text', optionsValue: 'value', value:choiceUnitTypeValue"></select>
+    <label data-bind="text:'选中值：'+choiceUnitTypeValue()"></label><br />
+    <hr />
+
+    <!--pureComputed read-->
+    <p data-bind="text:unitInfo"></p>
+    <!--pureComputed write-->
+    <label>反向更改</label>
+    <input type="text" data-bind="value:unitDetailInfo" /><br />
+    <hr />
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        function ViewModel() {
+            var self = this;
+            self.unitName = ko.observable("");
+            self.address = ko.observable("");
+            self.choiceUnitTypeValue = ko.observable();
+            self.addUnitTypeText = ko.observable();
+            self.addUnitTypeValue = ko.observable();
+            self.unitTypeOptions = ko.observableArray([
+                { text: "有限公司", value: "1" },
+                { text: "有限责任公司", value: "2" },
+                { text: "国有独资公司", value: "3" },
+                { text: "股份有限公司", value: "4" }
+            ]);
+            self.addUnitTypeOption = function () {
+                self.unitTypeOptions.push({ text: self.addUnitTypeText(), value: self.addUnitTypeValue() });
+                self.addUnitTypeText("").addUnitTypeValue("");
+            };
+            self.unitInfo = ko.pureComputed(function () {
+                return "您的公司名称为:" + self.unitName() + "，公司地址是：" + self.address();
+            });
+            self.unitDetailInfo = ko.pureComputed({
+                read: function () {
+                    return "您的公司名称为:" + self.unitName() + "，公司地址是：" + self.address();
+                },
+                write: function (value) {
+                    self.unitName(value);
+                }
+            });
+        };
+
+        $(function () {
+            var viewModel = new ViewModel();
+            ko.applyBindings(viewModel);//完成绑定
+        });
+    </script>
+}
+

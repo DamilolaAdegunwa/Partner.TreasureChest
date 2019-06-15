@@ -1,0 +1,116 @@
+﻿@using KnockoutJS.Web.ViewModels
+@model List<UnitViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "实现前后端交互(自动绑定)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered" style="margin-top:5px;">
+    <thead>
+        <tr>
+            <th>公司名称</th>
+            <th>公司地址</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:unitList">
+        <tr>
+            <td><input type="text" data-bind="value:UnitName" /></td>
+            <td><input type="text" data-bind="value:Address" /></td>
+            <td><button class="btn btn-danger" data-bind="click:$root.removeUnitModel">删除</button></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" style="text-align:center;">
+                <button type="button" class="btn btn-primary" data-bind="click:addUnitModel">增加</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<button type="button" class="btn btn-primary" data-bind="click:getUnitModelList">加载新数据</button>
+<button type="button" class="btn btn-primary" data-bind="click:submitUnitModelList">提交全部数据</button>
+<button type="button" class="btn btn-primary" data-bind="click:submitSingleUnitModel">提交单个数据</button>
+
+@section Scripts{
+    <script type="text/javascript">
+        var viewModel = {
+            //ko.mapping将把json格式数据中的属性转换为监测属性(observable),数组为监测数组(observableArray),因此无需在前端声明一个js类，直接由ko.mapping插件辅助完成
+            unitList: ko.mapping.fromJSON('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))'),
+
+            addUnitModel: function () {
+                var newViewModel = ko.mapping.fromJSON('@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new UnitViewModel()))');
+                viewModel.unitList.push(newViewModel);
+            },
+
+            removeUnitModel: function (unit) {
+                viewModel.unitList.remove(unit);
+            },
+
+            //使用ajax请求后台获取Json数据并绑定到viewModel对象中
+            getUnitModelList: function () {
+                var result = $.getJSON('@Url.Action("GetUnitViewModelList")', '', function (data) {
+                    viewModel.unitList.removeAll();
+                    if (data.executeResult) {
+                        //方式一：
+                        var resultViewModel = ko.mapping.fromJS(data.unitViewModels)();
+                        viewModel.unitList(resultViewModel);
+                        //viewModel.unitList(ko.mapping.fromJS(data.unitViewModels)());//与上等同
+
+                        //方式二：
+                        //ko.mapping.fromJS(data.unitViewModels, viewModel.unitList);
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                });
+            },
+
+            //使用ajax提交viewModel对象到后台
+            submitUnitModelList: function () {
+                //如果在unitList的单个记录中没有增加额外属性或方法，则使用mapping插件的toJSON和直接使用toJSON是一样的效果
+                //反之，如果增加了额外的属性或方法，则使用mapping插件提供的toJSON则可以获得纯净的原始结构，手动添加的属性或方法无效
+                //var postData = ko.mapping.toJSON(viewModel.unitList());
+                var postData = ko.toJSON(viewModel.unitList());
+
+                 $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ManualMappingUnitViewModelList")',
+                    contentType: "application/json; charset=utf-8",
+                    data: postData,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data.message);
+                    }
+                });
+            },
+
+            //使用ajax提交viewModel对象到后台
+            submitSingleUnitModel: function () {
+                var postSingleData = ko.toJSON(viewModel.unitList()[0]);//提交单个实体
+
+                 $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ManualMappingSingleUnitViewModel")',
+                    contentType: "application/json;charset=utf-8",
+                    data: postSingleData,
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(data.message);
+                    }
+                });
+            }
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);//完成绑定
+        });
+    </script>
+}
+
+
+
+

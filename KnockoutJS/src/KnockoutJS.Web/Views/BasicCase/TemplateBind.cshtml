@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "模板绑定";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@* 标准模板 *@
+<hr />
+<label>标准模板</label>
+<div data-bind="template: 'personTemplate'"></div>
+<script id='personTemplate' type='text/html'>
+    ${ name } 是 ${ age } 岁
+    <button class="btn btn-primary" data-bind='click: makeOlder'>增长一岁</button>
+</script>
+
+@* 增强版 *@
+<br /><hr />
+<label>增强版</label>
+<div data-bind="template: 'personAdvancedTemplate'"></div>
+<script id='personAdvancedTemplate' type='text/html'>
+    <label data-bind="text:name()+'是'+age()+'岁'"></label>
+    <button class="btn btn-primary" data-bind='click: makeOlder'>增长一岁</button>
+</script>
+
+@* 嵌套模版 *@
+<br /><hr />
+<label>嵌套模版</label>
+<div data-bind="template: 'firstPersonAdvancedTemplate'"></div>
+<script id='firstPersonAdvancedTemplate' type='text/html'>
+    <label data-bind="text:name()+'是'+age()+'岁'"></label>
+    <button class="btn btn-primary" data-bind='click: makeOlder'>增长一岁</button>
+    <div style="border:1px dotted red;" data-bind="template: 'secondPersonAdvancedTemplate'"></div>
+</script>
+<script id='secondPersonAdvancedTemplate' type='text/html'>
+    <label data-bind="text:name()+'是'+age()+'岁'"></label>
+    <button class="btn btn-primary" data-bind='click: makeOlder'>增长一岁</button>
+</script>
+
+@* foreach模板输出 *@
+<br /><hr />
+<label>foreach模板</label>
+<ul data-bind="template: { name: 'dynastyForeachTemplate',foreach: dynastys,afterAdd:afterAddFunc,beforeRemove:beforeRemoveFunc }"></ul>
+<script id='dynastyForeachTemplate' type='text/html'>
+    <li><label data-bind="text:dynastyName()+'是'+dynastyAge()+'年'"></label></li>
+</script>
+
+@* table模板输出 *@
+<br /><hr />
+<label>table模板</label>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>朝代</th>
+            <th>存活时间</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="template:  { name: 'dynastyTableTemplate',data:'dynastyViewModel', foreach: dynastys,afterAdd:afterAddFunc,beforeRemove:beforeRemoveFunc }"></tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-center"><button class="btn btn-primary" data-bind="click:addDynasty">增加朝代</button></td>
+        </tr>
+    </tfoot>
+</table>
+<script id='dynastyTableTemplate' type='text/html'>
+    <tr>
+        <td><input data-bind="value:dynastyName" /></td>
+        <td><input data-bind="value:dynastyAge" /></td>
+        <td><button class="btn btn-danger" data-bind="click:$root.deleteDynasty">删除</button></td>
+    </tr>
+</script>
+
+@section Scripts{
+    <script type='text/javascript'>
+        function dynastyViewModel(name, age) {
+            dynastyName = ko.observable(name);
+            dynastyAge = ko.observable(age);
+        }
+
+        var viewModel = {
+            name: ko.observable('刺客'),
+            age: ko.observable(20),
+            makeOlder: function () {
+                viewModel.age(viewModel.age() + 1);
+            },
+
+            dynastys: ko.observableArray([new dynastyViewModel("秦朝", 30)]),
+            afterAddFunc: function () {
+                console.log("afterAddFunc");
+            },
+            beforeRemoveFunc: function () {
+                console.log("beforeRemoveFunc");
+            },
+            addDynasty: function () {
+                console.log("addDynasty");
+                viewModel.dynastys.push(new dynastyViewModel("", 0));
+            },
+            deleteDynasty: function (dynasty) {
+                console.log("deleteDynasty");
+                viewModel.dynastys.remove(dynasty);
+                //item删除了，但模板还没有消失
+            }
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);
+            viewModel.dynastys.push(new dynastyViewModel("唐朝", 300));
+            viewModel.dynastys.push(new dynastyViewModel("宋朝", 300));
+            viewModel.dynastys.push(new dynastyViewModel("元代", 300));
+        })
+    </script>
+}

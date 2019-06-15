@@ -1,0 +1,34 @@
+﻿@using KnockoutJS.Web.Extensions
+@model KnockoutJS.Web.ViewModels.BookViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div id="bookDetails" class="row">
+    <div class="col-md-4">
+        <img src="~/images/book.png" alt="@Model.Title" title="@Model.Title" class="img-rounded" />
+    </div>
+    <div class="col-md-5">
+        <h3>@Model.Author.Name</h3>
+        <p>价格:$@decimal.Round(Model.SalePrice, 2)</p>
+        <p>原价:<span style="text-decoration:line-through">$@decimal.Round(Model.ListPrice, 2)</span></p>
+        <p class="label label-success">Save @Model.SavePercentage %</p>
+        <p>@Model.Description</p>
+    </div>
+    <div class="col-md-2 col-md-offset-1 bg-info">
+        <upsert-cart-item params="cartItem:cartItem,showButton:true"></upsert-cart-item>
+    </div>
+</div>
+@await Html.PartialAsync("_CartItemForm")
+
+@section Scripts{
+    <script src="~/js/ViewModels/BookDetailViewModel.js"></script>
+    <script src="~/js/ViewModels/CartItemViewModel.js"></script>
+    <script>
+        var model = @Html.HtmlConvertToJson(Model);
+        var bookDetailViewModel = new BookDetailViewModel(model);
+        ko.applyBindings(bookDetailViewModel, document.getElementById("bookDetails"));
+    </script>
+}

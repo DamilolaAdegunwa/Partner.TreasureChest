@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "简单案例";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <label>公司名称</label>
+    <input type="text" data-bind="value:unitName" /><br />
+    <label>公司地址</label>
+    <input type="text" data-bind="value:address" /><br />
+    <p data-bind="text:'您的公司名称为:'+unitName()+'，公司地址是:'+address()+' .'"></p>
+    
+    <label>公司类型</label>
+    <input type="text" data-bind="value:addUnitTypeText" />
+    <label>值</label>
+    <input type="text" data-bind="value:addUnitTypeValue" />
+    <button class="btn btn-primary" data-bind="click:addUnitTypeOption">增加下拉值</button><br />
+
+    <select data-bind="options:unitTypeOptions, optionsText: 'text', optionsValue: 'value', value:choiceUnitTypeValue"></select>
+
+    <p data-bind="text:unitInfo"></p>
+    <label>反向更改</label>
+    <input type="text" data-bind="value:unitDetailInfo" /><br />
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var viewModel = {
+            unitName: ko.observable(""),
+            address: ko.observable(""),
+            choiceUnitTypeValue: ko.observable(),
+            addUnitTypeText: ko.observable(),
+            addUnitTypeValue: ko.observable(),
+            unitTypeOptions: ko.observableArray([
+                { text: "有限公司", value: "1" },
+                { text: "有限责任公司", value: "2" },
+                { text: "国有独资公司", value: "3" },
+                { text: "股份有限公司", value: "4" }
+            ]),
+            addUnitTypeOption: function () {
+                this.unitTypeOptions.push({ text: this.addUnitTypeText(), value: this.addUnitTypeValue() });
+                this.addUnitTypeText("").addUnitTypeValue("");
+            },
+            unitInfo: ko.pureComputed(function () {
+                return "您的公司名称为:" + viewModel.unitName() + "，公司地址是：" + viewModel.address();
+            }),
+            unitDetailInfo: ko.pureComputed({
+                read: function () {
+                    return "您的公司名称为:" + viewModel.unitName() + "，公司地址是：" + viewModel.address();
+                },
+                write: function (value) {
+                    viewModel.unitName(value);
+                }
+            })
+        };
+        $(function () {
+            ko.applyBindings(viewModel);//完成绑定
+        });
+    </script>
+}
+
