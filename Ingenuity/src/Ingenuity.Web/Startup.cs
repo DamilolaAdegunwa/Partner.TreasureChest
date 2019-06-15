@@ -27,7 +27,7 @@ namespace Ingenuity.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDbContext<BJDbContext>(d => d.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BJDbContext>(d => d.UseMySql(Configuration.GetConnectionString("Default")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
