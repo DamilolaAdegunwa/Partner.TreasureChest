@@ -40,6 +40,7 @@ namespace KnockoutJS.EFCore
 
             //注册 DbContext
             builder.RegisterType<ShoppingCartContext>().AsSelf().InstancePerLifetimeScope();
+
             //注入UOW依赖，确保每次请求都是同一个对象
             builder.RegisterType<UnitOfWork<ShoppingCartContext>>().As<IUnitOfWork>().InstancePerLifetimeScope();
         }
