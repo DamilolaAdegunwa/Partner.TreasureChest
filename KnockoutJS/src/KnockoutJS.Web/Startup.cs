@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -36,7 +37,7 @@ namespace KnockoutJS.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddAutoMapper();
+            services.AddAutoMapper();
             services.AddSession();
             services.AddHttpClient();
 
