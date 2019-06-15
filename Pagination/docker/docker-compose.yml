@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  koinstance.web:
+    image: ${DOCKER_REGISTRY}koinstanceweb
+    build:
+      context: ../
+      dockerfile: src/koInstance.Web/Dockerfile

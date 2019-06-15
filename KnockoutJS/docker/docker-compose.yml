@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  knockoutjsweb:
+    image: ${DOCKER_REGISTRY}knockoutjsweb
+    build:
+      context: ../
+      dockerfile: src/KnockoutJS.Web/Dockerfile
