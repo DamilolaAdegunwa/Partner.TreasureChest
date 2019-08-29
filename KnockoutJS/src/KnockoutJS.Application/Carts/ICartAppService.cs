@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KnockoutJS.Application
 {
-    public interface ICartAppService: IAppServiceBase
+    public interface ICartAppService : IAppServiceBase
     {
         /// <summary>
         /// 获取购物车第一条记录

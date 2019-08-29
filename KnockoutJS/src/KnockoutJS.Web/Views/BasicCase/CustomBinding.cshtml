@@ -1,0 +1,33 @@
+﻿@using KnockoutJS.Web.ViewModels
+@model List<UnitViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    ViewData["Title"] = "自定义绑定";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div data-bind="slideVisible: giftWrap, slideDuration: 600">You have selected the option</div>
+<label><input type="checkbox" data-bind="checked: giftWrap" /> Gift wrap</label>
+
+<p>Name: <input data-bind="hasFocus: editingName" /></p>
+
+<div data-bind="visible: editingName">You're editing the name</div>
+<button data-bind="enable: !editingName(), click:function() { editingName(true) }">Edit name</button>
+
+@section Scripts{
+    <script type="text/javascript">
+        var viewModel = {
+            giftWrap: ko.observable(false),
+            editingName: ko.observable()
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);//完成绑定
+        });
+    </script>
+}
+
+
+
+

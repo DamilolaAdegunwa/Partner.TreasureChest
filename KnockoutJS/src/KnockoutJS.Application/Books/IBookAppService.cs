@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KnockoutJS.Application
 {
-    public interface IBookAppService: IAppServiceBase
+    public interface IBookAppService : IAppServiceBase
     {
         Task<List<Book>> GetFeaturedBooks();
 

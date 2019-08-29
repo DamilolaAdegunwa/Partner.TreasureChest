@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KnockoutJS.Application
 {
-    public interface ICategoryAppService: IAppServiceBase
+    public interface ICategoryAppService : IAppServiceBase
     {
         Task<List<Category>> Get();
     }

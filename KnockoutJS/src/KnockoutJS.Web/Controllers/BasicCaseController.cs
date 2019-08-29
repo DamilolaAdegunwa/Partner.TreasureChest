@@ -208,5 +208,16 @@ namespace KnockoutJS.Web.Controllers
             return View(unitViewModels);
         }
         #endregion
+
+        #region 基础知识(五)
+        /// <summary>
+        /// 自定义绑定
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CustomBinding()
+        {
+            return View();
+        }
+        #endregion
     }
 }

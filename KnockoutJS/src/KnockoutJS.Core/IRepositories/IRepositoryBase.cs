@@ -14,20 +14,23 @@ namespace KnockoutJS.Core.IRepositories
     public interface IRepositoryBase<T> where T : Entity
     {
         /// <summary>
-        /// IQueryable to be used to select entities from database
+        /// 延迟加载获取所有实体
         /// </summary>
         /// <returns></returns>
         IQueryable<T> GetAll();
+
         /// <summary>
-        /// 用来获取所有实体
+        /// 直接获取所有实体
         /// </summary>
         /// <returns>所有实体的List集合</returns>
         List<T> GetAllList();
+
         /// <summary>
-        ///  用来获取所有实体
+        ///  异步获取所有实体
         /// </summary>
         /// <returns>所有实体的List集合</returns>
         Task<List<T>> GetAllListAsync();
+
         /// <summary>
         /// 基于提供的表达式 获取所有实体
         /// </summary>
