@@ -1,0 +1,57 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>状态</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderNo</td>
+                    <td>@order.OrderName</td>
+                    <td>@order.Price</td>
+                    <td>@order.OrderState</td>
+                    @switch (order.OrderState)
+                    {
+                        case OrderState.OrderCreated:
+                            <td>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">跳转支付</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                            </td>
+                            break;
+                        case OrderState.OrderPendingPay:
+                            <td>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成支付</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                            </td>
+                            break;
+                        case OrderState.OrderPendingSend:
+                            <td>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成配送</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                            </td>
+                            break;
+                        case OrderState.OrderPendingSign:
+                            <td>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成收货</a>
+                            </td>
+                            break;
+                        default:
+                            break;
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

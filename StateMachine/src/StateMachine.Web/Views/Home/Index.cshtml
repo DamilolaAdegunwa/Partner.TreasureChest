@@ -3,6 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>简单方式:<a href="@Url.Action("Index","Simple")">使用诸如if/else、switch进行状态切换</a>.</p>
+    <p>常用方式:<a href="@Url.Action("Index","Common")">将状态进行分离成独立方法、类等方式来进行状态切换</a>.</p>
+    <p>状态机方式:<a href="@Url.Action("Index","Stateless")">利用状态机集中配置，采用触发形式进行状态切换</a>.</p>
 </div>
