@@ -74,24 +74,45 @@ namespace StateMachine.Web.Models
     /// </summary>
     public enum OrderState
     {
+        /// <summary>
+        /// 无效
+        /// </summary>
         [Description("无效")]
         OrderInvalided = 0,
 
+        /// <summary>
+        /// 已创建
+        /// </summary>
         [Description("已创建")]
         OrderCreated = 3,
 
+        /// <summary>
+        /// 待支付
+        /// </summary>
         [Description("待支付")]
         OrderPendingPay = 6,
 
+        /// <summary>
+        /// 待配送
+        /// </summary>
         [Description("待配送")]
         OrderPendingSend = 9,
 
+        /// <summary>
+        /// 待收货
+        /// </summary>
         [Description("待收货")]
         OrderPendingSign = 12,
 
+        /// <summary>
+        /// 待退款
+        /// </summary>
         [Description("待退款")]
         OrderPendingRefund = 15,
 
+        /// <summary>
+        /// 已完成
+        /// </summary>
         [Description("已完成")]
         OrderCompleted = 18,
     }

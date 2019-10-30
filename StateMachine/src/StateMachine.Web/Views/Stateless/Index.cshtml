@@ -1,6 +1,7 @@
-﻿@model List<Order>
+﻿@using StateMachine.Web.Models
+@model List<Order>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "状态机方式订单页";
 }
 
 <div class="text-center">
@@ -26,26 +27,37 @@
                     {
                         case OrderState.OrderCreated:
                             <td>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">跳转支付</a>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Jump })">跳转支付</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Cancel })">取消订单</a>
                             </td>
                             break;
                         case OrderState.OrderPendingPay:
                             <td>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成支付</a>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Payment })">完成支付</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Cancel })">取消订单</a>
                             </td>
                             break;
                         case OrderState.OrderPendingSend:
                             <td>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成配送</a>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Disagree })">取消订单</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Send })">完成配送</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Cancel })">取消订单</a>
                             </td>
                             break;
                         case OrderState.OrderPendingSign:
                             <td>
-                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Simple",new {operateResult=OperateEnum.Agree })">完成收货</a>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new {id=order.OrderId,orderTrigger = OrderTrigger.Sign })">完成收货</a>
                             </td>
+                            break;
+                        case OrderState.OrderPendingRefund:
+                            <td>
+                                <a class="btn btn-primary" href="@Url.Action("UpdateOrderState","Stateless",new { id=order.OrderId,orderTrigger = OrderTrigger.Refund})">完成退款</a>
+                            </td>
+                            break;
+                        case OrderState.OrderInvalided:
+                            <td>交易关闭</td>
+                            break;
+                        case OrderState.OrderCompleted:
+                            <td>交易完成</td>
                             break;
                         default:
                             break;
