@@ -46,16 +46,5 @@ namespace StateMachine.Web.Controllers
 
             return RedirectToAction("Index");
         }
-
-        /// <summary>
-        /// 流程运行图
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult DotGraph()
-        {
-            var orderManager = new OrderManager();
-            ViewBag.Graph = orderManager.GetDotGraph();
-            return View();
-        }
     }
 }

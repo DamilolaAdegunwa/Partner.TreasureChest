@@ -14,11 +14,6 @@ namespace StateMachine.Web.Models
     {
         private readonly StateMachine<OrderState, OrderTrigger> orderStateMachine;
 
-        public OrderManager()
-        {
-            orderStateMachine = new StateMachine<OrderState, OrderTrigger>(OrderState.OrderCreated);
-        }
-
         public OrderManager(Order order)
         {
             //初始化状态机
