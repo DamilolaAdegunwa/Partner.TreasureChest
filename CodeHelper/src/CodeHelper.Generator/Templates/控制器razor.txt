@@ -1,0 +1,87 @@
+using Ace;
+using Ace.Application.CMS.Implements;
+using Ace.Application.CMS.Models;
+using CMS.WebApi.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+
+namespace CMS.WebApi.Controllers
+{
+    [Produces("application/json")]
+    [Route("api/@(Model.AppClassName)")]
+#if DEBUG
+    [AllowAnonymous]  //调试状态下禁用权限验证。
+#endif
+    public class @(Model.AppClassName)Controller : BaseController
+    {
+		private readonly I@(Model.AppClassName)Service() _appService;
+        public @(Model.AppClassName)Controller(I@(Model.AppClassName)Service appService)
+        {
+            _appService = appService;
+        }
+
+
+        #region @(Model.TableComment)管理
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        [HttpGet,Route("list")]
+        public async Task<PostResultList<@(Model.DtoName)>>> GetList(@(Model.DtoName)Page info)
+        {
+            return await _appService.GetListAsync(info);
+        }
+
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        [HttpPost, Route("add")]
+        public async Task<PostResult<int>> Insert([FromBody]@Model.DtoName info)
+        {
+             return await _appService.InsertAsync(info);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        [HttpPost, Route("edit")]
+        public async Task<PostResult<int>> Update([FromBody]@Model.DtoName info)
+        {
+             return await _appService.UpdateAsync(info);
+        }
+
+		@if(Model.Status==1)
+		{
+        @:/// <summary>
+        @:/// 修改状态
+        @:/// </summary>
+        @:/// <param name="id"></param>
+        @:/// <param name="status"></param>
+        @:/// <returns></returns>
+        @:[HttpPost, Route("updatestate")]
+        @:public async Task<PostResult<int>> UpdateState(int? id, string status)
+        @:{
+        @:     return await _appService.UpdateStateAsync(id, status);
+        @:}
+		}
+
+        /// <summary>
+        /// 根据ID删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, Route("delete")]
+        public async Task<PostResult<int>> Delete(int? id)
+        {
+             return await _appService.DeleteAsync(id);
+        }
+
+        #endregion
+    }
+}

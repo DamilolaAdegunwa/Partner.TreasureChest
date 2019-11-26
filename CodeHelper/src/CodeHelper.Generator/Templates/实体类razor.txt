@@ -1,0 +1,21 @@
+namespace @Model.EntityNameSpace
+{
+    using System;
+    /// <summary>
+    /// 实体类@(Model.EntityName)
+    /// </summary>
+    public class @Model.EntityName
+    {
+        public @(Model.EntityName)()
+        {
+        }
+
+		@foreach(var item in Model.Columns)
+		{
+				@:/// <summary>
+				@:/// @item.column_comment
+				@:/// </summary>
+				@:public @item.data_type @item.column_name { get; set; }
+		}
+    }
+}
