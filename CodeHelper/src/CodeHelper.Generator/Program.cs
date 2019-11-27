@@ -1,7 +1,5 @@
 ﻿using System;
-using CodeHelper.Models;
-using RazorEngine;
-using RazorEngine.Templating;
+using CodeHelper.Generator.SimpleCoders;
 
 namespace CodeHelper.Generator
 {
@@ -9,14 +7,13 @@ namespace CodeHelper.Generator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            var simpleCoder = new SimpleCoder();
-            //simpleCoder.Builder();
+            Console.WriteLine("Hello Generator!");
 
-            string template = "Hello @Model.Name, welcome to RazorEngine!";
-            var result = Engine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
-            Console.WriteLine(result);
-            
+            var simpleCoder = new SimpleCoder();
+            simpleCoder.Builder();
+
+            Console.WriteLine("See You Generator!");
+
             Console.Read();
         }
     }

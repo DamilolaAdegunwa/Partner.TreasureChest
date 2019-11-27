@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CodeHelper.Models.Base
+namespace CodeHelper.Generator.StandardCoder.Base
 {
     /// <summary>
     /// 返回的通用类型

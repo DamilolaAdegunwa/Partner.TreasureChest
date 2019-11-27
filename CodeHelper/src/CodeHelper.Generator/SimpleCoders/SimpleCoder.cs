@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using RazorEngine;
 using RazorEngine.Templating;
+using CodeHelper.Generator.Utils;
 
-namespace CodeHelper.Models
+namespace CodeHelper.Generator.SimpleCoders
 {
     /// <summary>
     /// 简单解析器
@@ -13,7 +14,6 @@ namespace CodeHelper.Models
     public class SimpleCoder
     {
         public string TemplatePage { get; set; }
-
         public string TemplatePageJson { get; set; }
 
         public SimpleCoder()
@@ -23,8 +23,6 @@ namespace CodeHelper.Models
 
             var templatePageJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "templatePageJson.json");
             TemplatePageJson = File.ReadAllText(templatePageJson);
-
-            Console.WriteLine(TemplatePageJson);
         }
 
         /// <summary>
@@ -33,7 +31,6 @@ namespace CodeHelper.Models
         public void Builder()
         {
             var templatePageJsonList = JsonConvert.DeserializeObject<List<PageDataModel>>(TemplatePageJson);
-            Console.WriteLine(templatePageJsonList);
 
             foreach (var templatePageJson in templatePageJsonList)
             {
@@ -55,11 +52,9 @@ namespace CodeHelper.Models
         /// <param name="prev"></param>
         /// <param name="next"></param>
         /// <param name="content"></param>
-        public void RazorParse(int pageIndex, DateTime? date, int? prev, int? next, string content)
+        private void RazorParse(int pageIndex, DateTime? date, int? prev, int? next, string content)
         {
-            Console.WriteLine(TemplatePage);
-
-            var entityResult = Engine.Razor.RunCompile(TemplatePage,"templatePageKey", null, new
+            var entityResult = Engine.Razor.RunCompile(TemplatePage, "templatePageKey", null, new
             {
                 PostData = (date ?? DateTime.Now).ToString("yyyy-MM-dd"),
                 PrevIndex = prev.Value,
@@ -67,21 +62,7 @@ namespace CodeHelper.Models
                 ContentHtml = content
             });
 
-            Console.WriteLine(entityResult);
-
-            //Utils.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code", $"detail_{pageIndex}.html"), entityResult);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate", $"detail_{pageIndex}.html"), entityResult);
         }
-    }
-
-    /// <summary>
-    /// 页面数据
-    /// </summary>
-    public class PageDataModel
-    {
-        public DateTime? Date { get; set; }
-
-        public int? Index { get; set; }
-
-        public string Content { get; set; }
     }
 }

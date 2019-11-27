@@ -2,12 +2,12 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CodeHelper.Models
+namespace CodeHelper.Generator.Utils
 {
     /// <summary>
     /// 类型转换辅助类
     /// </summary>
-    public class Utils
+    public class UtilHelper
     {
         /// <summary>
         /// 类型转化

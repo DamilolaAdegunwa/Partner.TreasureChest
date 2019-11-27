@@ -1,5 +1,12 @@
-[{
-    "Index":1,
-    "Date":"2019-11-26",
-    "Content":"hello world"
-}]
+[
+  {
+    "Index": 1,
+    "Date": "2019-11-26",
+    "Content": "hello world"
+  },
+  {
+    "Index": 2,
+    "Date": "2019-11-27",
+    "Content": "See You Again"
+  }
+]
