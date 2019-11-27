@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CMS.Tool.WebApi.Models.Base
+namespace CodeHelper.Models.Base
 {
     /// <summary>
     /// Get方式父类

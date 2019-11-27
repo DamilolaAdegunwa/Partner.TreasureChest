@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using RazorEngine;
+using RazorEngine.Templating;
 
 namespace CodeHelper.Models
 {
@@ -17,11 +18,13 @@ namespace CodeHelper.Models
 
         public SimpleCoder()
         {
-            var templatePage = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template", "templatePage.txt");
+            var templatePage = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "templatePage.txt");
             TemplatePage = File.ReadAllText(templatePage);
 
-            var templatePageJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template", "templatePageJson.json");
+            var templatePageJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "templatePageJson.json");
             TemplatePageJson = File.ReadAllText(templatePageJson);
+
+            Console.WriteLine(TemplatePageJson);
         }
 
         /// <summary>
@@ -30,12 +33,17 @@ namespace CodeHelper.Models
         public void Builder()
         {
             var templatePageJsonList = JsonConvert.DeserializeObject<List<PageDataModel>>(TemplatePageJson);
+            Console.WriteLine(templatePageJsonList);
 
             foreach (var templatePageJson in templatePageJsonList)
             {
-                var prev = templatePageJson.Index - 1;
-                var next = templatePageJson.Index + 1;
-                RazorParse(templatePageJson.Index ?? 1, templatePageJson.Date, prev, next, templatePageJson.Content);
+                RazorParse(
+                    templatePageJson.Index ?? 1,
+                    templatePageJson.Date,
+                    templatePageJson.Index - 1,
+                    templatePageJson.Index + 1,
+                    templatePageJson.Content
+                );
             }
         }
 
@@ -49,15 +57,19 @@ namespace CodeHelper.Models
         /// <param name="content"></param>
         public void RazorParse(int pageIndex, DateTime? date, int? prev, int? next, string content)
         {
-            var entity_result = Razor.Parse(TemplatePage, new
+            Console.WriteLine(TemplatePage);
+
+            var entityResult = Engine.Razor.RunCompile(TemplatePage,"templatePageKey", null, new
             {
                 PostData = (date ?? DateTime.Now).ToString("yyyy-MM-dd"),
-                PrevIndex = prev,
-                NextIndex = next,
+                PrevIndex = prev.Value,
+                NextIndex = next.Value,
                 ContentHtml = content
             });
 
-            Utils.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code\\Yangji", $"detail_{pageIndex}.html"), entity_result);
+            Console.WriteLine(entityResult);
+
+            //Utils.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code", $"detail_{pageIndex}.html"), entityResult);
         }
     }
 
