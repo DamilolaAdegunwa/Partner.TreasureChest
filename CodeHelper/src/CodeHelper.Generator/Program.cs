@@ -7,12 +7,10 @@ namespace CodeHelper.Generator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Generator!");
-
+            Console.WriteLine("Hello Simple Generator!");
             var simpleCoder = new SimpleCoder();
             simpleCoder.Builder();
-
-            Console.WriteLine("See You Generator!");
+            Console.WriteLine("See You Simple Generator!");
 
             Console.Read();
         }

@@ -17,28 +17,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Templates\IRazorAppService.txt">
+    <None Update="StandardCoders\Templates\IRazorAppService.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\RazorAppService.txt">
+    <None Update="StandardCoders\Templates\RazorAppService.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\RazorController.txt">
+    <None Update="StandardCoders\Templates\RazorController.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\RazorDto.txt">
+    <None Update="StandardCoders\Templates\RazorDto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\RazorModel.txt">
+    <None Update="StandardCoders\Templates\RazorModel.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\RazorView.txt">
+    <None Update="StandardCoders\Templates\RazorView.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\templatePage.txt">
+    <None Update="SimpleCoders\Templates\templatePage.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\templatePageJson.json">
+    <None Update="SimpleCoders\Templates\templatePageJson.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

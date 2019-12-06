@@ -67,7 +67,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeHelper", "CodeHelper", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B14633DD-4907-4CC5-895E-09F0022BBDC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHelper.Generator", "CodeHelper\src\CodeHelper.Generator\CodeHelper.Generator.csproj", "{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeHelper.Generator", "CodeHelper\src\CodeHelper.Generator\CodeHelper.Generator.csproj", "{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FastConnect", "FastConnect", "{2F62D6C3-AB35-4342-8BAC-08B42BC9C89A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1CAA39AC-12A7-4518-97B7-125A98E7D6EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastConnect.Tool", "FastConnect.Tool\src\FastConnect.Tool\FastConnect.Tool.csproj", "{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +133,10 @@ Global
 		{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +165,8 @@ Global
 		{8CF7EB95-A8AE-41A1-AA87-F2A57F0E1A53} = {1F044058-9C93-4304-A197-7A1B80C2AE36}
 		{B14633DD-4907-4CC5-895E-09F0022BBDC6} = {998408CF-4CF6-43A9-AFC1-B7CB9D0DE6E3}
 		{D58F6C3E-C2CF-460B-8F49-CEC3FB862B94} = {B14633DD-4907-4CC5-895E-09F0022BBDC6}
+		{1CAA39AC-12A7-4518-97B7-125A98E7D6EE} = {2F62D6C3-AB35-4342-8BAC-08B42BC9C89A}
+		{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D} = {1CAA39AC-12A7-4518-97B7-125A98E7D6EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {965E9C99-96A6-489B-A17A-1285073763B0}

@@ -1,0 +1,188 @@
+using Ace.Application.CMS.Base;
+using Ace.Application.CMS.Models;
+using Ace.AutoMapper;
+using Ace.Entity.CMS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace @Model.AppNameSpace
+{
+	/// <summary>
+    /// @(Model.TableComment==""?Model.Table:Model.TableComment)管理
+    /// </summary>
+    public class @(Model.AppClassName)Service : BaseService,I@(Model.AppClassName)Service
+    {
+		#region CRUD
+		/// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public async Task<PostResultList<@(Model.DtoName)>>> GetListAsync(@(Model.DtoName)Page info)
+        {
+			return await Task.Run(() =>
+            {
+				var total = 0;
+				var t = db.Queryable<@(Model.Table)>()
+				@foreach(var item in Model.Columns){
+					if(@item.column_name=="isdel"){
+					@: .Where(c => c.isdel == "N")
+					}
+					if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_name!="isdel"){
+					@: .WhereIF(!string.IsNullOrEmpty(info.key), c => c.@(item.column_name).Contains(info.key))
+					}
+				}
+					.ToPageList(info.pageindex, info.pagesize, ref total);
+				var ret = t.MapTo<List<@(Model.DtoName)>>();
+			 
+				return new PostResultList<@(Model.DtoName)>>
+				{
+					data = ret,
+					msg =ret.Any()? "success":"no data",
+					total = total
+				};
+			});
+        }
+		
+		/// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public async Task<PostResult<int>> InsertAsync(@Model.DtoName info)
+        {
+			return await Task.Run(() =>
+            {
+				@foreach(var item in Model.Columns){
+				if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_comment!="" && @item.column_name!="isdel"){
+			@: info.@(item.column_name).NotNullOrEmpty("@(item.column_comment)不为空");
+				}
+				}
+				var t = new @Model.Table
+				{
+				@foreach(var item in Model.Columns){
+					if(@item.column_name=="isdel"){
+					@: isdel="N",
+					}
+					else if(@item.column_name=="status"){
+					@: status="Y",
+					}
+					else if(@item.column_name=="createAt"){
+					@: createAt=DateTime.Now,
+					}else{
+					@: @(item.column_name)=info.@(item.column_name),
+					}
+				}
+				};
+				var cnt = db.Insertable(t).ExecuteCommand();
+            
+				return new PostResult<int>
+				{
+					data = cnt,
+					msg = cnt > 0 ? "success" : "failed",
+				};
+			});
+        }
+		
+		/// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public async Task<PostResult<int>> UpdateAsync(@Model.DtoName info)
+        {
+			return await Task.Run(() =>
+            {
+				@foreach(var item in Model.Columns){
+				if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_comment!="" && @item.column_name!="isdel"){
+			@: info.@(item.column_name).NotNullOrEmpty("@(item.column_comment)不为空");
+				}
+				}
+				var t = db.Queryable<@Model.Table>().First(c => c.id == info.id);
+			   @foreach(var item in Model.Columns){
+					if(@item.column_name=="id"){
+						continue;
+					}
+					else if(@item.column_name=="password"){
+						continue;
+					}
+					else if(@item.column_name=="isdel"){
+						continue;
+					}
+					else if(@item.column_name=="status"){
+						continue;
+					}
+					else if(@item.column_name=="createAt"){
+						continue;
+					}
+				
+					else{
+					@:  t.@(item.column_name) = info.@(item.column_name);
+					}
+				}
+			
+				var cnt = db.Updateable(t).ExecuteCommand();
+					return new PostResult<int>
+					{
+						data = cnt,
+						msg = cnt > 0 ? "success" : "failed",
+					};
+			 });
+        }
+
+		@if(Model.Status==1)
+		{
+        @:/// <summary>
+        @:/// 修改状态
+        @:/// </summary>
+        @:/// <param name="id"></param>
+        @:/// <returns></returns>
+		@:public async Task<PostResult<int>> UpdateStateAsync(int? id, string status)
+        @:{
+        @:   return await Task.Run(() =>
+        @:   {
+		@:      var cnt = db.Updateable<@Model.Table>().UpdateColumns(c => new @Model.Table() { status = status }).Where(c => c.id == id).ExecuteCommand();
+		@:		return new PostResult<int>
+        @:		{
+        @:        data = cnt,
+        @:        msg = cnt > 0 ? "success" : "failed"
+        @:		};
+		@:	 });
+        @:}
+		}
+		
+		/// <summary>
+        /// 根据ID删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<PostResult<int>> DeleteAsync(int? id)
+        {
+			return await Task.Run(() =>
+            {
+				@{
+				var isdel=0;
+				foreach(var item in Model.Columns){
+					if(@item.column_name=="isdel"){
+						isdel=1;
+					}
+				}
+				if(isdel==0){
+					@: var cnt = db.Deleteable<@Model.Table>().Where(c => c.id == id).ExecuteCommand();
+				}else
+				{
+				@:  var cnt = db.Updateable<@Model.Table>().UpdateColumns(c => new @Model.Table() { isdel = "Y" }).Where(c => c.id == id).ExecuteCommand();
+				}
+				}
+				return new PostResult<int>
+				{
+					data = cnt,
+					msg = "success"
+				};
+			});
+        }
+		
+		#endregion
+    }
+}
