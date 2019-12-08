@@ -1,188 +1,108 @@
-using Ace.Application.CMS.Base;
-using Ace.Application.CMS.Models;
-using Ace.AutoMapper;
-using Ace.Entity.CMS;
+using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Extensions;
+using Abp.Linq.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using WuLong.Lims.Authorization;
+using @Model.AppNameSpace.@(Model.EntityName)s.Dto;
 
 namespace @Model.AppNameSpace
 {
-	/// <summary>
-    /// @(Model.TableComment==""?Model.Table:Model.TableComment)管理
+    /// <summary>
+    /// @(Model.EntityDescription)应用服务
     /// </summary>
-    public class @(Model.AppClassName)Service : BaseService,I@(Model.AppClassName)Service
+    public class @(Model.EntityName)AppService : LimsAppServiceBase, I@(Model.EntityName)AppService
     {
-		#region CRUD
-		/// <summary>
-        /// 分页查询
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
-        public async Task<PostResultList<@(Model.DtoName)>>> GetListAsync(@(Model.DtoName)Page info)
+        #region 初始化
+        private readonly IRepository<@(Model.EntityName), long> _@(Model.EntityNameLower)Repository;
+
+        public @(Model.EntityName)AppService(IRepository<@(Model.EntityName), long> @(Model.EntityNameLower)Repository)
         {
-			return await Task.Run(() =>
-            {
-				var total = 0;
-				var t = db.Queryable<@(Model.Table)>()
-				@foreach(var item in Model.Columns){
-					if(@item.column_name=="isdel"){
-					@: .Where(c => c.isdel == "N")
-					}
-					if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_name!="isdel"){
-					@: .WhereIF(!string.IsNullOrEmpty(info.key), c => c.@(item.column_name).Contains(info.key))
-					}
-				}
-					.ToPageList(info.pageindex, info.pagesize, ref total);
-				var ret = t.MapTo<List<@(Model.DtoName)>>();
-			 
-				return new PostResultList<@(Model.DtoName)>>
-				{
-					data = ret,
-					msg =ret.Any()? "success":"no data",
-					total = total
-				};
-			});
+            _@(Model.EntityNameLower)Repository = @(Model.EntityNameLower)Repository;
         }
-		
-		/// <summary>
-        /// 添加
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
-        public async Task<PostResult<int>> InsertAsync(@Model.DtoName info)
+        #endregion
+
+        public async Task<PagedResultDto<@(Model.EntityName)ListDto>> GetPaged@(Model.EntityName)(Get@(Model.EntityName)PagedInput input)
         {
-			return await Task.Run(() =>
-            {
-				@foreach(var item in Model.Columns){
-				if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_comment!="" && @item.column_name!="isdel"){
-			@: info.@(item.column_name).NotNullOrEmpty("@(item.column_comment)不为空");
-				}
-				}
-				var t = new @Model.Table
-				{
-				@foreach(var item in Model.Columns){
-					if(@item.column_name=="isdel"){
-					@: isdel="N",
-					}
-					else if(@item.column_name=="status"){
-					@: status="Y",
-					}
-					else if(@item.column_name=="createAt"){
-					@: createAt=DateTime.Now,
-					}else{
-					@: @(item.column_name)=info.@(item.column_name),
-					}
-				}
-				};
-				var cnt = db.Insertable(t).ExecuteCommand();
-            
-				return new PostResult<int>
-				{
-					data = cnt,
-					msg = cnt > 0 ? "success" : "failed",
-				};
-			});
-        }
-		
-		/// <summary>
-        /// 修改
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
-        public async Task<PostResult<int>> UpdateAsync(@Model.DtoName info)
-        {
-			return await Task.Run(() =>
-            {
-				@foreach(var item in Model.Columns){
-				if(@item.data_type=="string" && @item.is_nullable=="NO" && @item.column_comment!="" && @item.column_name!="isdel"){
-			@: info.@(item.column_name).NotNullOrEmpty("@(item.column_comment)不为空");
-				}
-				}
-				var t = db.Queryable<@Model.Table>().First(c => c.id == info.id);
-			   @foreach(var item in Model.Columns){
-					if(@item.column_name=="id"){
-						continue;
-					}
-					else if(@item.column_name=="password"){
-						continue;
-					}
-					else if(@item.column_name=="isdel"){
-						continue;
-					}
-					else if(@item.column_name=="status"){
-						continue;
-					}
-					else if(@item.column_name=="createAt"){
-						continue;
-					}
-				
-					else{
-					@:  t.@(item.column_name) = info.@(item.column_name);
-					}
-				}
-			
-				var cnt = db.Updateable(t).ExecuteCommand();
-					return new PostResult<int>
-					{
-						data = cnt,
-						msg = cnt > 0 ? "success" : "failed",
-					};
-			 });
+            var query = _@(Model.EntityNameLower)Repository.GetAll()
+                .WhereIf(!input.Name.IsNullOrWhiteSpace(), s => s.Name.Contains(input.Name));
+
+            var totalCount = await query.CountAsync();//总数
+            var items = await query.PageBy(input).ToListAsync();
+
+            return new PagedResultDto<@(Model.EntityName)ListDto>(
+                totalCount,
+                items.Select(item =>
+                {
+                    var dto = ObjectMapper.Map<@(Model.EntityName)ListDto>(item);
+                    dto.LastModificationTime = item.LastModificationTime.HasValue ? item.LastModificationTime.Value : item.CreationTime;
+                    return dto;
+                })
+                .ToList());
         }
 
-		@if(Model.Status==1)
-		{
-        @:/// <summary>
-        @:/// 修改状态
-        @:/// </summary>
-        @:/// <param name="id"></param>
-        @:/// <returns></returns>
-		@:public async Task<PostResult<int>> UpdateStateAsync(int? id, string status)
-        @:{
-        @:   return await Task.Run(() =>
-        @:   {
-		@:      var cnt = db.Updateable<@Model.Table>().UpdateColumns(c => new @Model.Table() { status = status }).Where(c => c.id == id).ExecuteCommand();
-		@:		return new PostResult<int>
-        @:		{
-        @:        data = cnt,
-        @:        msg = cnt > 0 ? "success" : "failed"
-        @:		};
-		@:	 });
-        @:}
-		}
-		
-		/// <summary>
-        /// 根据ID删除
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<PostResult<int>> DeleteAsync(int? id)
+        public async Task<Get@(Model.EntityName)ForEditOutput> Get@(Model.EntityName)ForEdit(NullableIdDto<long> input)
         {
-			return await Task.Run(() =>
+            var get@(Model.EntityName)ForEdit = new Get@(Model.EntityName)ForEditOutput()
             {
-				@{
-				var isdel=0;
-				foreach(var item in Model.Columns){
-					if(@item.column_name=="isdel"){
-						isdel=1;
-					}
-				}
-				if(isdel==0){
-					@: var cnt = db.Deleteable<@Model.Table>().Where(c => c.id == id).ExecuteCommand();
-				}else
-				{
-				@:  var cnt = db.Updateable<@Model.Table>().UpdateColumns(c => new @Model.Table() { isdel = "Y" }).Where(c => c.id == id).ExecuteCommand();
-				}
-				}
-				return new PostResult<int>
-				{
-					data = cnt,
-					msg = "success"
-				};
-			});
+                @(Model.EntityName) = new @(Model.EntityName)EditDto()
+            };
+
+            if (input.Id.HasValue && input.Id.Value > 0)
+            {
+                var @(Model.EntityNameLower) = await _@(Model.EntityNameLower)Repository.GetAsync(input.Id.Value);
+                get@(Model.EntityName)ForEdit.@(Model.EntityName) = ObjectMapper.Map<@(Model.EntityName)EditDto>(@(Model.EntityNameLower));
+            }
+
+            return get@(Model.EntityName)ForEdit;
         }
-		
-		#endregion
+
+        public async Task CreateOrUpdate@(Model.EntityName)(CreateOrUpdate@(Model.EntityName)Input input)
+        {
+            if (input.@(Model.EntityName).Id.HasValue && input.@(Model.EntityName).Id.Value > 0)
+            {
+                await Update@(Model.EntityName)(input);
+            }
+            else
+            {
+                await Create@(Model.EntityName)(input);
+            }
+        }
+
+        /// <summary>
+        /// 添加@(Model.EntityDescription)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private async Task Create@(Model.EntityName)(CreateOrUpdate@(Model.EntityName)Input input)
+        {
+            var @(Model.EntityNameLower) = ObjectMapper.Map<@(Model.EntityName)>(input.@(Model.EntityName));
+            await _@(Model.EntityNameLower)Repository.InsertAsync(@(Model.EntityNameLower));
+        }
+
+        /// <summary>
+        /// 更新@(Model.EntityDescription)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private async Task Update@(Model.EntityName)(CreateOrUpdate@(Model.EntityName)Input input)
+        {
+            var @(Model.EntityNameLower) = await _@(Model.EntityNameLower)Repository.GetAsync(input.@(Model.EntityName).Id.Value);
+            ObjectMapper.Map(input.@(Model.EntityName), @(Model.EntityNameLower));
+            await _@(Model.EntityNameLower)Repository.UpdateAsync(@(Model.EntityNameLower));
+        }
+
+        public async Task Delete@(Model.EntityName)(List<EntityDto<long>> inputs)
+        {
+            foreach (var input in inputs)
+            {
+                await _@(Model.EntityNameLower)Repository.DeleteAsync(input.Id);
+            }
+        }
     }
 }
