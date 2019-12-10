@@ -14,11 +14,15 @@ namespace CodeHelper.Generator.DataBaseCoders
     /// </summary>
     public class DataBaseCoder
     {
-        public string RazorListDto { get; set; }
         public string RazorEditDto { get; set; }
+        public string RazorListDto { get; set; }
+        public string CreateOrUpdateRazorInput { get; set; }
+        public string GetPagedRazorInput { get; set; }
+        public string GetRazorForEditOutput { get; set; }
         public string IRazorAppService { get; set; }
         public string RazorAppService { get; set; }
         public string RazorController { get; set; }
+        public string CreateOrUpdateRazorView { get; set; }
         public string RazorView { get; set; }
 
         public DataBaseCoder()
@@ -28,6 +32,15 @@ namespace CodeHelper.Generator.DataBaseCoders
 
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorEditDto.txt");
             RazorEditDto = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "CreateOrUpdateRazorInput.txt");
+            CreateOrUpdateRazorInput = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "GetPagedRazorInput.txt");
+            GetPagedRazorInput = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "GetRazorForEditOutput.txt");
+            GetRazorForEditOutput = File.ReadAllText(filePath);
 
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorAppService.txt");
             RazorAppService = File.ReadAllText(filePath);
@@ -40,6 +53,9 @@ namespace CodeHelper.Generator.DataBaseCoders
 
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorView.txt");
             RazorView = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "CreateOrUpdateRazorView.txt");
+            CreateOrUpdateRazorView = File.ReadAllText(filePath);
         }
 
         public string RazorParse(string entityName)
@@ -73,6 +89,42 @@ namespace CodeHelper.Generator.DataBaseCoders
             });
             UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{UtilHelper.ToCamelName(entityName)}EditDto.cs"), razorEditDto);
             builder.Append(razorEditDto);
+
+            var createOrUpdateRazorInput = Engine.Razor.RunCompile(CreateOrUpdateRazorInput, "CreateOrUpdateRazorInput", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\CreateOrUpdate{UtilHelper.ToCamelName(entityName)}Input.cs"), createOrUpdateRazorInput);
+            builder.Append(createOrUpdateRazorInput);
+
+            var getPagedRazorInput = Engine.Razor.RunCompile(GetPagedRazorInput, "GetPagedRazorInput", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\GetPaged{UtilHelper.ToCamelName(entityName)}Input.cs"), getPagedRazorInput);
+            builder.Append(getPagedRazorInput);
+
+            var getRazorForEditOutput = Engine.Razor.RunCompile(GetRazorForEditOutput, "GetRazorForEditOutput", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\Get{UtilHelper.ToCamelName(entityName)}ForEditOutput.cs"), getRazorForEditOutput);
+            builder.Append(getRazorForEditOutput);
             #endregion
 
             #region 应用服务接口
@@ -131,6 +183,19 @@ namespace CodeHelper.Generator.DataBaseCoders
             });
             UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + "\\Views\\Index.cshtml"), razorView);
             builder.Append(razorView);
+
+            var createOrUpdateRazorView = Engine.Razor.RunCompile(CreateOrUpdateRazorView, "CreateOrUpdateRazorView", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + $"\\Views\\CreateOrUpdate{UtilHelper.ToCamelName(entityName)}View.cshtml"), createOrUpdateRazorView);
+            builder.Append(createOrUpdateRazorView);
             #endregion
 
             return builder.ToString();

@@ -7,14 +7,14 @@ using System.Text;
 
 namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto
 {
-    /// <summary>
-    /// @(Model.EntityDescription)编辑Dto
+	/// <summary>
+    /// 获取(Model.EntityDescription)编辑响应Dto
     /// </summary>
-    public class @(Model.EntityName)EditDto: NullableIdDto<@Model.EntityKeyType>
+    public class Get@(Model.EntityName)ForEditOutput
     {
         /// <summary>
-        /// 名称
+        /// @(Model.EntityDescription)
         /// </summary>
-        public string Name { get; set; }
+        public @(Model.EntityName)EditDto @(Model.EntityName) { get; set; }
     }
 }

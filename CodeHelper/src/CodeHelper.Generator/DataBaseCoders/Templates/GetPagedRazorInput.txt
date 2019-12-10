@@ -7,14 +7,11 @@ using System.Text;
 
 namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto
 {
-    /// <summary>
-    /// @(Model.EntityDescription)编辑Dto
+	/// <summary>
+    /// 分页获取@(Model.EntityDescription)列表请求Dto
     /// </summary>
-    public class @(Model.EntityName)EditDto: NullableIdDto<@Model.EntityKeyType>
+    public class GetPaged@(Model.EntityName)Input : PagedInputDto
     {
-        /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name { get; set; }
+
     }
 }

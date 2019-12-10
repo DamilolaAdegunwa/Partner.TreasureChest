@@ -23,7 +23,7 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DataBaseCoders\Templates\CreateOrUpdateRazor.txt">
+    <None Update="DataBaseCoders\Templates\CreateOrUpdateRazorView.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DataBaseCoders\Templates\IRazorAppService.txt">
@@ -33,6 +33,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DataBaseCoders\Templates\RazorController.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBaseCoders\Templates\CreateOrUpdateRazorInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBaseCoders\Templates\GetPagedRazorInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBaseCoders\Templates\GetRazorForEditOutput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DataBaseCoders\Templates\RazorEditDto.txt">
