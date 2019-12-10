@@ -14,7 +14,8 @@ namespace CodeHelper.Generator.DataBaseCoders
     /// </summary>
     public class DataBaseCoder
     {
-        public string RazorDto { get; set; }
+        public string RazorListDto { get; set; }
+        public string RazorEditDto { get; set; }
         public string IRazorAppService { get; set; }
         public string RazorAppService { get; set; }
         public string RazorController { get; set; }
@@ -22,8 +23,11 @@ namespace CodeHelper.Generator.DataBaseCoders
 
         public DataBaseCoder()
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorDto.txt");
-            RazorDto = File.ReadAllText(filePath);
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorListDto.txt");
+            RazorListDto = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorEditDto.txt");
+            RazorEditDto = File.ReadAllText(filePath);
 
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorAppService.txt");
             RazorAppService = File.ReadAllText(filePath);
@@ -42,15 +46,33 @@ namespace CodeHelper.Generator.DataBaseCoders
         {
             StringBuilder builder = new StringBuilder();
 
-            #region 实体Dto
-            //var razorDto = Engine.Razor.RunCompile(RazorDto, "RazorDto", null, new
-            //{
-            //    DtoNameSpace = "Ace.Application.CMS.Models",
-            //    //DtoName = Utils.ToCamelName(tablename) + "Info",
-            //    //Columns = columsInfo
-            //});
-            //UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code\\Dto", $"{UtilHelper.ToCamelName(entityName) + "Dto"}.cs"), razorDto);
-            //builder.Append(razorDto);
+            var applicationPath = string.Format($"CodeResult\\{UtilHelper.ToCamelName(entityName)}s\\Application\\{UtilHelper.ToCamelName(entityName)}s");
+            var mvcPath = string.Format($"CodeResult\\{UtilHelper.ToCamelName(entityName)}s\\Mvc");
+
+            #region 数据传输对象
+            var razorListDto = Engine.Razor.RunCompile(RazorListDto, "RazorListDto", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{UtilHelper.ToCamelName(entityName)}ListDto.cs"), razorListDto);
+            builder.Append(razorListDto);
+
+            var razorEditDto = Engine.Razor.RunCompile(RazorEditDto, "RazorEditDto", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{UtilHelper.ToCamelName(entityName)}EditDto.cs"), razorEditDto);
+            builder.Append(razorEditDto);
             #endregion
 
             #region 应用服务接口
@@ -62,7 +84,7 @@ namespace CodeHelper.Generator.DataBaseCoders
                 EntityDescription = "公司",
                 EntityKeyType = "int"
             });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\"+ UtilHelper.ToCamelName(entityName) + "s", $"I{UtilHelper.ToCamelName(entityName) + "AppService"}.cs"), iRazorAppService);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"I{UtilHelper.ToCamelName(entityName)}AppService.cs"), iRazorAppService);
             builder.Append(iRazorAppService);
             #endregion
 
@@ -77,32 +99,38 @@ namespace CodeHelper.Generator.DataBaseCoders
                 EntityDescription = "公司",
                 EntityKeyType = "int"
             });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\" + UtilHelper.ToCamelName(entityName) + "s", $"{ UtilHelper.ToCamelName(entityName) + "AppService"}.cs"), razorAppService);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"{UtilHelper.ToCamelName(entityName)}AppService.cs"), razorAppService);
             builder.Append(razorAppService);
             #endregion
 
             #region 控制器
-            //var razorController = Engine.Razor.RunCompile(RazorController, "RazorController", null, new
-            //{
-            //    //AppClassName = Utils.ToCamelName(tablename),
-            //    //DtoName = Utils.ToCamelName(tablename) + "Info",
-            //    //TableComment = tablecomment,
-            //    //Status = columsInfo.Any(c => c.column_name == "status") ? 1 : 0
-            //});
-            //UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code\\Controller", $"{UtilHelper.ToCamelName(entityName) + "Controller"}.cs"), razorController);
-            //builder.Append(razorController);
+            var razorController = Engine.Razor.RunCompile(RazorController, "RazorController", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + "\\Controllers\\", $"{UtilHelper.ToCamelName(entityName)}Controller.cs"), razorController);
+            builder.Append(razorController);
             #endregion
 
             #region 视图
-            //var razorView = Engine.Razor.RunCompile(RazorView, "RazorView", null, new
-            //{
-            //    TableName = Utils.ToCamelName(tablename).ToLower(),
-            //    TableComment = string.IsNullOrEmpty(tablecomment) ? tablename : tablecomment,
-            //    Columns = columsInfo,
-            //    Status = columsInfo.Any(c => c.column_name == "status") ? 1 : 0
-            //});
-            //UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CodeGenerate\\Code\\View", $"{UtilHelper.ToCamelName(entityName).ToLower()}.cshtml"), razorView);
-            //builder.Append(razorView);
+            var razorView = Engine.Razor.RunCompile(RazorView, "RazorView", null, new
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            });
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + "\\Views\\Index.cshtml"), razorView);
+            builder.Append(razorView);
             #endregion
 
             return builder.ToString();

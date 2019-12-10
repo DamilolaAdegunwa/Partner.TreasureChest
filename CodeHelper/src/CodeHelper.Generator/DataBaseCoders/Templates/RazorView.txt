@@ -1,211 +1,195 @@
-﻿<div class="layui-card">
-    <div class="layui-card-header">
-        <h2 class="header-title">@(Model.TableComment)管理</h2>
-        <span class="layui-breadcrumb pull-right">
-            <a href="#!console">首页</a>
-            <a><cite>@(Model.TableComment)管理</cite></a>
-        </span>
-    </div>
-    <div class="layui-card-body">
-        <div class="layui-form toolbar">
-            搜索：<input id="@(Model.TableName)-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字" />&emsp;
-            <button id="@(Model.TableName)-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-            <button id="@(Model.TableName)-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
-        </div>
+﻿@@using @(Model.ProjectNameSpace).Web.Startup
+@@using @(Model.ProjectNameSpace).Authorization
 
-        <!-- 数据表格 -->
-        <table class="layui-table" id="@(Model.TableName)-table" lay-filter="@(Model.TableName)-table"></table>
+<!--@(Model.EntityDescription)列表-->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">@(Model.EntityDescription)名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" placeholder="请输入@(Model.EntityDescription)名称" autocomplete="off" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn" lay-submit lay-filter="form_search">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div class="layui-btn-container">
+				@@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_@(Model.EntityName)_Delete))
+				{
+					<button class="layui-btn layui-btn-template" data-type="batchdel">删除</button>
+				}
+				@@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_@(Model.EntityName)_Create))
+				{
+					<button class="layui-btn layui-btn-template" data-type="add">添加</button>
+				}
+            </div>
+            <div class="layui-row">
+                <div class="layui-col-xs12">
+                    <table class="layui-table"
+                           lay-data="{height: 'full-180', page:true, id:'@(Model.EntityNameLower)List'}"
+                           lay-filter="@(Model.EntityNameLower)List">
+                        <thead>
+                            <tr>
+                                <th lay-data="{checkbox:true, fixed: true,width:40}"></th>
+                                <th lay-data="{field:'lastModificationTime',templet:'#lastModificationTime'}">最后修改时间</th>
+                                @@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_@(Model.EntityName)_Create_Update))
+                                {
+                                    <th lay-data="{align:'center',toolbar:'#@(Model.EntityNameLower)BarList'}"></th>
+                                }
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- 表单弹窗 -->
-<script type="text/html" id="@(Model.TableName)-model">
-    <form id="@(Model.TableName)-form" lay-filter="@(Model.TableName)-form" class="layui-form model-form">
-        <input name="id" type="hidden" value="0" />
-		@foreach(var item in Model.Columns)
-{
-	if(@item.column_name=="id" || @item.column_name=="isdel" || @item.column_name=="status" || @item.column_name=="createAt" || @item.column_name=="updateAt"){
-					continue;
-				}
-		<div class="layui-form-item">
-            <label class="layui-form-label">@(item.column_comment==""?item.column_name:item.column_comment)</label>
-            <div class="layui-input-block">
-                <input name="@(item.column_name)" placeholder="请输入@(item.column_comment==""?item.column_name:item.column_comment)" type="text" class="layui-input"
-                      	@if(@item.data_type=="string" && @item.is_nullable=="NO")
-					  {
-					@:	 lay-verify="required" required />
-					  }else{
-					  @:  />
-					  }
-            </div>
-        </div>
-}
+@@await Html.PartialAsync("_LastModificationTime")
 
-        <div class="layui-form-item model-form-footer">
-            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
-            <button class="layui-btn" lay-filter="@(Model.TableName)-form-submit" lay-submit>保存</button>
-        </div>
-    </form>
+<!--列表按钮-->
+<script type="text/html" id="@(Model.EntityNameLower)BarList">
+    <div class="layui-table-cell laytable-cell-1-0-9">
+        @@if (await PermissionChecker.IsGrantedAsync(PermissionNames.Pages_@(Model.EntityName)_Update))
+        {
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+        }
+    </div>
 </script>
 
-<!-- 表格操作列 -->
-<script type="text/html" id="@(Model.TableName)-table-bar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
+@@section Scripts{
+    <script type="text/javascript">
+        layui.config({
+            base: "/lib/layui-extend-modules/"
+        }).use(['jquery', 'layer', 'table', 'form'], function () {
+            var $ = layui.$,
+                table = layui.table,
+                form = layui.form,
+                layer = layui.layer;
 
-@if(Model.Status==1){
-<!-- 表格状态列 -->
-<script type="text/html" id="@(Model.TableName)-tpl-state">
-    <input type="checkbox" lay-filter="@(Model.TableName)-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用"
-           {{d.status=='Y'?'checked':''}} />
-</script>
-}
+            //监听搜索
+            form.on('submit(form_search)', function (data) {
+                var field = data.field;
 
-<script>
-    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
-        var form = layui.form;
-        var table = layui.table;
-        var config = layui.config;
-        var layer = layui.layer;
-        var util = layui.util;
-        var admin = layui.admin;
+                //执行重载
+                load@(Model.EntityName)List(field);
+            });
 
-        //渲染表格
-        table.render({
-            elem: '#@(Model.TableName)-table',
-            url: config.api_server + 'api/@(Model.TableName)/list',
-            headers: { AccessToken: config.getToken().token },
-            request: {
-                pageName: 'pageindex',
-                limitName: 'pagesize'
-            },
-            response: {
-                countName: 'total'
-            },
-            page: true,
-            cols: [[
-        @foreach(var item in Model.Columns)
-		{
-			if(@item.column_name=="isdel"){
-				continue;
-			}
-			if(@item.column_name=="createAt"){
-						
-			@:	{
-            @:   field: 'createAt', sort: true, templet: function (d) {
-            @:       return util.toDateString(d.createAt);
-            @:   }, title: '创建时间'
-			@:	},
-
-			}else if(@item.column_name=="status"){
-		@:	   { field: 'status', width: 100, sort: true, templet: '#@(Model.TableName)-tpl-state', title: '状态' },
-			}else{
-			@:	field: '@(item.column_name)', sort: true, title: '@(item.column_comment==""?item.column_name:item.column_comment)' },
-			}
-		}
-                { align: 'center', toolbar: '#@(Model.TableName)-table-bar', title: '操作' }
-            ]]
-        });
-
-        // 添加按钮点击事件
-        $('#@(Model.TableName)-btn-add').click(function () {
-            showEditModel();
-        });
-
-        // 显示编辑弹窗
-        var showEditModel = function (data) {
-            layer.open({
-                type: 1,
-                title: data ? '修改@(Model.TableComment)' : '新增@(Model.TableComment)',
-                area: ['600px', '400px'],
-                offset: '120px',
-                content: $('#@(Model.TableName)-model').html(),
-                success: function () {
-                    $('#@(Model.TableName)-form')[0].reset();
-                    $('#@(Model.TableName)-form').attr('method', 'POST');
-                    if (data) {
-                        form.val('@(Model.TableName)-form', data);
-                        $('#@(Model.TableName)-form').attr('method', 'POST');
+            //加载表格数据
+            var config = {};  //table的参数，如搜索key
+            var load@(Model.EntityName)List = function (options) {
+                if (options != undefined) {
+                    $.extend(config, options);
+                }
+                table.reload('@(Model.EntityNameLower)List', {
+                    url: "@@Url.Action("Get@(Model.EntityName)List", "@(Model.EntityName)s")",
+                    where: config,
+                    parseData: function (res) {
+                        return {
+                            "code": res.result.code,
+                            "msg": res.result.msg,
+                            "count": res.result.count,
+                            "data": res.result.data
+                        };
+                    },
+                    response: {
+                        statusCode: 200
                     }
+                });
+            };
+            load@(Model.EntityName)List();
+
+            //监听工具条
+            table.on('tool(@(Model.EntityNameLower)List)', function (obj) {
+                var data = obj.data;
+                switch (obj.event) {
+                    case "edit":
+                        var templateData = {
+                            title: '编辑@(Model.EntityDescription)信息',
+                            content: "@@Url.Action("CreateOrUpdate@(Model.EntityName)", "@(Model.EntityName)s")" + abp.utils.formatString("?@(Model.EntityNameLower)Id={0}", data.id)
+                        };
+                        createOrUpdate(@(Model.EntityNameLower)Data);
+                        break;
                 }
             });
-        };
 
-        // 删除
-        table.on('tool(@(Model.TableName)-table)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') { // 修改
-                showEditModel(data);
-            } else if (obj.event === 'del') { //删除
-                doDelete(obj);
-            }
-        });
-
-        // 查询
-        $('#@(Model.TableName)-btn-search').click(function () {
-            var keyword = $('#@(Model.TableName)-edit-search').val();
-            table.reload('@(Model.TableName)-table', { where: { key: keyword  } });
-        });
-
-        // 表单提交事件
-        form.on('submit(@(Model.TableName)-form-submit)', function (data) {
-            layer.load(2);
-            var postdata = JSON.stringify(data.field);
-            var url = 'api/@(Model.TableName)/add';
-            if (data.field.id != null && data.field.id > 0) {
-                url = 'api/Appproject@(Model.TableName)code/edit';
-            }
-
-            admin.req(url, postdata, function (data) {
-                layer.closeAll('loading');
-                if (data.data > 0) {
-                    layer.msg(data.msg, { icon: 1 });
-                    table.reload('@(Model.TableName)-table');
-                    layer.closeAll('page');
-                } else {
-                    layer.msg(data.msg, { icon: 2 });
-                }
-            }, "POST", 'application/json');
-            return false;
-        });
-
-@if(Model.Status==1)
-{
-@:	// 修改状态
-@:	form.on('switch(@(Model.TableName)-tpl-state)', function (obj) {
-@:		layer.load(2);
-@:		admin.req('api/@(Model.TableName)/updatestate', {
-@:			id: obj.elem.value,
-@:			status: obj.elem.checked ? "Y" : "N"
-@:		}, function (data) {
-@:			layer.closeAll('loading');
-@:			if (data.data > 0) {
-@:				layer.msg(data.msg, { icon: 1 });
-@:			} else {
-@:				layer.msg(data.msg, { icon: 2 });
-@:				$(obj.elem).prop('checked', !obj.elem.checked);
-@:				form.render('checkbox');
-@:			}
-@:		}, 'POST');
-@:	});
-}
-        var doDelete = function (obj) {
-            layer.confirm('确定要删除吗？', function (i) {
-                layer.close(i);
-                layer.load(2);
-                admin.req('api/@(Model.TableName)/delete', { id: obj.data.id }, function (data) {
-                    layer.closeAll('loading');
-                    if (data.data > 0) {
-                        layer.msg(data.msg, { icon: 1 });
-                        obj.del();
-                    } else {
-                        layer.msg(data.msg, { icon: 2 });
+            //创建或更新
+            function createOrUpdate(@(Model.EntityNameLower)Data) {
+                parent.layer.open({
+                    type: 2,
+                    title: @(Model.EntityNameLower)Data.title,
+                    content: @(Model.EntityNameLower)Data.content,
+                    area: ["700px", "520px"],
+                    btn: ['确定', '取消'],
+                    yes: function (index, layero) {
+                        parent.window['layui-layer-iframe' + index].layui.submitForm();
                     }
-                }, 'POST');
+                });
+            }
+
+            //创建或更新完毕回调
+            layui.callback = function (data) {
+                parent.layer.close(data.index); //关闭弹层
+                abp.notify.success(data.msg);
+                load@(Model.EntityName)List();
+            }
+
+            //删除模板
+            function delete@(Model.EntityName)(ids) {
+                parent.layer.confirm("确认删除?", function (index) {
+                    abp.ajax({
+                        url: "@@Url.Action("Delete@(Model.EntityName)", "@(Model.EntityName)s")",
+                        data: JSON.stringify(ids),
+                        abpHandleError: false
+                    }).done(function (data) {
+                        if (data.code == 200) {
+                            abp.notify.success(data.msg);
+                            load@(Model.EntityName)List();
+                        }
+                    }).fail(function (jqXHR) {
+                        parent.layer.msg(jqXHR.message, { icon: 5 });
+                    }).always(function () {
+                        parent.layer.close(index);
+                    });
+                });
+            }
+
+            //监听事件处理
+            var active = {
+                add: function () {
+                    var templateData = {
+                        title: '添加模板',
+                        content:"@@Url.Action("CreateOrUpdate@(Model.EntityName)", "@(Model.EntityName)s")"
+                    };
+                    createOrUpdate(@(Model.EntityNameLower)Data);
+                },
+                batchdel: function () {
+                    var checkStatus = table.checkStatus('@(Model.EntityNameLower)List'),
+                        checkData = checkStatus.data; //得到选中的数据
+
+                    if (checkData.length === 0) {
+                        return layer.msg('请选择数据');
+                    }
+
+                    var ids = checkData.map(function (d) { return { "id": d.id }; });
+                    delete@(Model.EntityName)(ids);
+                }
+            };
+
+            //点击事件转发器
+            $('.layui-btn.layui-btn-@(Model.EntityNameLower)').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
             });
-        };
-
-    });
-
-</script>
+        });
+    </script>
+}

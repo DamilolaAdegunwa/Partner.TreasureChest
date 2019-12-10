@@ -1,0 +1,25 @@
+using Abp.Application.Services.Dto;
+using Abp.Domain.Entities.Auditing;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto
+{
+    /// <summary>
+    /// @(Model.EntityDescription)编辑Dto
+    /// </summary>
+    public class @(Model.EntityName)EditDto
+    {
+		/// <summary>
+        /// @(Model.EntityDescription)Id,根据Id的有无做更新还是新增判定
+        /// </summary>
+        public @(Model.EntityKeyType)? Id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name { get; set; }
+    }
+}

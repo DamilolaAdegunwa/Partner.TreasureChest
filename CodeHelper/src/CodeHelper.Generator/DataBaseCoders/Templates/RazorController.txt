@@ -5,22 +5,20 @@ using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WuLong.Lims.Authorization;
-using WuLong.Lims.Controllers;
-using WuLong.Lims.CRM.@(Model.EntityName)s;
-using WuLong.Lims.CRM.@(Model.EntityName)s.Dto;
-using WuLong.Lims.CRM.@(Model.EntityName)s.@(Model.EntityName)Applys;
-using WuLong.Lims.CRM.@(Model.EntityName)s.@(Model.EntityName)Applys.Dto;
-using WuLong.Lims.Web.Areas.CRM.Models.@(Model.EntityName)s;
-using WuLong.Lims.Web.Models.Common;
+using @(Model.ProjectNameSpace).Authorization;
+using @(Model.ProjectNameSpace).Controllers;
+using @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s;
+using @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto;
+using @(Model.ProjectNameSpace).Web.Areas.@(Model.ProjectModule).Models.@(Model.EntityName)s;
+using @(Model.ProjectNameSpace).Web.Models.Common;
 
-namespace WuLong.Lims.Web.Mvc.Areas.CRM.Controllers
+namespace @(Model.ProjectNameSpace).Web.Mvc.Areas.@(Model.ProjectModule).Controllers
 {
     /// <summary>
-    /// @(Model.EntityDescription)管理控制器
+    /// @(Model.EntityDescription)控制器
     /// </summary>
-    [Area("CRM")]
-    public class @(Model.EntityName)Controller : LimsControllerBase
+    [Area("@Model.ProjectModule")]
+    public class @(Model.EntityName)Controller : @(Model.ProjectRootName)ControllerBase
     {
         #region 初始化
         private readonly I@(Model.EntityName)AppService _@(Model.EntityNameLower)AppService;
@@ -45,12 +43,9 @@ namespace WuLong.Lims.Web.Mvc.Areas.CRM.Controllers
         /// 获取@(Model.EntityDescription)数据列表
         /// </summary>
         /// <returns></returns>
-        public async Task<JsonResult> Get@(Model.EntityName)List(@(Model.EntityName)PagedViewModel viewModel)
+        public async Task<JsonResult> Get@(Model.EntityName)List(GetPaged@(Model.EntityName)ViewModel viewModel)
         {
-            var input = ObjectMapper.Map<Get@(Model.EntityName)PagedInput>(viewModel);
-            input.MaxResultCount = viewModel.Limit;
-            input.SkipCount = (viewModel.Page - 1) * viewModel.Limit;
-
+			var input = PagedViewModelMapToPagedInputDto<GetPaged@(Model.EntityName)ViewModel, GetPaged@(Model.EntityName)Input>(viewModel);
             var @(Model.EntityNameLower)ListDto = await _@(Model.EntityNameLower)AppService.GetPaged@(Model.EntityName)(input);
             return Json(new PagedResultViewModel<@(Model.EntityName)ListDto>(@(Model.EntityNameLower)ListDto.TotalCount, @(Model.EntityNameLower)ListDto.Items));
         }
@@ -61,7 +56,7 @@ namespace WuLong.Lims.Web.Mvc.Areas.CRM.Controllers
         /// <returns></returns>
         public async Task<IActionResult> CreateOrUpdate@(Model.EntityName)(@(Model.EntityName)RequestModel viewModel)
         {
-            var get@(Model.EntityName)ForEditOutput = await _@(Model.EntityNameLower)AppService.Get@(Model.EntityName)ForEdit(new NullableIdDto<long>(viewModel.@(Model.EntityName)Id));
+            var get@(Model.EntityName)ForEditOutput = await _@(Model.EntityNameLower)AppService.Get@(Model.EntityName)ForEdit(new NullableIdDto<@Model.EntityKeyType>(viewModel.@(Model.EntityName)Id));
 
             return View(get@(Model.EntityName)ForEditOutput);
         }
@@ -75,7 +70,7 @@ namespace WuLong.Lims.Web.Mvc.Areas.CRM.Controllers
         public async Task<JsonResult> CreateOrUpdate@(Model.EntityName)([FromBody]CreateOrUpdate@(Model.EntityName)Input input)
         {
             await _@(Model.EntityNameLower)AppService.CreateOrUpdate@(Model.EntityName)(input);
-            return Json(new ResponseParamViewModel(input.@(Model.EntityName).Id.HasValue ? L("更新@(Model.EntityDescription)成功") : L("添加@(Model.EntityDescription)成功")));
+            return Json(new ResponseParamViewModel(input.@(Model.EntityName).Id.HasValue ? L("Update@(Model.EntityName)Success") : L("Create@(Model.EntityName)Success")));
         }
 
         /// <summary>
@@ -83,10 +78,10 @@ namespace WuLong.Lims.Web.Mvc.Areas.CRM.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<JsonResult> Delete@(Model.EntityName)([FromBody]List<EntityDto<long>> input)
+        public async Task<JsonResult> Delete@(Model.EntityName)([FromBody]List<EntityDto<@Model.EntityKeyType>> input)
         {
             await _@(Model.EntityNameLower)AppService.Delete@(Model.EntityName)(input);
-            return Json(new ResponseParamViewModel(L("Delete@(Model.EntityName)OK")));
+            return Json(new ResponseParamViewModel(L("Delete@(Model.EntityName)Success")));
         }
         #endregion
     }
