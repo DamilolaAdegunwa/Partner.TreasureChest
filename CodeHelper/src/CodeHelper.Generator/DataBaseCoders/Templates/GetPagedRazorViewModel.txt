@@ -1,0 +1,15 @@
+﻿using Abp.AutoMapper;
+using @(Model.ProjectNameSpace).@(Model.ProjectModule).@(Model.EntityName)s.Dto;
+using @(Model.ProjectNameSpace).Web.Models.Common;
+
+namespace @(Model.ProjectNameSpace).Web.Mvc.Areas.Base.Models.@(Model.EntityName)s
+{
+    /// <summary>
+    /// @(Model.EntityDescription)分页请求视图模型
+    /// </summary>
+    [AutoMapTo(typeof(GetPaged@(Model.EntityName)Input))]
+    public class GetPaged@(Model.EntityName)ViewModel : PagedViewModel
+    {
+
+    }
+}

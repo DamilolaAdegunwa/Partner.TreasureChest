@@ -8,12 +8,12 @@ using System.Text;
 namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto
 {
 	/// <summary>
-    /// 获取(Model.EntityDescription)编辑响应Dto
+    /// 获取@Model.EntityDescription编辑响应Dto
     /// </summary>
     public class Get@(Model.EntityName)ForEditOutput
     {
         /// <summary>
-        /// @(Model.EntityDescription)
+        /// @Model.EntityDescription
         /// </summary>
         public @(Model.EntityName)EditDto @(Model.EntityName) { get; set; }
     }

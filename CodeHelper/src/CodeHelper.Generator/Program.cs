@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeHelper.Generator.DataBaseCoders;
 using CodeHelper.Generator.SimpleCoders;
+using CodeHelper.Generator.Utils;
 
 namespace CodeHelper.Generator
 {
@@ -27,32 +28,45 @@ namespace CodeHelper.Generator
                 //    Console.WriteLine(item["Name"] + " " + item["Address"]);
                 //}
             }
-            //{
-            //    var tables = dataBaseHelper.GetAllTables();
-            //    foreach (var item in tables)
-            //    {
-            //        Console.WriteLine(item.Name + " " + item.Comment);
-            //    }
-            //}
             {
-                var tables = dataBaseHelper.GetAllTablesBySchema("fastconnectdb");
-                foreach (var item in tables)
-                {
-                    Console.WriteLine(item.Name + " " + item.Comment);
-                }
+                //var tables = dataBaseHelper.GetAllTables();
+                //foreach (var item in tables)
+                //{
+                //    Console.WriteLine(item.Name + " " + item.Comment);
+                //}
             }
             {
+                //获取指定数据库中的表集合
+                //var tables = dataBaseHelper.GetAllTablesBySchema("fastconnectdb");
+                //foreach (var item in tables)
+                //{
+                //    Console.WriteLine(item.Name + " " + item.Comment);
+                //}
+            }
+            {
+                //获取指定数据库中指定表下的字段集合
                 var columns = dataBaseHelper.GetAllColumnsByTable("fastconnectdb", "companys");
                 foreach (var item in columns)
                 {
-                    Console.WriteLine(item.Name + " " + item.TableName + " " + item.IsNullable + " " + item.DataType);
+                    Console.WriteLine(item.Name + " " + item.TableName + " " + item.IsNullable + " " + item.DataType + " " + item.ColumnKey + " " + item.ColumnComment);
                 }
             }
             #endregion
 
             #region 模板替换
             var dataBaseCoder = new DataBaseCoder();
-            var result = dataBaseCoder.RazorParse("company");
+            var entityName = "company";
+            var templateParseModel = new TemplateParseModel()
+            {
+                ProjectRootName = "Surround",
+                ProjectNameSpace = "Partner.Surround",
+                ProjectModule = "Base",
+                EntityName = UtilHelper.ToCamelName(entityName),
+                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
+                EntityDescription = "公司",
+                EntityKeyType = "int"
+            };
+            var result = dataBaseCoder.RazorParse(templateParseModel);
             Console.Write(result);
             #endregion
 

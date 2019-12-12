@@ -16,7 +16,7 @@ namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<PagedResultDto<@(Model.EntityName)ListDto>> GetPaged@(Model.EntityName)(Get@(Model.EntityName)PagedInput input);
+        Task<PagedResultDto<@(Model.EntityName)ListDto>> GetPaged@(Model.EntityName)(GetPaged@(Model.EntityName)Input input);
 
         /// <summary>
         /// 获取@(Model.EntityDescription)编辑信息

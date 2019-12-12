@@ -13,12 +13,11 @@ namespace CodeHelper.Generator.DataBaseCoders
     /// </summary>
     public class DataBaseHelper
     {
-        private IConfiguration configuration;
         private readonly string connectionStr;
 
         public DataBaseHelper()
         {
-            configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
             connectionStr = configuration.GetConnectionString("Default");
         }
 
@@ -63,7 +62,7 @@ namespace CodeHelper.Generator.DataBaseCoders
         }
 
         /// <summary>
-        /// 查询指定数据库中的所有表
+        /// 查询指定数据库中的表集合
         /// </summary>
         /// <param name="dbschema"></param>
         /// <returns></returns>
@@ -92,6 +91,12 @@ namespace CodeHelper.Generator.DataBaseCoders
             }
         }
 
+        /// <summary>
+        /// 获取指定数据库、指定表中的字段集合
+        /// </summary>
+        /// <param name="dbschema"></param>
+        /// <param name="tablename"></param>
+        /// <returns></returns>
         public List<ColumnInfo> GetAllColumnsByTable(string dbschema, string tablename)
         {
             using (var SqlConnection = new MySqlConnection(connectionStr))
@@ -127,6 +132,11 @@ namespace CodeHelper.Generator.DataBaseCoders
             }
         }
 
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
         public List<Dictionary<string, string>> GetSqlDatas(string cmd)
         {
             using (var SqlConnection = new MySqlConnection(connectionStr))
@@ -152,6 +162,22 @@ namespace CodeHelper.Generator.DataBaseCoders
     }
 
     /// <summary>
+    /// 数据库表信息
+    /// </summary>
+    public class TableInfo
+    {
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Comment { get; set; }
+    }
+
+    /// <summary>
     /// 数据库表中列信息
     /// </summary>
     public class ColumnInfo
@@ -166,6 +192,9 @@ namespace CodeHelper.Generator.DataBaseCoders
         /// </summary>
         public string TableName { get; set; }
 
+        /// <summary>
+        /// 字段顺序
+        /// </summary>
         public int? OrdinalPosition { get; set; }
 
         /// <summary>
@@ -192,21 +221,5 @@ namespace CodeHelper.Generator.DataBaseCoders
         /// 列备注
         /// </summary>
         public string ColumnComment { get; set; }
-    }
-
-    /// <summary>
-    /// 数据库表信息
-    /// </summary>
-    public class TableInfo
-    {
-        /// <summary>
-        /// 表名
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// 描述
-        /// </summary>
-        public string Comment { get; set; }
     }
 }

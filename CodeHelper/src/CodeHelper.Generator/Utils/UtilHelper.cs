@@ -138,17 +138,12 @@ namespace CodeHelper.Generator.Utils
             return value.Substring(0, 1).ToUpper() + value.Substring(1);
         }
 
-        /**
-        * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。</br>
-        * 例如：HELLO_WORLD->HelloWorld
-        * @param name 转换前的下划线大写方式命名的字符串
-        * @return 转换后的驼峰式命名的字符串
-        */
         /// <summary>
-        /// 转换为驼峰命名
+        /// 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串
+        /// eg：HELLO_WORLD->HelloWorld
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">转换前的下划线大写方式命名的字符串</param>
+        /// <returns>转换后的驼峰式命名的字符串</returns>
         public static string ToCamelName(string name)
         {
             StringBuilder result = new StringBuilder();

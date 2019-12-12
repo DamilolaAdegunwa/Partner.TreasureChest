@@ -11,6 +11,7 @@ using @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s;
 using @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s.Dto;
 using @(Model.ProjectNameSpace).Web.Areas.@(Model.ProjectModule).Models.@(Model.EntityName)s;
 using @(Model.ProjectNameSpace).Web.Models.Common;
+using @(Model.ProjectNameSpace).Web.Controllers;
 
 namespace @(Model.ProjectNameSpace).Web.Mvc.Areas.@(Model.ProjectModule).Controllers
 {
@@ -18,7 +19,7 @@ namespace @(Model.ProjectNameSpace).Web.Mvc.Areas.@(Model.ProjectModule).Control
     /// @(Model.EntityDescription)控制器
     /// </summary>
     [Area("@Model.ProjectModule")]
-    public class @(Model.EntityName)Controller : @(Model.ProjectRootName)ControllerBase
+    public class @(Model.EntityName)Controller : @(Model.ProjectRootName)ControllerWebBase
     {
         #region 初始化
         private readonly I@(Model.EntityName)AppService _@(Model.EntityNameLower)AppService;

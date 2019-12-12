@@ -26,6 +26,9 @@
     <None Update="DataBaseCoders\Templates\CreateOrUpdateRazorView.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="DataBaseCoders\Templates\RazorRequestViewModel.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DataBaseCoders\Templates\IRazorAppService.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -51,6 +54,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DataBaseCoders\Templates\RazorModel.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBaseCoders\Templates\GetPagedRazorViewModel.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DataBaseCoders\Templates\RazorView.txt">

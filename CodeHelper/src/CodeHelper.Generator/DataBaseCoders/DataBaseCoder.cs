@@ -22,6 +22,8 @@ namespace CodeHelper.Generator.DataBaseCoders
         public string IRazorAppService { get; set; }
         public string RazorAppService { get; set; }
         public string RazorController { get; set; }
+        public string GetPagedRazorViewModel { get; set; }
+        public string RazorRequestViewModel { get; set; }
         public string CreateOrUpdateRazorView { get; set; }
         public string RazorView { get; set; }
 
@@ -51,6 +53,12 @@ namespace CodeHelper.Generator.DataBaseCoders
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorController.txt");
             RazorController = File.ReadAllText(filePath);
 
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "GetPagedRazorViewModel.txt");
+            GetPagedRazorViewModel = File.ReadAllText(filePath);
+
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorRequestViewModel.txt");
+            RazorRequestViewModel = File.ReadAllText(filePath);
+
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataBaseCoders\\Templates", "RazorView.txt");
             RazorView = File.ReadAllText(filePath);
 
@@ -58,143 +66,69 @@ namespace CodeHelper.Generator.DataBaseCoders
             CreateOrUpdateRazorView = File.ReadAllText(filePath);
         }
 
-        public string RazorParse(string entityName)
+        public string RazorParse(TemplateParseModel templateParseModel)
         {
+            var applicationPath = string.Format($"CodeResult\\{templateParseModel.EntityName}s\\Application\\{templateParseModel.EntityName}s");
+            var mvcPath = string.Format($"CodeResult\\{templateParseModel.EntityName}s\\Mvc");
             StringBuilder builder = new StringBuilder();
 
-            var applicationPath = string.Format($"CodeResult\\{UtilHelper.ToCamelName(entityName)}s\\Application\\{UtilHelper.ToCamelName(entityName)}s");
-            var mvcPath = string.Format($"CodeResult\\{UtilHelper.ToCamelName(entityName)}s\\Mvc");
-
             #region 数据传输对象
-            var razorListDto = Engine.Razor.RunCompile(RazorListDto, "RazorListDto", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{UtilHelper.ToCamelName(entityName)}ListDto.cs"), razorListDto);
+            var razorListDto = Engine.Razor.RunCompile(RazorListDto, nameof(RazorListDto), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{templateParseModel.EntityName}ListDto.cs"), razorListDto);
             builder.Append(razorListDto);
 
-            var razorEditDto = Engine.Razor.RunCompile(RazorEditDto, "RazorEditDto", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{UtilHelper.ToCamelName(entityName)}EditDto.cs"), razorEditDto);
+            var razorEditDto = Engine.Razor.RunCompile(RazorEditDto, nameof(RazorEditDto), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\{templateParseModel.EntityName}EditDto.cs"), razorEditDto);
             builder.Append(razorEditDto);
 
-            var createOrUpdateRazorInput = Engine.Razor.RunCompile(CreateOrUpdateRazorInput, "CreateOrUpdateRazorInput", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\CreateOrUpdate{UtilHelper.ToCamelName(entityName)}Input.cs"), createOrUpdateRazorInput);
+            var createOrUpdateRazorInput = Engine.Razor.RunCompile(CreateOrUpdateRazorInput, nameof(CreateOrUpdateRazorInput), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\CreateOrUpdate{templateParseModel.EntityName}Input.cs"), createOrUpdateRazorInput);
             builder.Append(createOrUpdateRazorInput);
 
-            var getPagedRazorInput = Engine.Razor.RunCompile(GetPagedRazorInput, "GetPagedRazorInput", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\GetPaged{UtilHelper.ToCamelName(entityName)}Input.cs"), getPagedRazorInput);
+            var getPagedRazorInput = Engine.Razor.RunCompile(GetPagedRazorInput, nameof(GetPagedRazorInput), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\GetPaged{templateParseModel.EntityName}Input.cs"), getPagedRazorInput);
             builder.Append(getPagedRazorInput);
 
-            var getRazorForEditOutput = Engine.Razor.RunCompile(GetRazorForEditOutput, "GetRazorForEditOutput", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\Get{UtilHelper.ToCamelName(entityName)}ForEditOutput.cs"), getRazorForEditOutput);
+            var getRazorForEditOutput = Engine.Razor.RunCompile(GetRazorForEditOutput, nameof(GetRazorForEditOutput), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"Dto\\Get{templateParseModel.EntityName}ForEditOutput.cs"), getRazorForEditOutput);
             builder.Append(getRazorForEditOutput);
             #endregion
 
             #region 应用服务接口
-            var iRazorAppService = Engine.Razor.RunCompile(IRazorAppService, "IRazorAppService", null, new
-            {
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"I{UtilHelper.ToCamelName(entityName)}AppService.cs"), iRazorAppService);
+            var iRazorAppService = Engine.Razor.RunCompile(IRazorAppService, nameof(IRazorAppService), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"I{templateParseModel.EntityName}AppService.cs"), iRazorAppService);
             builder.Append(iRazorAppService);
             #endregion
 
             #region 应用服务实现
-            var razorAppService = Engine.Razor.RunCompile(RazorAppService, "RazorAppService", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"{UtilHelper.ToCamelName(entityName)}AppService.cs"), razorAppService);
+            var razorAppService = Engine.Razor.RunCompile(RazorAppService, nameof(RazorAppService), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, applicationPath, $"{templateParseModel.EntityName}AppService.cs"), razorAppService);
             builder.Append(razorAppService);
             #endregion
 
             #region 控制器
-            var razorController = Engine.Razor.RunCompile(RazorController, "RazorController", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + "\\Controllers\\", $"{UtilHelper.ToCamelName(entityName)}Controller.cs"), razorController);
+            var razorController = Engine.Razor.RunCompile(RazorController, nameof(RazorController), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath, $"Controllers\\{templateParseModel.EntityName}Controller.cs"), razorController);
             builder.Append(razorController);
             #endregion
 
+            #region 视图模型
+            var getPagedRazorViewModel = Engine.Razor.RunCompile(GetPagedRazorViewModel, nameof(GetPagedRazorViewModel), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath, $"Models\\{templateParseModel.EntityName}s\\GetPaged{templateParseModel.EntityName}ViewModel.cs"), getPagedRazorViewModel);
+            builder.Append(getPagedRazorViewModel);
+
+            var razorRequestViewModel = Engine.Razor.RunCompile(RazorRequestViewModel, nameof(RazorRequestViewModel), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath, $"Models\\{templateParseModel.EntityName}s\\{templateParseModel.EntityName}RequestViewModel.cs"), razorRequestViewModel);
+            builder.Append(razorRequestViewModel);
+            #endregion
+
             #region 视图
-            var razorView = Engine.Razor.RunCompile(RazorView, "RazorView", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + "\\Views\\Index.cshtml"), razorView);
+            var razorView = Engine.Razor.RunCompile(RazorView, nameof(RazorView), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath, $"Views\\{templateParseModel.EntityName}\\Index.cshtml"), razorView);
             builder.Append(razorView);
 
-            var createOrUpdateRazorView = Engine.Razor.RunCompile(CreateOrUpdateRazorView, "CreateOrUpdateRazorView", null, new
-            {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
-                EntityName = UtilHelper.ToCamelName(entityName),
-                EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
-            });
-            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath + $"\\Views\\CreateOrUpdate{UtilHelper.ToCamelName(entityName)}View.cshtml"), createOrUpdateRazorView);
+            var createOrUpdateRazorView = Engine.Razor.RunCompile(CreateOrUpdateRazorView, nameof(CreateOrUpdateRazorView), typeof(TemplateParseModel), templateParseModel);
+            UtilHelper.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, mvcPath, $"Views\\{templateParseModel.EntityName}\\CreateOrUpdate{templateParseModel.EntityName}View.cshtml"), createOrUpdateRazorView);
             builder.Append(createOrUpdateRazorView);
             #endregion
 

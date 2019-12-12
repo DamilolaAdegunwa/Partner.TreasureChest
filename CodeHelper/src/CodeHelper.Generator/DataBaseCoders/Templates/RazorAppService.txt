@@ -27,10 +27,9 @@ namespace @Model.ProjectNameSpace.@Model.ProjectModule.@(Model.EntityName)s
         }
         #endregion
 
-        public async Task<PagedResultDto<@(Model.EntityName)ListDto>> GetPaged@(Model.EntityName)(Get@(Model.EntityName)PagedInput input)
+        public async Task<PagedResultDto<@(Model.EntityName)ListDto>> GetPaged@(Model.EntityName)(GetPaged@(Model.EntityName)Input input)
         {
-            var query = _@(Model.EntityNameLower)Repository.GetAll()
-                .WhereIf(!input.Name.IsNullOrWhiteSpace(), s => s.Name.Contains(input.Name));
+            var query = _@(Model.EntityNameLower)Repository.GetAll();
 
             var totalCount = await query.CountAsync();//总数
             var items = await query.PageBy(input).ToListAsync();

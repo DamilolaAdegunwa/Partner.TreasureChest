@@ -1,0 +1,13 @@
+﻿namespace @(Model.ProjectNameSpace).Web.Mvc.Areas.Base.Models.@(Model.EntityName)s
+{
+    /// <summary>
+    /// @(Model.EntityDescription)请求视图模型
+    /// </summary>
+    public class @(Model.EntityName)RequestViewModel
+    {
+        /// <summary>
+        /// @(Model.EntityDescription)Id
+        /// </summary>
+        public @(Model.EntityKeyType)? @(Model.EntityName)Id { get; set; }
+    }
+}
