@@ -18,10 +18,10 @@ namespace CodeHelper.Generator.SimpleCoders
 
         public SimpleCoder()
         {
-            var templatePage = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SimpleCOders\\Templates", "templatePage.txt");
+            var templatePage = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SimpleCoders\\Templates", "templatePage.txt");
             TemplatePage = File.ReadAllText(templatePage);
 
-            var templatePageJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SimpleCOders\\Templates", "templatePageJson.json");
+            var templatePageJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SimpleCoders\\Templates", "templatePageJson.json");
             TemplatePageJson = File.ReadAllText(templatePageJson);
         }
 

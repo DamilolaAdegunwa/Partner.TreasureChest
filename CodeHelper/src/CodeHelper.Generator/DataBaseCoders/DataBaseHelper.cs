@@ -13,14 +13,24 @@ namespace CodeHelper.Generator.DataBaseCoders
     /// </summary>
     public class DataBaseHelper
     {
+        #region 初始化
         private readonly string connectionStr;
 
         public DataBaseHelper()
         {
-            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             connectionStr = configuration.GetConnectionString("Default");
         }
+        #endregion
 
+        /// <summary>
+        /// 执行sql
+        /// </summary>
+        /// <param name="cmd"></param>
         public void Execute(string cmd)
         {
             using (var SqlConnection = new MySqlConnection(connectionStr))
@@ -229,6 +239,21 @@ namespace CodeHelper.Generator.DataBaseCoders
         public bool IsPrimaryKey()
         {
             return ColumnKey == "PRI";
+        }
+
+        public static string GetPrimaryKeyType(List<ColumnInfo> tableColumns)
+        {
+            var entityKeyType = string.Empty;
+            foreach (var tableColumn in tableColumns)
+            {
+                if (tableColumn.IsPrimaryKey())
+                {
+                    entityKeyType = UtilHelper.GetCsType(tableColumn.DataType);
+                    break;
+                }
+            }
+
+            return entityKeyType;
         }
     }
 }
