@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using CodeHelper.Generator.DataBaseCoders;
 using CodeHelper.Generator.SimpleCoders;
 using CodeHelper.Generator.Utils;
+using Microsoft.Extensions.Configuration;
 
 namespace CodeHelper.Generator
 {
@@ -22,6 +24,7 @@ namespace CodeHelper.Generator
             var dataBaseHelper = new DataBaseHelper();
             dataBaseHelper.Execute("use fastconnectdb;");
             {
+                //执行sql语句
                 //dataBaseHelper.Execute("insert into companys(name,address) values('hello world','earth');");
                 //foreach (var item in dataBaseHelper.GetSqlDatas("select * from companys"))
                 //{
@@ -29,6 +32,7 @@ namespace CodeHelper.Generator
                 //}
             }
             {
+                //获取数据库表集合
                 //var tables = dataBaseHelper.GetAllTables();
                 //foreach (var item in tables)
                 //{
@@ -45,27 +49,49 @@ namespace CodeHelper.Generator
             }
             {
                 //获取指定数据库中指定表下的字段集合
-                var columns = dataBaseHelper.GetAllColumnsByTable("fastconnectdb", "companys");
-                foreach (var item in columns)
-                {
-                    Console.WriteLine(item.Name + " " + item.TableName + " " + item.IsNullable + " " + item.DataType + " " + item.ColumnKey + " " + item.ColumnComment);
-                }
+                //var columns = dataBaseHelper.GetAllColumnsByTable("fastconnectdb", "companys");
+                //foreach (var item in columns)
+                //{
+                //    Console.WriteLine(item.Name + " " + item.TableName + " " + item.IsNullable + " " + item.DataType + " " + item.ColumnKey + " " + item.ColumnComment);
+                //}
             }
             #endregion
 
             #region 模板替换
-            var dataBaseCoder = new DataBaseCoder();
-            var entityName = "company";
+            Console.WriteLine("数据库表名：");
+            var tableName = Console.ReadLine();
+
+            Console.WriteLine("实体名：");
+            var entityName = Console.ReadLine();
+
+            Console.WriteLine("实体描述：");
+            var entityDescription = Console.ReadLine();
+
+            var configurationSection = UtilHelper.GetConfigurationSection("ProjectSettings");
+
+            var entityKeyType = string.Empty;
+            var tableColumns = dataBaseHelper.GetAllColumnsByTable(configurationSection.GetSection("DataBaseName").Value, tableName);
+            foreach (var tableColumn in tableColumns)
+            {
+                if (tableColumn.IsPrimaryKey())
+                {
+                    entityKeyType = UtilHelper.GetCsType(tableColumn.DataType);
+                    break;
+                }
+            }
+
             var templateParseModel = new TemplateParseModel()
             {
-                ProjectRootName = "Surround",
-                ProjectNameSpace = "Partner.Surround",
-                ProjectModule = "Base",
+                ProjectRootName = configurationSection.GetSection("ProjectRootName").Value,
+                ProjectNameSpace = configurationSection.GetSection("ProjectNameSpace").Value,
+                ProjectModule = configurationSection.GetSection("ProjectModule").Value,
                 EntityName = UtilHelper.ToCamelName(entityName),
                 EntityNameLower = UtilHelper.ToCamelName(entityName).ToLower(),
-                EntityDescription = "公司",
-                EntityKeyType = "int"
+                EntityDescription = entityDescription,
+                EntityKeyType = entityKeyType
             };
+
+            var dataBaseCoder = new DataBaseCoder();
             var result = dataBaseCoder.RazorParse(templateParseModel);
             Console.Write(result);
             #endregion

@@ -221,5 +221,14 @@ namespace CodeHelper.Generator.DataBaseCoders
         /// 列备注
         /// </summary>
         public string ColumnComment { get; set; }
+
+        /// <summary>
+        /// 是否是主键
+        /// </summary>
+        /// <returns></returns>
+        public bool IsPrimaryKey()
+        {
+            return ColumnKey == "PRI";
+        }
     }
 }

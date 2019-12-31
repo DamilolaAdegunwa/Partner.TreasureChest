@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,8 +14,8 @@ namespace CodeHelper.Generator.Utils
         /// <summary>
         /// 类型转化
         /// </summary>
-        /// <param name="dbType"></param>
-        /// <returns></returns>
+        /// <param name="dbType">数据库类型</param>
+        /// <returns>c#类型</returns>
         public static string GetCsType(string dbType)
         {
             string csType = "";
@@ -42,7 +43,6 @@ namespace CodeHelper.Generator.Utils
                 case "int":
                 case "number":
                 case "smallint":
-
                 case "integer":
                     csType = "int";
                     break;
@@ -60,6 +60,7 @@ namespace CodeHelper.Generator.Utils
                 case "double":
                     csType = "decimal";
                     break;
+
                 case "tinyint":
                 case "bit":
                     csType = "bool";
@@ -84,6 +85,7 @@ namespace CodeHelper.Generator.Utils
                 case "json":
                     csType = "string";
                     break;
+
                 default:
                     csType = "object";
                     break;
@@ -181,6 +183,21 @@ namespace CodeHelper.Generator.Utils
                 //}
             }
             return result.ToString();
+        }
+
+        /// <summary>
+        /// 获取配置项
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
+        public static IConfigurationSection GetConfigurationSection(string sectionName)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            var configurationRoot = builder.Build();
+            return configurationRoot.GetSection(sectionName);
         }
     }
 }
