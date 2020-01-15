@@ -20,20 +20,12 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KnockoutJS</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="BookShop">书城</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             @await Component.InvokeAsync("Cart")
@@ -49,6 +41,10 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <div class="jumbotron" style="padding:32px;">
+            <p class="lead">挑选你最喜欢的书籍，将会给你最好的折扣.</p>
+            <p><a href="@Url.Action("BookShop","Home")" class="btn btn-primary btn-lg">更多信息 &raquo;</a></p>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -72,7 +68,6 @@
                 crossorigin="anonymous"
                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
         </script>
-        <script src="https://cdn.bootcss.com/popper.js/1.15.0/esm/popper-utils.min.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"

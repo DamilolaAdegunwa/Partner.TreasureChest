@@ -1,28 +1,32 @@
 ﻿@model IEnumerable<KnockoutJS.Web.ViewModels.BookViewModel>
-@{ 
+@{
     const int maxPerRow = 3;
     int counter = 0;
 }
+
 <div class="row">
     @foreach (var book in Model)
     {
         counter++;
-        if(counter> maxPerRow)
+        if (counter > maxPerRow)
         {
             counter = 0;
             @Html.Raw("</div>")
             @Html.Raw("<div class=\"row\">")
         }
+
         <div class="col-md-4">
             <a href="@Url.Action("Details","Book",new { book.Id})" class="thumbnail">
-                <img src="~/images/book.png" alt="@book.Title" title="@book.Title"/>
-                <span class="label label-success">Save @book.SavePercentage %</span>
+                <img src="~/images/book.png" alt="@book.Title" title="@book.Title" style="width:100%;"/>
             </a>
             <h4>
                 <a href="@Url.Action("Details","Book",new { book.Id})">@book.Title</a>
             </h4>
             <p>@book.Author.Name</p>
-            <p>价格:$@decimal.Round(book.SalePrice, 2)</p>
+            <p>
+                价格:$@decimal.Round(book.SalePrice, 2)
+                <span class="label label-success">Save @book.SavePercentage %</span>
+            </p>
             <p>原价:<span style="text-decoration:line-through">$@decimal.Round(book.ListPrice, 2)</span></p>
         </div>
     }

@@ -1,19 +1,24 @@
 ﻿@using KnockoutJS.Web.ViewModels
 @model IEnumerable<BookViewModel>
 @{
-    Layout = "~/Views/Shared/_LayoutScreen.cshtml";
-    ViewData["Title"] = "Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
-@if (Model.Count() > 0)
-{
-    @await Html.PartialAsync("_List", Model)
-}
-else
-{
-    <div class="alert alert-info">
-        当前分类下没有书籍
+<div class="row">
+    <div class="well well-lg col-lg-3">
+        @await Component.InvokeAsync("Category", new { selectedCategoryId = ViewBag.SelectedCategoryId != null ? ViewBag.SelectedCategoryId : 0 })
     </div>
-}
+    <div class="col-lg-9">
+        @if (Model.Count() > 0)
+        {
+            @await Html.PartialAsync("_List", Model)
+        }
+        else
+        {
+            <div class="alert alert-info">
+                当前分类下没有书籍
+            </div>
+        }
+    </div>
+</div>
 

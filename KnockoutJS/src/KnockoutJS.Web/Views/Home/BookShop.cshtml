@@ -1,13 +1,13 @@
 ﻿@{
     ViewData["Title"] = "书城";
-    Layout = "~/Views/Shared/_LayoutScreen.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="jumbotron">
-    <h1>@ViewData["Title"]</h1>
-    <p class="lead">挑选你最喜欢的书籍，将会给你最好的折扣.</p>
-    <p>
-        <a href="@Url.Action("About")" class="btn btn-primary btn-lg">更多信息 &raquo;</a>
-    </p>
-</div>
 
-@await Component.InvokeAsync("Book")
+<div class="row">
+    <div class="well well-lg col-lg-3">
+        @await Component.InvokeAsync("Category", new { selectedCategoryId = ViewBag.SelectedCategoryId != null ? ViewBag.SelectedCategoryId : 0 })
+    </div>
+    <div class="col-lg-9">
+        @await Component.InvokeAsync("Book")
+    </div>
+</div>
