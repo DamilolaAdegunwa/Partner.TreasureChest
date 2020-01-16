@@ -40,30 +40,23 @@
     };
 
     self.showCart = function () {
-        $("#cart").popover("toggle");
+        displayCartItems();
     };
 
     self.fadeIn = function (element) {
         setTimeout(function () {
-            $("#cart").popover("show");
+            displayCartItems();
             $(element).slideDown(function () {
                 setTimeout(function () {
-                    $("cart").popover("hide");
+                    //$("cart").popover("hide");
                 }, 2000);
             });
         }, 100);
     };
 
-    $("#cart").popover({
-        html: true,
-        content: function () {
-            return $("#cart-summary").html();
-        },
-        title: '购物车详情',
-        placement: 'bottom',
-        animation: true,
-        trigger: 'manual'
-    });
+    function displayCartItems() {
+        alert($("#cart-summary").html());
+    }
 }
 
 if (cartSummaryData !== undefined) {
