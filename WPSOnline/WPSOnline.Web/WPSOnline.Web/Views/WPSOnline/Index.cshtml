@@ -1,0 +1,27 @@
+﻿@*@using WuLong.Lims.LIMS.Reports.Dto
+@model ReportListDto*@
+@{
+//var appId = await SettingManager.GetSettingValueAsync(AppSettings.HostManagement.WPSDocumentAppId);
+//var wPSDocumentIPAddress = await SettingManager.GetSettingValueAsync(AppSettings.HostManagement.WPSDocumentIPAddress);
+//var onlineUrl = Html.Raw(string.Format("{0}{1}?_w_appid={2}&_w_fname={3}&_w_tokentype=1&_w_signature={4}", wPSDocumentIPAddress, Model.Id, appId, Model.FileName, Model.Sign));
+}
+
+@section scripts{
+    <script src="~/lib/wps/web-office-sdk-v1.1.1.umd.js"></script>
+    <script type="text/javascript">
+        var webOfficeSDK = WebOfficeSDK.config({
+            @*url: '@onlineUrl',*@
+            mode: 'normal',//normal常规，simple简洁
+            wordOptions: {
+                isShowDocMap: true, //显示目录
+                isBestScale: false, //最佳比例
+            }
+        });
+
+        @*webOfficeSDK.setToken({ token: "@string.Format("{0}-{1}",AbpSession.TenantId,AbpSession.UserId)" })*@
+
+        webOfficeSDK.on('fileOpen', function (data) {
+            console.log(data.result)
+        });
+    </script>
+}
