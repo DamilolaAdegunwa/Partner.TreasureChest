@@ -20,9 +20,9 @@ namespace RedisOperate.App
                 //}
             }
             {
-                //var service = RedisService.Redis;
+                var service = RedisService.Redis;
                 //service.KeyFlush();
-                //service.StringSet("RedisStringService_key1", "RedisStringService_value1");
+                service.StringSet("RedisStringService_key1", "RedisStringService_value1");
                 //Console.WriteLine(service.StringGet("RedisStringService_key1"));
                 //Console.WriteLine(service.StringGetSet("RedisStringService_key1", "RedisStringService_value2"));
                 //Console.WriteLine(service.StringGet("RedisStringService_key1"));
@@ -35,24 +35,24 @@ namespace RedisOperate.App
                 //Console.WriteLine(service.StringGet("RedisStringService_key1"));
             }
             {
-                //using (RedisStringService service = new RedisStringService())
-                //{
-                //    service.KeyFlush();
-                //    service.StringSet("RedisStringService_key1", "RedisStringService_value1");
-                //    Console.WriteLine(service.StringGet("RedisStringService_key1"));
-                //    Console.WriteLine(service.StringGetSet("RedisStringService_key1", "RedisStringService_value2"));
-                //    Console.WriteLine(service.StringGet("RedisStringService_key1"));
+                using (RedisStringService service = new RedisStringService())
+                {
+                    //service.KeyFlush();
+                    //service.StringSet("RedisStringService_key1", "RedisStringService_value1");
+                    //Console.WriteLine(service.StringGet("RedisStringService_key1"));
+                    Console.WriteLine(service.StringGetSet("RedisStringService_key1", "RedisStringService_value2"));
+                    //Console.WriteLine(service.StringGet("RedisStringService_key1"));
 
-                //    service.StringAppend("RedisStringService_key1", "Append");
-                //    Console.WriteLine(service.StringGet("RedisStringService_key1"));
-                //    service.StringSet("RedisStringService_key1", "RedisStringService_value", new TimeSpan(0, 0, 0, 5));
-                //    Console.WriteLine(service.StringGet("RedisStringService_key1"));
-                //    Thread.Sleep(5000);
-                //    Console.WriteLine(service.StringGet("RedisStringService_key1"));
-                //}
+                    //service.StringAppend("RedisStringService_key1", "Append");
+                    //Console.WriteLine(service.StringGet("RedisStringService_key1"));
+                    //service.StringSet("RedisStringService_key1", "RedisStringService_value", new TimeSpan(0, 0, 0, 5));
+                    //Console.WriteLine(service.StringGet("RedisStringService_key1"));
+                    //Thread.Sleep(5000);
+                    //Console.WriteLine(service.StringGet("RedisStringService_key1"));
+                }
             }
             {
-                Oversell.Show();
+                //Oversell.Show();
             }
 
             Console.ReadLine();

@@ -156,7 +156,7 @@ namespace RedisOperate.RedisTool.Interface
                 }
             }
         }
-        #endregion 其他
+        #endregion
 
         #region 常用Key操作
         /// <summary>
@@ -173,7 +173,6 @@ namespace RedisOperate.RedisTool.Interface
         public string AddSysCustomKey(string oldKey) => $"{CustomKey}_{oldKey}";
 
         #region 同步方法
-
         /// <summary>
         /// 删除单个key
         /// </summary>
@@ -201,7 +200,6 @@ namespace RedisOperate.RedisTool.Interface
         /// </summary>
         public void KeyFlush()
         {
-            //直接执行清除命令
             redis.Execute("FLUSHDB");
         }
 
@@ -240,12 +238,9 @@ namespace RedisOperate.RedisTool.Interface
             key = AddSysCustomKey(key);
             return redis.KeyExpire(key, expiry);
         }
-
-
         #endregion
 
         #region 异步方法
-
         /// <summary>
         /// 删除单个key
         /// </summary>
@@ -388,6 +383,6 @@ namespace RedisOperate.RedisTool.Interface
         /// <param name="redisValues"></param>
         /// <returns></returns>
         protected RedisValue[] ConvertRedisValue<T>(params T[] redisValues) => redisValues.Select(o => (RedisValue)ConvertJson<T>(o)).ToArray();
-        #endregion 辅助方法
+        #endregion
     }
 }
