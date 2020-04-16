@@ -223,6 +223,14 @@ namespace RedisOperate.Tool
 
         #region 删除设置过期
         /// <summary>
+        /// 清空当前DataBase中所有Key
+        /// </summary>
+        public void KeyFlush()
+        {
+            CacheRedis.Execute("FLUSHDB");
+        }
+
+        /// <summary>
         /// 删除单个key
         /// </summary>
         /// <param name="key">redis key</param>
