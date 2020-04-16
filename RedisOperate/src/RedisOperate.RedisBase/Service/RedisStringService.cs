@@ -354,5 +354,50 @@ namespace RedisOperate.RedisTool.Service
         }
 
         #endregion
+
+        #region 辅助方法
+        /// <summary>
+        /// 获取值的长度
+        /// </summary>
+        public long GetLength(string key)
+        {
+            return base.redis.StringBitCount(key);
+        }
+
+        /// <summary>
+        /// 自增1，返回自增后的值
+        /// </summary>
+        public long Incr(string key)
+        {
+            return base.redis.StringIncrement(key);
+        }
+        
+        /// <summary>
+        /// 自增count，返回自增后的值
+        /// </summary>
+        public long IncrBy(string key, int count)
+        {
+            return base.redis.StringIncrement(key, count);
+        }
+
+        /// <summary>
+        /// 自减1，返回自减后的值
+        /// </summary>
+        public long Decr(string key)
+        {
+            return base.redis.StringDecrement(key);
+        }
+
+        /// <summary>
+        /// 自减count ，返回自减后的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public long DecrBy(string key, int count)
+        {
+            return base.redis.StringDecrement(key, count);
+        }
+        #endregion
     }
 }
