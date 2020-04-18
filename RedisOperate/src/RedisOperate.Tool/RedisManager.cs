@@ -11,7 +11,6 @@ namespace RedisOperate.Tool
     /// </summary>
     public class RedisManager
     {
-        //public static ILogger Log = UtilLogger<RedisCommon>.Log;//日志记录
         private string _conn = AppConfigurataionServices.Configuration["RedisConfig:ReadWriteHosts"] ?? "127.0.0.1:6379";
         private int _db = 0;
         private static ConnectionMultiplexer connection;//静态变量 保证各模块使用的是不同实例的相同链接
@@ -64,6 +63,18 @@ namespace RedisOperate.Tool
         public bool StringSet(string key, string value)
         {
             return CacheRedis.StringSet(key, value);
+        }
+
+        /// <summary>
+        /// 单条存值
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="value">The value.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        public bool StringSet(string key, int value)
+        {
+            var keyValue = JsonConvert.ToString(value);
+            return CacheRedis.StringSet(key, keyValue);
         }
 
         /// <summary>
@@ -218,6 +229,40 @@ namespace RedisOperate.Tool
         public T GetStringKey<T>(string key)
         {
             return JsonConvert.DeserializeObject<T>(CacheRedis.StringGet(key));
+        }
+        #endregion
+
+        #region 其他操作
+        /// <summary>
+        /// 获取值的长度
+        /// </summary>
+        /// <param name="key">Key名称</param>
+        /// <returns></returns>
+        public long StringGetLength(string key)
+        {
+            return CacheRedis.StringLength(key);
+        }
+
+        /// <summary>
+        /// 数字增长val，返回自增后的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val">可以为负</param>
+        /// <returns>增长后的值</returns>
+        public double StringIncrement(string key, double val = 1)
+        {
+            return CacheRedis.StringIncrement(key, val);
+        }
+
+        /// <summary>
+        /// 数字减少val，返回自减少的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val">可以为负</param>
+        /// <returns>减少后的值</returns>
+        public double StringDecrement(string key, double val = 1)
+        {
+            return CacheRedis.StringDecrement(key, val);
         }
         #endregion
 

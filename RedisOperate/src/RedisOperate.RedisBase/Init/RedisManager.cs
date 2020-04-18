@@ -1,4 +1,6 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
+using System;
 using System.Collections.Concurrent;
 
 namespace RedisOperate.RedisTool.Init
@@ -8,7 +10,6 @@ namespace RedisOperate.RedisTool.Init
     /// </summary>
     public class RedisManager
     {
-        //private static LogHelper log = LogHelper.LogInterface<RedisManager>();
         private static readonly object Locker = new object();
         private static ConnectionMultiplexer _instance;
         /// <summary>
@@ -39,10 +40,11 @@ namespace RedisOperate.RedisTool.Init
                     {
                         if (_instance == null || !_instance.IsConnected)
                         {
-                            _instance = GetManager();
+                            _instance = GetConnectionMultiplexer();
                         }
                     }
                 }
+
                 return _instance;
             }
         }
@@ -52,12 +54,15 @@ namespace RedisOperate.RedisTool.Init
         /// </summary>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static ConnectionMultiplexer GetConnectionMultiplexer(string connectionString)
+        public static ConnectionMultiplexer GetConnectionMultiplexer(string connectionString = null)
         {
+            connectionString = connectionString ?? RedisHostConnection;
+
             if (!ConnectionCache.ContainsKey(connectionString))
             {
                 ConnectionCache[connectionString] = GetManager(connectionString);
             }
+
             return ConnectionCache[connectionString];
         }
 
@@ -66,9 +71,8 @@ namespace RedisOperate.RedisTool.Init
         /// </summary>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        private static ConnectionMultiplexer GetManager(string connectionString = null)
+        private static ConnectionMultiplexer GetManager(string connectionString)
         {
-            connectionString = connectionString ?? RedisHostConnection;
             var connect = ConnectionMultiplexer.Connect(connectionString);
 
             //注册如下事件
@@ -90,7 +94,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerConfigurationChanged(object sender, EndPointEventArgs e)
         {
-            //log.InfoAsync($"Configuration changed: {e.EndPoint}");
+            Console.WriteLine($"Configuration changed: {e.EndPoint}");
         }
 
         /// <summary>
@@ -100,7 +104,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerErrorMessage(object sender, RedisErrorEventArgs e)
         {
-            //log.InfoAsync($"ErrorMessage: {e.Message}");
+            Console.WriteLine($"ErrorMessage: {e.Message}");
         }
 
         /// <summary>
@@ -110,7 +114,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerConnectionRestored(object sender, ConnectionFailedEventArgs e)
         {
-            //log.InfoAsync($"ConnectionRestored: {e.EndPoint}");
+            Console.WriteLine($"ConnectionRestored: {e.EndPoint}");
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerConnectionFailed(object sender, ConnectionFailedEventArgs e)
         {
-            //log.InfoAsync($"重新连接：Endpoint failed: {e.EndPoint},  {e.FailureType} , {(e.Exception == null ? "" : e.Exception.Message)}");
+            Console.WriteLine($"Reconnection：Endpoint failed: {e.EndPoint},  {e.FailureType} , {(e.Exception == null ? "" : e.Exception.Message)}");
         }
 
         /// <summary>
@@ -130,7 +134,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerHashSlotMoved(object sender, HashSlotMovedEventArgs e)
         {
-            //log.InfoAsync($"HashSlotMoved:NewEndPoint{e.NewEndPoint}, OldEndPoint{e.OldEndPoint}");
+            Console.WriteLine($"HashSlotMoved:NewEndPoint{e.NewEndPoint}, OldEndPoint{e.OldEndPoint}");
         }
 
         /// <summary>
@@ -140,7 +144,7 @@ namespace RedisOperate.RedisTool.Init
         /// <param name="e"></param>
         private static void MuxerInternalError(object sender, InternalErrorEventArgs e)
         {
-            //log.InfoAsync($"InternalError:Message{ e.Exception.Message}");
+            Console.WriteLine($"InternalError:Message{ e.Exception.Message}");
         }
         #endregion
     }

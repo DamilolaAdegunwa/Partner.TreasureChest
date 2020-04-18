@@ -40,6 +40,7 @@ namespace RedisOperate.RedisTool.Interface
         protected RedisBase(int? dbNum = null)
         {
             _conn = RedisManager.Instance;
+
             if (_conn != null)
             {
                 redis = _conn.GetDatabase(dbNum ?? RedisManager.RedisDataBaseIndex);
@@ -62,6 +63,7 @@ namespace RedisOperate.RedisTool.Interface
             }
             this._disposed = true;
         }
+
         public void Dispose()
         {
             Dispose(true);
@@ -135,6 +137,7 @@ namespace RedisOperate.RedisTool.Interface
             bool committed = tran.Execute();
             return committed;
         }
+
         /// <summary>
         /// Redis锁
         /// </summary>
@@ -170,7 +173,7 @@ namespace RedisOperate.RedisTool.Interface
         /// </summary>
         /// <param name="oldKey"></param>
         /// <returns></returns>
-        public string AddSysCustomKey(string oldKey) => $"{CustomKey}_{oldKey}";
+        public string AddSysCustomKey(string oldKey) => $"{CustomKey}{oldKey}";
 
         #region 同步方法
         /// <summary>
