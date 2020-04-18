@@ -73,7 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FastConnect", "FastConnect"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1CAA39AC-12A7-4518-97B7-125A98E7D6EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastConnect.Tool", "FastConnect.Tool\src\FastConnect.Tool\FastConnect.Tool.csproj", "{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastConnect.Tool", "FastConnect\src\FastConnect.Tool\FastConnect.Tool.csproj", "{3C6DD0A6-E126-4DC6-BC88-C1207BF6686D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheduler", "Scheduler", "{48DB1A7A-904F-469E-903C-A47E1715DC90}"
 EndProject
@@ -93,9 +93,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F1371C7C-8D4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.Tool", "RedisOperate\src\RedisOperate.Tool\RedisOperate.Tool.csproj", "{C8BFBA00-D143-46FF-AB7B-27CB2A182BCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.RedisTool", "RedisOperate\Src\RedisOperate.RedisBase\RedisOperate.RedisTool.csproj", "{41DCC796-830E-415C-85C8-3CA32891A6EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.RedisTool", "RedisOperate\src\RedisOperate.RedisBase\RedisOperate.RedisTool.csproj", "{41DCC796-830E-415C-85C8-3CA32891A6EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisOperate.App", "RedisOperate.App\src\RedisOperate.App\RedisOperate.App.csproj", "{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisOperate.App", "RedisOperate\src\RedisOperate.App\RedisOperate.App.csproj", "{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

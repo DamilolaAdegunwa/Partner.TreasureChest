@@ -6,7 +6,7 @@
   </PropertyGroup>
  
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RedisOperate\Src\RedisOperate.RedisBase\RedisOperate.RedisTool.csproj" />
+    <ProjectReference Include="..\..\..\RedisOperate\src\RedisOperate.RedisBase\RedisOperate.RedisTool.csproj" />
     <ProjectReference Include="..\..\..\RedisOperate\src\RedisOperate.Tool\RedisOperate.Tool.csproj" />
   </ItemGroup>
   
