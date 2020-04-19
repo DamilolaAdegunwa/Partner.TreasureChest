@@ -9,19 +9,18 @@ using RedisOperate.RedisTool.Interface;
 namespace RedisOperate.RedisTool.Service
 {
     /// <summary>
-    /// Sorted Sets是将 Set 中的元素增加了一个权重参数 score，使得集合中的元素能够按 score 进行有序排列
+    /// ZSet：是将 Set 中的元素增加了一个权重参数 score，使得集合中的元素能够按 score 进行有序排列
     /// 1.带有权重的元素，比如一个游戏的用户得分排行榜
     /// 2.比较复杂的数据结构，一般用到的场景不算太多
     /// </summary>
-    public class RedisSortedSetService : RedisBase
+    public class RedisZSetService : RedisBase
     {
         #region 构造函数
-
         /// <summary>
         /// 初始化Redis的SortedSet有序数据结构操作
         /// </summary>
         /// <param name="dbNum">操作的数据库索引0-64(需要在conf文件中配置)</param>
-        public RedisSortedSetService(int? dbNum = null) :
+        public RedisZSetService(int? dbNum = null) :
             base(dbNum)
         { }
         #endregion

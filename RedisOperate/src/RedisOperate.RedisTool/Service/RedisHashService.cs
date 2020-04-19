@@ -18,9 +18,7 @@ namespace RedisOperate.RedisTool.Service
     /// </summary>
     public class RedisHashService : RedisBase
     {
-
         #region 构造函数
-
         /// <summary>
         /// 初始化Redis的Hash数据结构操作
         /// </summary>
@@ -31,7 +29,6 @@ namespace RedisOperate.RedisTool.Service
         #endregion
 
         #region 同步方法
-
         /// <summary>
         /// 判断某个数据是否已经被缓存
         /// </summary>
@@ -153,11 +150,9 @@ namespace RedisOperate.RedisTool.Service
             }
             return dic;
         }
-
-        #endregion 同步方法
+        #endregion
 
         #region 异步方法
-
         /// <summary>
         /// 异步方法 判断某个数据是否已经被缓存
         /// </summary>
@@ -279,8 +274,6 @@ namespace RedisOperate.RedisTool.Service
             }
             return dic;
         }
-
-        #endregion 异步方法
-
+        #endregion
     }
 }

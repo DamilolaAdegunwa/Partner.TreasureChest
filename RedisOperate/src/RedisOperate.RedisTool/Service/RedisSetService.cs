@@ -17,7 +17,6 @@ namespace RedisOperate.RedisTool.Service
     public class RedisSetService : RedisBase
     {
         #region 构造函数
-
         /// <summary>
         /// 初始化Redis的Set无序数据结构操作
         /// </summary>

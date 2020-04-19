@@ -95,6 +95,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.RedisTool", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.App", "RedisOperate\src\RedisOperate.App\RedisOperate.App.csproj", "{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisOperate.BackgroundService", "RedisOperate\src\RedisOperate.BackgroundService\RedisOperate.BackgroundService.csproj", "{3AEBCD44-432E-440C-BD5D-C600585A204D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,6 +175,10 @@ Global
 		{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -210,6 +216,7 @@ Global
 		{F1371C7C-8D46-4E10-97E5-3C4B02849FD4} = {AC237A33-9271-440C-91EB-0452E01B3C23}
 		{41DCC796-830E-415C-85C8-3CA32891A6EF} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
 		{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
+		{3AEBCD44-432E-440C-BD5D-C600585A204D} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {965E9C99-96A6-489B-A17A-1285073763B0}

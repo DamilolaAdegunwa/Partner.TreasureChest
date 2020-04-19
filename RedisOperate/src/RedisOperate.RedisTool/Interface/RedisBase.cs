@@ -100,7 +100,7 @@ namespace RedisOperate.RedisTool.Interface
         /// 获取Redis的SortedSet(ZSet)有序集合数据类型操作辅助方法类
         /// </summary>
         /// <returns></returns>
-        public static RedisSortedSetService SortedSetService => new RedisSortedSetService();
+        public static RedisZSetService SortedSetService => new RedisZSetService();
         #endregion
 
         #region 公共操作方法
