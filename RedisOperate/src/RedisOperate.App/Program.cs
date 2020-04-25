@@ -11,28 +11,30 @@ namespace RedisOperate.App
     {
         static void Main(string[] args)
         {
+            //更改appsettings.json中的连接字符串
+
             #region RedisString
-            RedisStringBasicTest.Run();
+            //RedisStringBasicTest.Run();
             OverSell.Run();
             #endregion
 
             #region RedisHash
-            UserInfoTest.Run();
+            //UserInfoTest.Run();
             #endregion
 
             #region RedisSet
-            FriendManager.Run();
+            //FriendManager.Run();
             #endregion
 
             #region RedisZSet
-            RankManager.Run();
+            //RankManager.Run();
             #endregion
 
             #region RedisList
-            RedisListBasicTest.Run();
-            BlogPageList.Run();
-            ProducerConsumerModel.Run();
-            PublisherSubscriberModel.Run();
+            //RedisListBasicTest.Run();
+            //BlogPageList.Run();
+            //ProducerConsumerModel.Run();
+            //PublisherSubscriberModel.Run();
             #endregion
 
             Console.ReadLine();

@@ -20,7 +20,7 @@ namespace RedisOperate.App.RedisString
             for (int i = 0; i < 5000; i++)
             {
                 int k = i;
-                Task.Run(() =>//每个线程就是一个用户请求
+                Task.Run(() =>//每个线程就是一个模拟用户请求
                 {
                     if (IsGoOn)
                     {
@@ -28,7 +28,7 @@ namespace RedisOperate.App.RedisString
                         if (index >= 0)
                         {
                             Console.WriteLine($"{k.ToString("000")} Success，Product Index:{index}");
-                            //可以分队列，去数据库操作
+                            //...
                         }
                         else
                         {

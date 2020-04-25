@@ -8,7 +8,6 @@ using RedisOperate.RedisTool.Interface;
 
 namespace RedisOperate.RedisTool.Service
 {
-
     /// <summary>
     /// Set：用哈希表来保持字符串的唯一性，没有先后顺序，存储一些集合性的数据
     /// 1.共同好友、二度好友
@@ -425,6 +424,5 @@ namespace RedisOperate.RedisTool.Service
         }
 
         #endregion
-
     }
 }
