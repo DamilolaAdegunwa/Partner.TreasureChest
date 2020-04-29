@@ -14,26 +14,20 @@ namespace KnockoutJS.Web.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// 主页
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
+        /// <summary>
+        /// 书城入口
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult BookShop()
         {
             return View();
         }
@@ -42,11 +36,6 @@ namespace KnockoutJS.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult BookShop()
-        {
-            return View();
         }
     }
 }

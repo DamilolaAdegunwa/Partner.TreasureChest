@@ -73,11 +73,6 @@ namespace RedisOperate.App.RedisHash
                 var existUserInfo = service.HashGet<UserInfo>($"userinfo_{userInfo1.Id}", "userInfo");
                 #endregion
             }
-
-            using (RedisHashService service = new RedisHashService())
-            {
-
-            }
             #endregion
         }
     }

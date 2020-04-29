@@ -36,6 +36,11 @@ namespace KnockoutJS.Web.Controllers
             return View(booksViewModel);
         }
 
+        /// <summary>
+        /// 书籍详情页
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int id)
         {
             var book = await _bookAppService.GetById(id);
