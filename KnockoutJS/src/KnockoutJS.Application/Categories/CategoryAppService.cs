@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using KnockoutJS.Core;
@@ -9,7 +10,7 @@ using KnockoutJS.Core.IRepositories;
 namespace KnockoutJS.Application
 {
     /// <summary>
-    /// 书籍目录
+    /// 书籍类别应用服务
     /// </summary>
     public class CategoryAppService : KnockoutJSAppServiceBase, ICategoryAppService
     {
@@ -20,11 +21,9 @@ namespace KnockoutJS.Application
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<Category>> Get()
+        public async Task<List<Category>> GetAllList()
         {
-            Console.WriteLine($"CategoryAppService Get-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
             var list = await _categoryRepository.Get();
-            Console.WriteLine($"CategoryAppService Get-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
             return list;
         }
     }

@@ -23,13 +23,11 @@ namespace KnockoutJS.EFCore.Repositories
 
         public async Task<List<Category>> Get()
         {
-            Console.WriteLine($"CategoryRepository Get-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
             var list = await _shoppingCartContext.Categories
                 .OrderBy(c => c.Name)
                 .AsNoTracking()
                 .ToListAsync();
-            Console.WriteLine($"CategoryRepository Get-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-
+           
             return list;
         }
     }

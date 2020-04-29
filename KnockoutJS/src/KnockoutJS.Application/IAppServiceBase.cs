@@ -10,5 +10,6 @@ namespace KnockoutJS.Application
     /// </summary>
     public interface IAppServiceBase
     {
+
     }
 }

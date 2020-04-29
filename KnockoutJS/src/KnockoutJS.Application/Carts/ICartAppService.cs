@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace KnockoutJS.Application
 {
+    /// <summary>
+    /// 购物车应用服务接口
+    /// </summary>
     public interface ICartAppService : IAppServiceBase
     {
         /// <summary>

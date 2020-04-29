@@ -56,6 +56,7 @@ namespace KnockoutJS.EFCore.Repositories
                 {
                     _entities = _context.Set<T>();
                 }
+
                 return _entities;
             }
         }
@@ -70,7 +71,6 @@ namespace KnockoutJS.EFCore.Repositories
             {
                 return this.Entities;
             }
-
         }
 
         public T GetById(object id)

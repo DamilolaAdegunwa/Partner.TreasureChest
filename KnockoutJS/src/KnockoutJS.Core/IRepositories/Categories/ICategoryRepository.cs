@@ -9,7 +9,7 @@ namespace KnockoutJS.Core.IRepositories
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
         /// <summary>
-        /// Get方法
+        /// 获取书籍类别列表
         /// </summary>
         /// <returns></returns>
         Task<List<Category>> Get();

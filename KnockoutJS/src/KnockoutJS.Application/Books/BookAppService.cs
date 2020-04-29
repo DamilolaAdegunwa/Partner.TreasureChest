@@ -9,7 +9,7 @@ using KnockoutJS.Core.IRepositories;
 namespace KnockoutJS.Application
 {
     /// <summary>
-    /// 书籍目录
+    /// 书籍应用服务
     /// </summary>
     public class BookAppService : KnockoutJSAppServiceBase, IBookAppService
     {

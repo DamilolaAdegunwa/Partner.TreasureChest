@@ -10,6 +10,11 @@ namespace KnockoutJS.Core.Categories
     /// </summary>
     public class Category : Entity
     {
+        public Category()
+        {
+
+        }
+
         /// <summary>
         /// 类别名称
         /// </summary>

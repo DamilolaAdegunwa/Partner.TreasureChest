@@ -9,7 +9,7 @@ using KnockoutJS.Core.IRepositories;
 namespace KnockoutJS.Application
 {
     /// <summary>
-    /// 书籍目录
+    /// 购物车子项应用服务
     /// </summary>
     public class CartItemAppService : KnockoutJSAppServiceBase, ICartItemAppService
     {

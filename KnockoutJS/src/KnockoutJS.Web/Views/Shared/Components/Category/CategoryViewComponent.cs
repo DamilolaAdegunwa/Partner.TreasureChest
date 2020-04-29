@@ -24,11 +24,10 @@ namespace KnockoutJS.Web.Views.Shared.Components.Category
 
         public async Task<IViewComponentResult> InvokeAsync(int selectedCategoryId)
         {
-            Console.WriteLine($"CategoryViewComponent InvokeAsync-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-            var categories = await _categoryAppService.Get();
+            var categories = await _categoryAppService.GetAllList();
             var cartViewModelList = _mapper.Map<List<CategoryViewModel>>(categories);
             ViewBag.SelectedCategoryId = selectedCategoryId;
-            Console.WriteLine($"CategoryViewComponent InvokeAsync-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
+
             return View(cartViewModelList);
         }
     }

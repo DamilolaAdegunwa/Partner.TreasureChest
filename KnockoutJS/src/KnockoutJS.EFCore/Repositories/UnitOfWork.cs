@@ -15,6 +15,7 @@ namespace KnockoutJS.EFCore.Repositories
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+
         public int SaveChanges()
         {
             return _dbContext.SaveChanges();
@@ -24,6 +25,7 @@ namespace KnockoutJS.EFCore.Repositories
         {
             return await _dbContext.SaveChangesAsync();
         }
+
         public void BeginTransaction()
         {
             _dbContext.Database.BeginTransaction();
