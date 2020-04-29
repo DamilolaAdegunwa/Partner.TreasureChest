@@ -18,7 +18,7 @@
         };
 
         $.ajax({
-            url: "http://localhost:64962/api/cartitem/" + (self.cartItem.id === undefined ? 'post' : 'put'),
+            url: "http://localhost:9527/api/cartitem/" + (self.cartItem.id === undefined ? 'post' : 'put'),
             type: self.cartItem.id === undefined ? 'post' : 'put',
             contentType: 'application/json',
             data: ko.toJSON(data),
@@ -32,25 +32,17 @@
 
     self.successfulSave = function (data) {
         var msg = '<div class="alert alert-success"><strong>Success!</strong> The item has been ';
-        if (self.cartItem.id === undefined)
-            msg += 'added to';
-        else
-            msg += 'updated in';
-
-        $('.body-content').prepend(msg + ' your cart.</div>');
+        msg += self.cartItem.id === undefined ? 'added to' : 'updated in';
+        $('.contentMenu').prepend(msg + ' your cart.</div>');
 
         self.cartItem.id = data.id;
         cartSummaryViewModel.updateCartItem(ko.toJS(self.cartItem));
     };
 
     self.errorSave = function () {
-        var msg = '<div class="alert alert-danger"><strong>Error!</strong> There was an error';
-        if (self.cartItem.id === undefined)
-            msg += 'adding';
-        else
-            msg += 'updating';
-
-        $('.body-content').prepend(msg + ' the item to your cart.</div>');
+        var msg = '<div class="alert alert-danger"><strong>Error!</strong> There was an error ';
+        msg += self.cartItem.id === undefined ? 'adding' : 'updating';
+        $('.contentMenu').prepend(msg + ' the item to your cart.</div>');
     };
 }
 

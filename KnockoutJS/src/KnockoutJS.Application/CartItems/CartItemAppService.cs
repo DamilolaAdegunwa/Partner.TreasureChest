@@ -25,14 +25,14 @@ namespace KnockoutJS.Application
             return await _cartItemRepository.AddToCart(cartItem);
         }
 
-        public void DeleteCartItem(CartItem cartItem)
+        public async Task DeleteCartItem(CartItem cartItem)
         {
-           _cartItemRepository.DeleteCartItem(cartItem);
+            await _cartItemRepository.DeleteCartItem(cartItem);
         }
 
-        public void UpdateCartItem(CartItem cartItem)
+        public async Task UpdateCartItem(CartItem cartItem)
         {
-             _cartItemRepository.UpdateCartItem(cartItem);
+            await _cartItemRepository.UpdateCartItem(cartItem);
         }
     }
 }

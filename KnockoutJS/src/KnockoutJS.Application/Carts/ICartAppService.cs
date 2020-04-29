@@ -16,10 +16,10 @@ namespace KnockoutJS.Application
         Task<Cart> GetFirstCart();
 
         /// <summary>
-        /// 根据sessionId获取唯一的购物车信息
+        /// 根据userId获取购物车信息
         /// </summary>
-        /// <param name="sessionId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<Cart> GetBySessionId(string sessionId);
+        Task<Cart> GetByUserId(string userId);
     }
 }

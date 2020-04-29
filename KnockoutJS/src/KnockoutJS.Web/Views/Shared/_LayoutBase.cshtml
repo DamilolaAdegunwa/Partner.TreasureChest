@@ -20,15 +20,10 @@
     </header>
 
     <div class="container">
-        <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        &nbsp;&copy; @DateTime.Now.Year
-    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -36,7 +31,6 @@
         <script src="~/lib/knockout/knockout-3.5.0.js"></script>
         <script src="~/js/custombindings.js" asp-append-version="true"></script>
         <script src="~/js/knockout.custom.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

@@ -12,8 +12,8 @@ namespace KnockoutJS.EFCore
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            builder.HasIndex(c=>c.SessionId).IsUnique();
-            builder.Property(c => c.SessionId).HasMaxLength(255);
+            builder.HasIndex(c=>c.UserId).IsUnique();
+            builder.Property(c => c.UserId).HasMaxLength(255);
         }
     }
 }

@@ -13,7 +13,7 @@
     self.cart.total = self.cart.cartItems.total();
 
     self.updateCartItem = function (cartItem) {
-        var isNewItem = true;
+        let isNewItem = true;
 
         for (var i = 0; i < self.cart.cartItems().length; i++) {
             if (self.cart.cartItems()[i].id === cartItem.id) {
@@ -24,13 +24,13 @@
         }
 
         if (isNewItem) {
-            cartItem.quantity = ko.observable(cartItem.quantity)
-                .extend({ subTotal: cartItem.book.salePrice });
+            cartItem.quantity = ko.observable(cartItem.quantity).extend({ subTotal: cartItem.book.salePrice });
             self.cart.cartItems.push(cartItem);
         }
     };
 
     self.deleteCartItem = function (cartItem) {
+        console.log(cartItem);
         for (var i = 0; i < self.cart.cartItems().length; i++) {
             if (self.cart.cartItems()[i].id === cartItem.id) {
                 self.cart.cartItems.remove(self.cart.cartItems()[i]);
@@ -40,23 +40,8 @@
     };
 
     self.showCart = function () {
-        displayCartItems();
+        $(".modal-body").html($("#cart-summary").html());
     };
-
-    self.fadeIn = function (element) {
-        setTimeout(function () {
-            displayCartItems();
-            $(element).slideDown(function () {
-                setTimeout(function () {
-                    //$("cart").popover("hide");
-                }, 2000);
-            });
-        }, 100);
-    };
-
-    function displayCartItems() {
-        alert($("#cart-summary").html());
-    }
 }
 
 if (cartSummaryData !== undefined) {
@@ -64,5 +49,5 @@ if (cartSummaryData !== undefined) {
     ko.applyBindings(cartSummaryViewModel, document.getElementById("cart-details"));
 }
 else {
-    $(".body-content").prepend('<div class="alert alert-danger"><strong>错误！</strong>没有找到购物车');
+    $(".contentMenu").prepend('<div class="alert alert-danger"><strong>错误！</strong>没有找到购物车');
 }

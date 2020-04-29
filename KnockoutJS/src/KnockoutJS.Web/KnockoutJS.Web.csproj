@@ -21,4 +21,9 @@
     <ProjectReference Include="..\KnockoutJS.Application\KnockoutJS.Application.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
 </Project>

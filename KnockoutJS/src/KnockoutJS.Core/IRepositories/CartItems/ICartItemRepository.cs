@@ -10,8 +10,8 @@ namespace KnockoutJS.Core.IRepositories
     {
         Task<CartItem> AddToCart(CartItem cartItem);
 
-        void UpdateCartItem(CartItem cartItem);
+        Task UpdateCartItem(CartItem cartItem);
 
-        void DeleteCartItem(CartItem cartItem);
+        Task DeleteCartItem(CartItem cartItem);
     }
 }

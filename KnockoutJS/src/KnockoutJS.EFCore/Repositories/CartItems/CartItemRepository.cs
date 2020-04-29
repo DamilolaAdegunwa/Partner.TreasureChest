@@ -40,10 +40,10 @@ namespace KnockoutJS.EFCore.Repositories
             return existingCartItem;
         }
 
-        public void DeleteCartItem(CartItem cartItem)
+        public async Task DeleteCartItem(CartItem cartItem)
         {
             _shoppingCartContext.Entry(cartItem).State = EntityState.Deleted;
-            _shoppingCartContext.SaveChanges();
+            await _shoppingCartContext.SaveChangesAsync();
         }
 
         public async Task<CartItem> GetByCartIdAndBookId(int cartId, int bookId)
@@ -51,10 +51,10 @@ namespace KnockoutJS.EFCore.Repositories
             return await _shoppingCartContext.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.BookId == bookId);
         }
 
-        public void UpdateCartItem(CartItem cartItem)
+        public async Task UpdateCartItem(CartItem cartItem)
         {
             _shoppingCartContext.Entry(cartItem).State = EntityState.Modified;
-            _shoppingCartContext.SaveChanges();
+            await _shoppingCartContext.SaveChangesAsync();
         }
     }
 }

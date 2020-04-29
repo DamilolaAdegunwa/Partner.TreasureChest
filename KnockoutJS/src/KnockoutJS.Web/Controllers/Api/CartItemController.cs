@@ -39,18 +39,20 @@ namespace KnockoutJS.Web.Controllers.Api
 
         [HttpPut]
         [Route("Put")]
-        public void Put(CartItemViewModel cartItem)
+        public async Task<CartItemViewModel> Put(CartItemViewModel cartItem)
         {
             var newCartItem = _mapper.Map<CartItem>(cartItem);
-            _cartItemAppService.UpdateCartItem(newCartItem);
+            await _cartItemAppService.UpdateCartItem(newCartItem);
+            cartItem = _mapper.Map<CartItemViewModel>(newCartItem);
+            return cartItem;
         }
 
         [HttpDelete]
         [Route("Delete")]
-        public void Delete(CartItemViewModel cartItem)
+        public async Task Delete(CartItemViewModel cartItem)
         {
             var newCartItem = _mapper.Map<CartItem>(cartItem);
-            _cartItemAppService.DeleteCartItem(newCartItem);
+            await _cartItemAppService.DeleteCartItem(newCartItem);
         }
     }
 }

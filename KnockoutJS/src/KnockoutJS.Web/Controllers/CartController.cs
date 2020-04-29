@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using KnockoutJS.Application;
 using KnockoutJS.Core;
+using KnockoutJS.Web.Extensions;
 using KnockoutJS.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,7 @@ namespace KnockoutJS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var cart = await _cartAppService.GetBySessionId(HttpContext.Session.Id);
+            var cart = await _cartAppService.GetByUserId(CommonData.UserId);
             var cartViewModel = _mapper.Map<CartViewModel>(cart);
             return View(cartViewModel);
         }

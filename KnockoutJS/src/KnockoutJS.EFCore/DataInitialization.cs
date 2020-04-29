@@ -13,7 +13,7 @@ namespace KnockoutJS.EFCore
     {
         public static void Initialize(ShoppingCartContext context)
         {
-            var result = context.Database.EnsureCreated();
+            context.Database.EnsureCreated();
 
             if (context.Categories.Any())
             {
@@ -21,12 +21,12 @@ namespace KnockoutJS.EFCore
             }
 
             var categories = new List<Category>()
-                {
-                    new Category(){Name="科学与技术"},
-                    new Category(){Name="人文哲理"},
-                    new Category(){Name="经济学"},
-                    new Category(){Name="走进社会"},
-                };
+            {
+                new Category(){Name="科学与技术"},
+                new Category(){Name="人文哲理"},
+                new Category(){Name="经济学"},
+                new Category(){Name="走进社会"},
+            };
             context.AddRange(categories);
 
             var author = new Author()

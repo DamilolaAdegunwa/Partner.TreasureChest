@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KnockoutJS.Application;
+using KnockoutJS.Web.Extensions;
 using KnockoutJS.Web.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,12 +25,8 @@ namespace KnockoutJS.Web.Views.Shared.Components.Cart
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            Console.WriteLine($"CartViewComponent InvokeAsync-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-            //设置Session中的属性，以此保证Session.Id是唯一的,否则session.Id总是变化的，参考官方文档
-            HttpContext.Session.SetString("sessionId", HttpContext.Session.Id.ToString());
-            var cart = await _cartAppService.GetBySessionId(HttpContext.Session.Id);
+            var cart = await _cartAppService.GetByUserId(CommonData.UserId);
             var cartViewModel = _mapper.Map<CartViewModel>(cart);
-            Console.WriteLine($"CartViewComponent InvokeAsync-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
             return View(cartViewModel);
         }
     }

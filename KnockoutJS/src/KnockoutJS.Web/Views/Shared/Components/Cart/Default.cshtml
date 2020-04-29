@@ -2,7 +2,7 @@
 @model KnockoutJS.Web.ViewModels.CartViewModel
 
 <div id="cart-details">
-    <button id="cart" type="button" class="btn btn-default btn-lg" data-bind="click:showCart">
+    <button id="cart" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" data-bind="click:showCart">
         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
         <span class="badge" data-bind="text:cart.cartItems().length;"></span>
     </button>
@@ -11,15 +11,14 @@
         <span data-bind="visible:cart.cartItems().length == 0">当前购物车为空！</span>
         <div data-bind="visible:cart.cartItems().length > 0">
             <ol style="padding-left:15px;">
-                <!--ko foreach :{data:cart.cartItems,afterAdd:fadeIn }-->
+                <!--ko foreach :{data:cart.cartItems }-->
                 <li data-bind="text:book.title"></li>
                 <!--/ko-->
             </ol>
             <p><strong>总计:</strong>￥<span data-bind="text:cart.total()"></span></p>
-            <br />
-            <a href="@Url.Action("Index","Cart")" class="btn btn-primary">详情</a>
         </div>
     </div>
+
     <script>
     var cartSummaryData = @Html.HtmlConvertToJson(Model);
     </script>

@@ -1,8 +1,9 @@
 ﻿@using KnockoutJS.Web.Extensions
 @model KnockoutJS.Web.ViewModels.CartViewModel
 @{
-    ViewData["Title"] = "Cart Details";
+    ViewData["Title"] = "购物车详情";
 }
+
 <h2>@ViewData["Title"]</h2>
 
 <div id="cartDetails">
@@ -18,12 +19,10 @@
         <tr>
             <td><a href="@Url.Action("Details","Book")" data-bind="appendToHref:book.id,text:book.title"></a></td>
             <td data-bind="text:'$'+book.salePrice"></td>
-            <td><upsert-cart-item params="cartItem:$data,showButton:false"></upsert-cart-item></td>
+            <td data-bind="text:quantity"></td>
             <td data-bind="text:'$'+quantity.subTotal()"></td>
             <td>
-                <button type="button" class="btn btn-danger" data-bind="click:$parent.deleteCartItem,visible:!$parent.sending()">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
+                <button type="button" class="btn btn-danger" data-bind="click:$parent.deleteCartItem,visible:!$parent.sending()">移除</button>
             </td>
         </tr>
         <!-- /ko -->
@@ -36,15 +35,13 @@
         </div>
     </div>
     <div class="alert alert-warning" style="display:none" data-bind="visible:cart.cartItems().length == 0">
-        购物车为空！
-        <a href="@Url.Action("BookShop","Home")">继续购物</a>
+        购物车为空！<a href="@Url.Action("BookShop","Home")">继续购物</a>
     </div>
     <h3>总计:$<span data-bind="text:cart.total"></span></h3>
 </div>
 
-@await Html.PartialAsync("_CartItemForm")
 @section Scripts{
-    <script src="~/js/ViewModels/CartItemViewModel.js"></script>
+    <script src="~/js/ViewModels/CartDetailViewModel.js"></script>
     <script type="text/javascript">
         var model = @Html.HtmlConvertToJson(Model);
         var cartDetailViewModel = new CartDetailViewModel(model);

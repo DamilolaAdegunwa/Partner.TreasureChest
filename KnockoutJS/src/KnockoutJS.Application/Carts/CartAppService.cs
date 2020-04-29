@@ -25,11 +25,9 @@ namespace KnockoutJS.Application
             return cart;
         }
 
-        public async Task<Cart> GetBySessionId(string sessionId)
+        public async Task<Cart> GetByUserId(string userId)
         {
-            Console.WriteLine($"CartAppService GetBySessionId-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-            var cart = await _cartRepository.GetBySessionId(sessionId);
-            Console.WriteLine($"CartAppService GetBySessionId-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
+            var cart = await _cartRepository.GetByUserId(userId);
             return cart;
         }
     }

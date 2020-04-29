@@ -9,9 +9,9 @@ namespace KnockoutJS.Core.Carts
     public class Cart : Entity
     {
         /// <summary>
-        /// 缓存Id
+        /// 用户Id
         /// </summary>
-        public string SessionId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 关联购物车子项

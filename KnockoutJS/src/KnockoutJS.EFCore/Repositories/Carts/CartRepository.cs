@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace KnockoutJS.EFCore.Repositories
-
 {
     public class CartRepository : KnockoutJSRepositoryBase<Cart>, ICartRepository
     {
@@ -29,32 +28,32 @@ namespace KnockoutJS.EFCore.Repositories
             return cart;
         }
 
-        public async Task<Cart> GetBySessionId(string sessionId)
+        public async Task<Cart> GetByUserId(string userId)
         {
-            Console.WriteLine($"CartRepository GetBySessionId-Start ThreadId:{Thread.CurrentThread.ManagedThreadId}");
             var cart = await _shoppingCartContext.Carts
                 .Include(c => c.CartItems)
                     .ThenInclude(c => c.Book)
-                .Where(c => c.SessionId == sessionId)
+                .Where(c => c.UserId == userId)
                 .FirstOrDefaultAsync();
 
-            cart = await CreateCartIfItDoesntExist(sessionId, cart);
-            Console.WriteLine($"CartRepository GetBySessionId-End ThreadId:{Thread.CurrentThread.ManagedThreadId}");
+            cart = await CreateCartIfItDoesntExist(userId, cart);
+
             return cart;
         }
 
-        private async Task<Cart> CreateCartIfItDoesntExist(string sessionId, Cart cart)
+        private async Task<Cart> CreateCartIfItDoesntExist(string userId, Cart cart)
         {
-            if (null == cart)
+            if (cart == null)
             {
                 cart = new Cart()
                 {
-                    SessionId = sessionId,
+                    UserId = userId,
                     CartItems = new List<CartItem>()
                 };
                 await _shoppingCartContext.Carts.AddAsync(cart);
                 await _shoppingCartContext.SaveChangesAsync();
             }
+
             return cart;
         }
     }
