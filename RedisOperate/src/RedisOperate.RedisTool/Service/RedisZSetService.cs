@@ -195,7 +195,7 @@ namespace RedisOperate.RedisTool.Service
             key = AddSysCustomKey(key);
             Order orderBy = desc ? Order.Descending : Order.Ascending;
             var rValue = base.redis.SortedSetRangeByRank(key, start, stop, orderBy);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace RedisOperate.RedisTool.Service
             key = AddSysCustomKey(key);
             Order orderBy = desc ? Order.Descending : Order.Ascending;
             var rValue = base.redis.SortedSetRangeByScore(key, start, stop, Exclude.None, orderBy);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace RedisOperate.RedisTool.Service
             var sValue = ConvertJson<T>(startValue);
             var eValue = ConvertJson<T>(endValue);
             var rValue = base.redis.SortedSetRangeByValue(key, sValue, eValue);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace RedisOperate.RedisTool.Service
             key = AddSysCustomKey(key);
             Order orderBy = desc ? Order.Descending : Order.Ascending;
             var rValue = await base.redis.SortedSetRangeByRankAsync(key, start, stop, orderBy);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace RedisOperate.RedisTool.Service
             key = AddSysCustomKey(key);
             Order orderBy = desc ? Order.Descending : Order.Ascending;
             var rValue = await base.redis.SortedSetRangeByScoreAsync(key, start, stop, Exclude.None, orderBy);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace RedisOperate.RedisTool.Service
             var sValue = ConvertJson<T>(startValue);
             var eValue = ConvertJson<T>(endValue);
             var rValue = await base.redis.SortedSetRangeByValueAsync(key, sValue, eValue);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>

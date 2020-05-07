@@ -325,36 +325,40 @@ namespace RedisOperate.RedisTool.Interface
         /// <returns></returns>
         protected string ConvertJson<T>(T value)
         {
-            string result = value is string ? value.ToString() :
-                JsonConvert.SerializeObject(value, Formatting.None);
-            return result;
+            return value is string ? value.ToString() : JsonConvert.SerializeObject(value, Formatting.None);
         }
 
         /// <summary>
-        /// 将值反系列化成对象
+        /// 将值反序列化成对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
         protected T ConvertObj<T>(RedisValue value)
         {
-            return value.IsNullOrEmpty ? default(T) : JsonConvert.DeserializeObject<T>(value);
+            if (typeof(T).Name.Equals(typeof(string).Name))
+            {
+                return JsonConvert.DeserializeObject<T>($"'{value}'");
+            }
+
+            return JsonConvert.DeserializeObject<T>(value);
         }
 
         /// <summary>
-        /// 将值反系列化成对象集合
+        /// 将值反序列化成对象集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="values"></param>
         /// <returns></returns>
-        protected List<T> ConvetList<T>(RedisValue[] values)
+        protected List<T> ConvertList<T>(RedisValue[] values)
         {
-            List<T> result = new List<T>();
+            var result = new List<T>();
             foreach (var item in values)
             {
                 var model = ConvertObj<T>(item);
                 result.Add(model);
             }
+
             return result;
         }
 

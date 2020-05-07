@@ -120,7 +120,7 @@ namespace RedisOperate.RedisTool.Service
         {
             var newKeys = ConvertRedisKeysAddSysCustomKey(keys);
             var values = base.redis.StringGet(newKeys);
-            return ConvetList<T>(values);
+            return ConvertList<T>(values);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace RedisOperate.RedisTool.Service
         {
             var newKeys = ConvertRedisKeysAddSysCustomKey(keys);
             var values = await base.redis.StringGetAsync(newKeys);
-            return ConvetList<T>(values);
+            return ConvertList<T>(values);
         }
 
         /// <summary>

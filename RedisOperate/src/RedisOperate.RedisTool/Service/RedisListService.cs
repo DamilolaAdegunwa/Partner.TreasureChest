@@ -167,7 +167,7 @@ namespace RedisOperate.RedisTool.Service
         {
             key = AddSysCustomKey(key);
             var rValue = base.redis.ListRange(key);
-            return base.ConvetList<T>(rValue);
+            return base.ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace RedisOperate.RedisTool.Service
         {
             key = AddSysCustomKey(key);
             var rValue = await base.redis.ListRangeAsync(key);
-            return base.ConvetList<T>(rValue);
+            return base.ConvertList<T>(rValue);
         }
 
         /// <summary>

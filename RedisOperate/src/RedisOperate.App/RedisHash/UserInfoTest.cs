@@ -13,64 +13,70 @@ namespace RedisOperate.App.RedisHash
     {
         public static void Run()
         {
-            #region 简单方式
+            #region 用户数据
             var userInfo = new UserInfo()
             {
-                Id = 123,
-                Account = "Administrator",
-                Address = "武汉市",
-                Email = "57265177@qq.com",
-                Name = "Eleven",
-                Password = "123456",
-                QQ = 57265177
+                Id = 9527,
+                Account = "SAssassin",
+                Address = "湖南长沙",
+                Email = "530521314@qq.com",
+                Name = "微笑刺客"
             };
 
+            //设置Redis_key
+            var userInfoKey = $"userinfo_{userInfo.Id}";
+            #endregion
+
+            #region String用法
             using (RedisStringService service = new RedisStringService())
             {
-                //初始设置
-                service.StringSet($"userinfo_{userInfo.Id}", userInfo);
+                service.KeyFlush();
 
-                //需要更改属性值
-                var userCache = service.StringGet<UserInfo>($"userinfo_{userInfo.Id}");
-                userCache.Account = "Admin";
+                //整个用户信息序列化并存储
+                service.StringSet(userInfoKey, userInfo);
 
-                //重新回存
-                service.StringSet($"userinfo_{userInfo.Id}", userCache);
+                //依据key读取已有值并反序列化，得到用户信息
+                var userInfoCache = service.StringGet<UserInfo>(userInfoKey);
+
+                //更改用户信息中的属性值
+                userInfoCache.Account = "Admin";
+
+                //重新回存并序列化用户信息，覆盖之前值
+                service.StringSet(userInfoKey, userInfoCache);
             }
             #endregion
 
-            #region Hash做法
-            var userInfo1 = new UserInfo()
-            {
-                Id = 123,
-                Account = "Administrator",
-                Address = "武汉市",
-                Email = "57265177@qq.com",
-                Name = "Eleven",
-                Password = "123456",
-                QQ = 57265177
-            };
-
+            #region Hash用法
             using (RedisHashService service = new RedisHashService())
             {
                 service.KeyFlush();
 
-                #region 拆分属性存储
-                //初始化
-                service.HashSet($"userinfo_{userInfo1.Id}", "Account", userInfo1.Account);
-                service.HashSet($"userinfo_{userInfo1.Id}", "Name", userInfo1.Name);
-                service.HashSet($"userinfo_{userInfo1.Id}", "Address", userInfo1.Address);
-                service.HashSet($"userinfo_{userInfo1.Id}", "Email", userInfo1.Email);
-                service.HashSet($"userinfo_{userInfo1.Id}", "Password", userInfo1.Password);
+                #region 用法一：拆分属性存储
+                //初始化属性值
+                service.HashSet(userInfoKey, "Account", userInfo.Account);
+                service.HashSet(userInfoKey, "Name", userInfo.Name);
+                service.HashSet(userInfoKey, "Address", userInfo.Address);
+                service.HashSet(userInfoKey, "Email", userInfo.Email);
 
-                //对某些属性进行更改
-                service.HashSet($"userinfo_{userInfo1.Id}", "Account", "Admin");
-                service.HashSet($"userinfo_{userInfo1.Id}", "Name", "SAssassin");
+                //更改某些属性值
+                service.HashSet(userInfoKey, "Account", "Admin");
+                service.HashSet(userInfoKey, "Name", "微笑d刺客");
                 #endregion
 
-                #region 整体存储
-                service.HashSet($"userinfo_{userInfo1.Id}", "userInfo", userInfo1);
-                var existUserInfo = service.HashGet<UserInfo>($"userinfo_{userInfo1.Id}", "userInfo");
+                #region 用法二：整体存储
+                service.KeyFlush();
+
+                //整个用户信息序列化并存储为一对field-value，类似于string用法
+                service.HashSet(userInfoKey, "userInfo", userInfo);
+
+                //依据key及field读取已有值并反序列化，得到用户信息
+                var userInfoCache = service.HashGet<UserInfo>(userInfoKey, "userInfo");
+
+                //更改用户信息中的属性值
+                userInfoCache.Account = "Admin";
+
+                //重新回存并序列化用户信息，覆盖之前值
+                service.HashSet(userInfoKey, "userInfo", userInfoCache);
                 #endregion
             }
             #endregion
@@ -83,11 +89,13 @@ namespace RedisOperate.App.RedisHash
     public class UserInfo
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+        
         public string Account { get; set; }
-        public string Password { get; set; }
+        
         public string Email { get; set; }
+        
         public string Address { get; set; }
-        public long QQ { get; set; }
     }
 }

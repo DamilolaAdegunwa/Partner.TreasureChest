@@ -15,11 +15,12 @@ namespace RedisOperate.App
 
             #region RedisString
             //RedisStringBasicTest.Run();
-            OverSell.Run();
+            //OverSell.Run();
             #endregion
 
             #region RedisHash
             //UserInfoTest.Run();
+            BlogOutlineList.Run();
             #endregion
 
             #region RedisSet

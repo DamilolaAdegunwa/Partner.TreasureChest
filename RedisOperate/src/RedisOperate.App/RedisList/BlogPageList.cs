@@ -7,7 +7,7 @@ using System.Threading;
 namespace RedisOperate.App.RedisList
 {
     /// <summary>
-    /// 博客展示数据测试
+    /// 博客分页数据
     /// </summary>
     public class BlogPageList
     {
@@ -15,12 +15,12 @@ namespace RedisOperate.App.RedisList
         {
             using (RedisListService service = new RedisListService())
             {
-                service.ListRightPush("newBlog", "11231_1fsgdfgd");
-                service.ListRightPush("newBlog", "41233_3fdfsfdsf");
-                service.ListRightPush("newBlog", "12345_4dsdsdsd");
-                service.ListRightPush("newBlog", "12354_2dsadsaf");
-                service.ListRightPush("newBlog", "12343_3fdsfsdfsdf");
-                service.ListRightPush("newBlog", "12323_2fsdfsdfsdfsd");
+                service.ListLeftPush("newBlog", "9527");
+                service.ListLeftPush("newBlog", "9528");
+                service.ListLeftPush("newBlog", "9529");
+                service.ListLeftPush("newBlog", "9530");
+                service.ListLeftPush("newBlog", "9531");
+                service.ListLeftPush("newBlog", "9532");
 
                 //service.TrimList("newBlog", 0, 200);//一个list最多2的32次方-1
 

@@ -95,7 +95,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.RedisTool", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.App", "RedisOperate\src\RedisOperate.App\RedisOperate.App.csproj", "{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisOperate.BackgroundService", "RedisOperate\src\RedisOperate.BackgroundService\RedisOperate.BackgroundService.csproj", "{3AEBCD44-432E-440C-BD5D-C600585A204D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisOperate.BackgroundService", "RedisOperate\src\RedisOperate.BackgroundService\RedisOperate.BackgroundService.csproj", "{3AEBCD44-432E-440C-BD5D-C600585A204D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine.App", "StateMachine\src\StateMachine.App\StateMachine.App.csproj", "{5EDFB456-D981-4166-A77B-CD51F6F760D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine.Engine", "StateMachine\src\StateMachine.Engine\StateMachine.Engine.csproj", "{7F37A473-C93E-43D2-A594-A863E26C15F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +183,14 @@ Global
 		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AEBCD44-432E-440C-BD5D-C600585A204D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EDFB456-D981-4166-A77B-CD51F6F760D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDFB456-D981-4166-A77B-CD51F6F760D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDFB456-D981-4166-A77B-CD51F6F760D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDFB456-D981-4166-A77B-CD51F6F760D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F37A473-C93E-43D2-A594-A863E26C15F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F37A473-C93E-43D2-A594-A863E26C15F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F37A473-C93E-43D2-A594-A863E26C15F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F37A473-C93E-43D2-A594-A863E26C15F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,6 +229,8 @@ Global
 		{41DCC796-830E-415C-85C8-3CA32891A6EF} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
 		{41D22743-8EDC-4A16-9DDA-50A4BE69D9B3} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
 		{3AEBCD44-432E-440C-BD5D-C600585A204D} = {F1371C7C-8D46-4E10-97E5-3C4B02849FD4}
+		{5EDFB456-D981-4166-A77B-CD51F6F760D5} = {1F044058-9C93-4304-A197-7A1B80C2AE36}
+		{7F37A473-C93E-43D2-A594-A863E26C15F6} = {1F044058-9C93-4304-A197-7A1B80C2AE36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {965E9C99-96A6-489B-A17A-1285073763B0}

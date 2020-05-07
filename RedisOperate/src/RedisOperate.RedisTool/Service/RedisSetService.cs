@@ -101,7 +101,7 @@ namespace RedisOperate.RedisTool.Service
         {
             key = AddSysCustomKey(key);
             var rValue = base.redis.SetMembers(key);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace RedisOperate.RedisTool.Service
         {
             key = AddSysCustomKey(key);
             var rValue = await base.redis.SetMembersAsync(key);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace RedisOperate.RedisTool.Service
         {
             RedisKey[] keyList = base.ConvertRedisKeysAddSysCustomKey(keys);
             var rValue = base.redis.SetCombine(operation, keyList);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace RedisOperate.RedisTool.Service
         {
             RedisKey[] keyList = base.ConvertRedisKeysAddSysCustomKey(keys);
             var rValue = await base.redis.SetCombineAsync(operation, keyList);
-            return ConvetList<T>(rValue);
+            return ConvertList<T>(rValue);
         }
         /// <summary>
         /// 获取几个集合的交叉并集合,并保存到一个新Key中
