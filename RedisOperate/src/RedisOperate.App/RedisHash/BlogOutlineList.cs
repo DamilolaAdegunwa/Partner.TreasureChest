@@ -108,7 +108,7 @@ namespace RedisOperate.App.RedisHash
             #endregion
 
             #region 更改简介内容
-            service.HashSet("blogOutlineInfo_9530", "Content", "k8s从入门到失恋");
+            service.HashSet("blogOutlineInfo_9530", "Content", "k8s从入门到失业");
             #endregion
 
             #region 增加阅读量
