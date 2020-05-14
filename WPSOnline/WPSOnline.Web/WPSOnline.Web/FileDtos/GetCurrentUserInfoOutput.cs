@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WuLong.Lims.Dto;
 
 namespace WuLong.Lims.LIMS.Reports.Dto
 {
@@ -12,9 +11,9 @@ namespace WuLong.Lims.LIMS.Reports.Dto
     {
         public GetCurrentUserInfoOutput()
         {
-            Users = new List<UserInfo>();
+            //Users = new List<UserInfo>();
         }
 
-        public List<UserInfo> Users { get; set; }
+        //public List<UserInfo> Users { get; set; }
     }
 }

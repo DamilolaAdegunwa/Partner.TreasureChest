@@ -1,5 +1,4 @@
-﻿using Abp.Runtime.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -9,7 +8,7 @@ namespace WuLong.Lims.LIMS.Reports.Dto
     /// <summary>
     /// 获取当前用户和报告信息
     /// </summary>
-    public class GetCurrentUserAndReportInfoInput : ICustomValidate
+    public class GetCurrentUserAndReportInfoInput
     {
         /// <summary>
         /// 签名信息
@@ -36,17 +35,5 @@ namespace WuLong.Lims.LIMS.Reports.Dto
         /// </summary>
         [Required]
         public string ReportId { get; set; }
-
-        /// <summary>
-        /// 自定义校验
-        /// </summary>
-        /// <param name="context"></param>
-        public void AddValidationErrors(CustomValidationContext context)
-        {
-            if (!UserToken.Contains("-"))
-            {
-                context.Results.Add(new ValidationResult("用户令牌数据异常!"));
-            }
-        }
     }
 }

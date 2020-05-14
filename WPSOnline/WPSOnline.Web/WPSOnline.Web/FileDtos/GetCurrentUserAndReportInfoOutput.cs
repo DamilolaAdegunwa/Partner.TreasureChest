@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WuLong.Lims.Dto;
 
 namespace WuLong.Lims.LIMS.Reports.Dto
 {
@@ -10,14 +9,14 @@ namespace WuLong.Lims.LIMS.Reports.Dto
     /// </summary>
     public class GetCurrentUserAndReportInfoOutput
     {
-        /// <summary>
-        /// 文档信息
-        /// </summary>
-        public DocInfo File { get; set; }
+        ///// <summary>
+        ///// 文档信息
+        ///// </summary>
+        //public DocInfo File { get; set; }
 
-        /// <summary>
-        /// 用户信息
-        /// </summary>
-        public UserInfo User { get; set; }
+        ///// <summary>
+        ///// 用户信息
+        ///// </summary>
+        //public UserInfo User { get; set; }
     }
 }
