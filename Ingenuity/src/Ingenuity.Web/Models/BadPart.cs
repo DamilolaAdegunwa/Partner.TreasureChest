@@ -1,30 +1,30 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ²»Á¼Æ·
+    /// ä¸è‰¯å“
     /// </summary>
     public class BadPart
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Áã¼ş¼Ó¹¤Id
+        /// é›¶ä»¶åŠ å·¥Id
         /// </summary>
         public int PartProcessId { get; set; }
 
         /// <summary>
-        /// ±¨·ÏÊıÁ¿
+        /// æŠ¥åºŸæ•°é‡
         /// </summary>
         public int BadCount { get; set; }
 
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime CreateDate { get; set; }
 

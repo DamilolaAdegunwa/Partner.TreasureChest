@@ -1,10 +1,10 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// Èë¿â
+    /// å…¥åº“
     /// </summary>
     public class Warehouse
     {
@@ -14,42 +14,42 @@ namespace Ingenuity.Web.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// ²ÄÁÏÃû³Æ
+        /// ææ–™åç§°
         /// </summary>
         public string MaterialName { get; set; }
 
         /// <summary>
-        /// Èë¿âÈÕÆÚ
+        /// å…¥åº“æ—¥æœŸ
         /// </summary>
         public DateTime InDate { get; set; }
 
         /// <summary>
-        /// ½»½Ó·½Ê½
+        /// äº¤æ¥æ–¹å¼
         /// </summary>
         public string TakeWay { get; set; }
 
         /// <summary>
-        /// ²Ö¿âÇøÎ»
+        /// ä»“åº“åŒºä½
         /// </summary>
         public string DepotSite { get; set; }
 
         /// <summary>
-        /// Èë¿âÊıÁ¿
+        /// å…¥åº“æ•°é‡
         /// </summary>
         public int Count { get; set; }
 
         /// <summary>
-        /// ÖØÁ¿
+        /// é‡é‡
         /// </summary>
         public decimal Weight { get; set; }
 
         /// <summary>
-        /// ¹©Ó¦ÉÌ
+        /// ä¾›åº”å•†
         /// </summary>
         public string Supplier { get; set; }
 
         /// <summary>
-        /// ÁªÏµÈË
+        /// è”ç³»äºº
         /// </summary>
         public string Contact { get; set; }
 

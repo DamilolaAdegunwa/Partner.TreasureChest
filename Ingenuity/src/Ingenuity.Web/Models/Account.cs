@@ -1,24 +1,24 @@
-using System;
+ï»¿using System;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ÓÃ»§ĞÅÏ¢
+    /// ç”¨æˆ·ä¿¡æ¯
     /// </summary>
     public class Account
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// ÓÃ»§Ãû
+        /// ç”¨æˆ·å
         /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
-        /// ÃÜÂë
+        /// å¯†ç 
         /// </summary>
         public string Password { get; set; }
     }

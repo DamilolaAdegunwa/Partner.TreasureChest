@@ -1,45 +1,45 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// Éè±¸×´Ì¬
+    /// è®¾å¤‡çŠ¶æ€
     /// </summary>
     public class EquipInfo
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Éè±¸±àºÅ
+        /// è®¾å¤‡ç¼–å·
         /// </summary>
         public string EquipNumber { get; set; }
 
         /// <summary>
-        /// Éè±¸Ãû³Æ
+        /// è®¾å¤‡åç§°
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// ³µ¼ä»úÎ»
+        /// è½¦é—´æœºä½
         /// </summary>
         public string Site { get; set; }
 
         /// <summary>
-        /// ¹¤×÷Çé¿ö
+        /// å·¥ä½œæƒ…å†µ
         /// </summary>
         public string WorkSituation { get; set; }
 
         /// <summary>
-        /// ÔËĞĞ×´Ì¬
+        /// è¿è¡ŒçŠ¶æ€
         /// </summary>
         public string OperateSituation { get; set; }
 
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime CreateDate { get; set; }
 

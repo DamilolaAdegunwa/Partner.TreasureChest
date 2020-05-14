@@ -1,41 +1,41 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ¹¤ĞòĞÅÏ¢
+    /// å·¥åºä¿¡æ¯
     /// </summary>
     public class ProcessInfo
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// ÎïÁÏÇåµ¥Id
+        /// ç‰©æ–™æ¸…å•Id
         /// </summary>
         public int MaterialInfoId { get; set; }
 
         /// <summary>
-        /// ¹¤ĞòÃû
+        /// å·¥åºå
         /// </summary>
         public string WorkName { get; set; }
 
         /// <summary>
-        /// ¹¤ÒÕÇé¿ö
+        /// å·¥è‰ºæƒ…å†µ
         /// </summary>
         public bool TechnologySituation { get; set; }
 
         /// <summary>
-        /// Éè±¸ID
+        /// è®¾å¤‡ID
         /// </summary>
         public int EquipInfoId { get; set; }
 
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime CreateDate { get; set; }
 
@@ -43,7 +43,7 @@ namespace Ingenuity.Web.Models
         public string T_EquipNumber { get; set; }
 
         [NotMapped]
-        public int CompleteStatus { get; set;}
+        public int CompleteStatus { get; set; }
 
         [NotMapped]
         public String MaterialName { get; set; }

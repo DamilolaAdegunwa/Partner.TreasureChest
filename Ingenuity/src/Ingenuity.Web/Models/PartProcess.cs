@@ -1,36 +1,36 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ²ÄÁÏ¼Ó¹¤
+    /// ææ–™åŠ å·¥
     /// </summary>
     public class PartProcess
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// ÎïÁÏÇåµ¥Id
+        /// ç‰©æ–™æ¸…å•Id
         /// </summary>
         public int MaterialInfoId { get; set; }
 
         /// <summary>
-        /// ¹¤ÒÕ´¦ÀíÕß
+        /// å·¥è‰ºå¤„ç†è€…
         /// </summary>
         public string WorkerName { get; set; }
 
         /// <summary>
-        /// Íê³É×ÜÊı
+        /// å®Œæˆæ€»æ•°
         /// </summary>
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime CreateDate { get; set; }
 

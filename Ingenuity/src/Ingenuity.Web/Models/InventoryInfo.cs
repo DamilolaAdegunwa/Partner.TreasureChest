@@ -1,10 +1,10 @@
-using System;
+锘縰sing System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// 库存信息
+    /// 搴撳瓨淇℃伅
     /// </summary>
     public class InventoryInfo
     {
@@ -14,32 +14,32 @@ namespace Ingenuity.Web.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// 材料名称
+        /// 鏉愭枡鍚嶇О
         /// </summary>
         public string MaterialName { get; set; }
 
         /// <summary>
-        /// 仓库区位
+        /// 浠撳簱鍖轰綅
         /// </summary>
         public string DepotSite { get; set; }
 
         /// <summary>
-        /// 总量
+        /// 鎬婚噺
         /// </summary>
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// 余量
+        /// 浣欓噺
         /// </summary>
         public int RemainCount { get; set; }
 
         /// <summary>
-        /// 更新时间
+        /// 鏇存柊鏃堕棿
         /// </summary>
         public DateTime UpdateDate { get; set; }
 
         /// <summary>
-        /// 备注
+        /// 澶囨敞
         /// </summary>
         public string Remark { get; set; }
 

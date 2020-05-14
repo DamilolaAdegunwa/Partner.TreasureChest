@@ -1,10 +1,10 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ÔÚÖÆÆ·
+    /// åœ¨åˆ¶å“
     /// </summary>
     public class WorkingProductInfo
     {
@@ -14,22 +14,22 @@ namespace Ingenuity.Web.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// ¶©µ¥Id
+        /// è®¢å•Id
         /// </summary>
         public string OrderId { get; set; }
 
         /// <summary>
-        /// Ä¿±êÊıÁ¿
+        /// ç›®æ ‡æ•°é‡
         /// </summary>
         public string AimCount { get; set; }
 
         /// <summary>
-        /// Íê³ÉÊıÁ¿
+        /// å®Œæˆæ•°é‡
         /// </summary>
         public string FinishCount { get; set; }
 
         /// <summary>
-        /// ²î¶îÊıÁ¿
+        /// å·®é¢æ•°é‡
         /// </summary>
         public string DifferCount { get; set; }
 

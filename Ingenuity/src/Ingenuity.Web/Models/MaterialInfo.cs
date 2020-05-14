@@ -1,40 +1,40 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ÎïÁÏĞÅÏ¢
+    /// ç‰©æ–™ä¿¡æ¯
     /// </summary>
     public class MaterialInfo
     {
         /// <summary>
-        /// ±êÊ¶
+        /// æ ‡è¯†
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// ¶©µ¥Id
+        /// è®¢å•Id
         /// </summary>
         public int OrderId { get; set; }
 
         /// <summary>
-        /// Ô­²ÄÁÏÃû³Æ
+        /// åŸææ–™åç§°
         /// </summary>
         public string MaterialName { get; set; }
 
         /// <summary>
-        /// Ê¹ÓÃÊıÁ¿
+        /// ä½¿ç”¨æ•°é‡
         /// </summary>
         public int UseCount { get; set; }
 
         /// <summary>
-        /// ´´½¨ÈÕÆÚ
+        /// åˆ›å»ºæ—¥æœŸ
         /// </summary>
         public DateTime CreateDate { get; set; }
 
         /// <summary>
-        /// Íê³É×´Ì¬
+        /// å®ŒæˆçŠ¶æ€
         /// </summary>
         public int CompleteStatus { get; set; }
 
@@ -56,8 +56,8 @@ namespace Ingenuity.Web.Models
 
     public enum CompleteStatusEnum : int
     {
-        ´ı¼Ó¹¤ = 0,
-        Õı¼Ó¹¤ = 1,
-        ¼Ó¹¤Íê³É = 2
+        å¾…åŠ å·¥ = 0,
+        æ­£åŠ å·¥ = 1,
+        åŠ å·¥å®Œæˆ = 2
     }
 }

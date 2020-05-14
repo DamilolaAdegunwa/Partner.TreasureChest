@@ -1,10 +1,10 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ingenuity.Web.Models
 {
     /// <summary>
-    /// ³ö»õ
+    /// å‡ºè´§
     /// </summary>
     public class Ship
     {
@@ -14,27 +14,27 @@ namespace Ingenuity.Web.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// ¶©µ¥ºÅ
+        /// è®¢å•å·
         /// </summary>
-        public string OrderId{ get; set; }
+        public string OrderId { get; set; }
 
         /// <summary>
-        /// ³ö»õ·½Ê½
+        /// å‡ºè´§æ–¹å¼
         /// </summary>
         public string OutWay { get; set; }
 
         /// <summary>
-        /// ³ö»õÈË
+        /// å‡ºè´§äºº
         /// </summary>
         public string WorkName { get; set; }
 
         /// <summary>
-        /// ³ö»õÊıÁ¿
+        /// å‡ºè´§æ•°é‡
         /// </summary>
         public int Count { get; set; }
 
         /// <summary>
-        /// ´´½¨Ê±¼ä
+        /// åˆ›å»ºæ—¶é—´
         /// </summary>
         public DateTime CreateDate { get; set; }
 
